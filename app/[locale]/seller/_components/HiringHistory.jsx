@@ -26,7 +26,7 @@ const HiringHistory = () => {
           className={`flex flex-row items-center w-full justify-around border-b-[2px] border-b-gray-200 gap-12 py-4 dark:border-[#374151]`}
         >
           <h2>نام آگهی استخدام</h2>
-          <h2>وضعیت</h2>
+          <h2>وضعی1ت</h2>
         </div>
         <Accordion
           type="single"
