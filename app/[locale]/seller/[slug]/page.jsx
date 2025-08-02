@@ -1,0 +1,145 @@
+import React from "react";
+import Image from "next/image";
+import ArrowRight from "@/assets/icons/arrow-right.svg";
+import GreenTick from "@/assets/icons/tick-circle.svg";
+import Star from "@/assets/icons/star.svg";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import StarsTab from "@/app/[locale]/seller/_components/StarsTab";
+import Advertisements from "@/components/Advertisements/Advertisements";
+import SellerComments from "@/app/[locale]/seller/_components/SellerComments";
+import HiringHistory from "@/app/[locale]/seller/_components/HiringHistory";
+import InformationContent from "@/app/[locale]/seller/_components/InformationContent";
+const Page = () => {
+  return (
+    <>
+      <div className={`flex flex-col gap-4 mt-4 w-full`}>
+        <button
+          className={`flex flex-row gap-4 items-center self-end md:hidden`}
+        >
+          <span>پروفایل فروشنده سعید اسدی</span>
+          <ArrowRight className={`dark:fill-white fill-gray-800`} />
+        </button>
+        <div className={` hidden md:block`}>
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">صفحه اصلی</BreadcrumbLink>
+              </BreadcrumbItem>
+
+              <BreadcrumbSeparator> /</BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/sellers">فروشندگان</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator> /</BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbLink>املاک</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator> /</BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbPage>پروفایل فروشنده سعید احمدی</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+        {/* Image */}
+        <div className={`w-full relative`}>
+          <Image
+            src={`/images/city.png`}
+            alt="0"
+            width={100}
+            className={`w-full h-full`}
+            height={200}
+          />
+          <div className={`flex flex-row-reverse justify-end  w-full`}>
+            <div
+              className={`flex flex-row gap-4 mr-16  justify-start items-start h-24 w-full`}
+            >
+              <div
+                className={`flex flex-row items-center gap-4 w-full justify-between`}
+              >
+                <div
+                  className={`flex flex-row gap-4 items-center ml-30 rtl:mr-20`}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`px-8 w-full mx-auto flex flex-row justify-between md:justify-end md:gap-4`}
+        >
+          <div className={`flex flex-row items-center gap-2`}>
+            <h2 className={`text-gray-700 dark:text-[#B0B8C7]`}>:موقعیت</h2>
+            <span className={`font-[500]`}>استانبول، ترکیه</span>
+          </div>
+          <div className={`flex flex-row items-center gap-2`}>
+            <h2 className={`text-gray-700 dark:text-[#B0B8C7]`}>:مدت عضویت</h2>
+            <span className={`font-[500]`}>1‌سال و 4ماه</span>
+          </div>
+        </div>
+        {/*    tabs*/}
+        <div className="flex w-full flex-col gap-6 mt-4 py-4 rounded-xl">
+          <Tabs defaultValue="comments" className={``}>
+            <TabsList className="flex flex-row rtl:flex-row-reverse bg-transparent w-full border-b-[1px] border-b-[#D1D5DB] dark:border-b-[#374151] rounded-none">
+              <TabsTrigger
+                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-[#4299C1] dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-[#4299C1] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-[#4299C1] data-[state=active]:shadow-none data-[state=active]:text-[#4299C1] md:max-w-42 py-4`}
+                value="hiring-history"
+              >
+                تاریخچه استخدام ها
+              </TabsTrigger>
+              <TabsTrigger
+                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-[#4299C1] dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-[#4299C1] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-[#4299C1] data-[state=active]:shadow-none data-[state=active]:text-[#4299C1] md:max-w-42 py-4`}
+                value="ads"
+              >
+                آگهی ها
+              </TabsTrigger>
+              <TabsTrigger
+                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-[#4299C1] dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-[#4299C1] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-[#4299C1] data-[state=active]:shadow-none data-[state=active]:text-[#4299C1] md:max-w-42 py-4`}
+                value="points"
+              >
+                امتیاز ها
+              </TabsTrigger>
+              <TabsTrigger
+                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-[#4299C1] dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-[#4299C1] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-[#4299C1] data-[state=active]:shadow-none data-[state=active]:text-[#4299C1] md:max-w-42 py-4`}
+                value="comments"
+              >
+                نظرات
+              </TabsTrigger>
+              <TabsTrigger
+                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-[#4299C1] dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-[#4299C1] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-[#4299C1] data-[state=active]:shadow-none data-[state=active]:text-[#4299C1] md:max-w-42 py-4`}
+                value="info"
+              >
+                اطلاعات
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="comments" className={`w-full`}>
+              <SellerComments />
+            </TabsContent>
+            <TabsContent value="points">
+              <StarsTab />
+            </TabsContent>
+            <TabsContent value="ads">
+              <Advertisements isOnProfile={true} />
+            </TabsContent>
+            <TabsContent value="hiring-history">
+              <HiringHistory />
+            </TabsContent>
+            <TabsContent value="info">
+              <InformationContent />
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Page;
