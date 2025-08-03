@@ -26,7 +26,7 @@ const HiringHistory = () => {
           className={`flex flex-row items-center w-full justify-around border-b-[2px] border-b-gray-200 gap-12 py-4 dark:border-[#374151]`}
         >
           <h2>نام آگهی استخدام</h2>
-          <h2>وضعی1ت</h2>
+          <h2>وضعیت</h2>
         </div>
         <Accordion
           type="single"
@@ -148,99 +148,10 @@ const HiringHistory = () => {
       {/* desktop */}
 
       <div className={`h-12`}></div>
-      {/* <Table className={`hidden md:block`} dir="ltr">
-        <TableHeader
-          className={`bg-[#D9EDF4] dark:bg-[#263F53] py-8 dark:border-b-[2px] dark:border-b-gray-200 w-full`}
-        >
-          <TableRow className={`text-center font-[600] flex-wrap w-full`}>
-            <TableHead className="py-4 flex-1">وضعیت</TableHead>
-            <TableHead className="py-4 flex-1">تاریخ</TableHead>
-            <TableHead className="py-4 flex-1">حقوق</TableHead>
-            <TableHead className="py-4 flex-1">نوع همکاری</TableHead>
-            <TableHead className="py-4 flex-1">نام آگهی استخدام</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody className={`dark:bg-[#252C36]`}>
-          <TableRow>
-            <TableCell className={`flex items-center justify-center`}>
-              <div
-                className={`py-1 px-2 max-w-38 bg-[#DCFCE8] text-[#16A34A] rounded-md`}
-              >
-                فرد موردنظر استخدام‌شده
-              </div>
-            </TableCell>
-            <TableCell>1404/02/29</TableCell>
-            <TableCell>20.000.000 تومان</TableCell>
-            <TableCell>حضوری</TableCell>
-            <TableCell>
-              <div
-                className={`flex flex-row items-center gap-4 justify-center`}
-              >
-                <span>استخدام فرانت‌اند دولوپر</span>
-                <Image
-                  width={40}
-                  height={40}
-                  alt={``}
-                  src={"/images/hiring-history-prof.png"}
-                />
-              </div>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={`flex items-center justify-center`}>
-              <div
-                className={`py-1 px-2 max-w-38 bg-[#DCFCE8] text-[#16A34A] rounded-md`}
-              >
-                فرد موردنظر استخدام‌شده
-              </div>
-            </TableCell>
-            <TableCell>1404/02/29</TableCell>
-            <TableCell>20.000.000 تومان</TableCell>
-            <TableCell>حضوری</TableCell>
-            <TableCell>
-              <div
-                className={`flex flex-row items-center gap-4 justify-center`}
-              >
-                <span>استخدام فرانت‌اند دولوپر</span>
-                <Image
-                  width={40}
-                  height={40}
-                  alt={``}
-                  src={"/images/hiring-history-prof.png"}
-                />
-              </div>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className={`flex items-center justify-center`}>
-              <div
-                className={`py-1 px-2 max-w-38 bg-[#FEE2E2] text-[#EF4444] rounded-md`}
-              >
-                فرد موردنظر استخدام‌شده
-              </div>
-            </TableCell>
-            <TableCell>1404/02/29</TableCell>
-            <TableCell>20.000.000 تومان</TableCell>
-            <TableCell>حضوری</TableCell>
-            <TableCell>
-              <div
-                className={`flex flex-row items-center gap-4 justify-center`}
-              >
-                <span>استخدام فرانت‌اند دولوپر</span>
-                <Image
-                  width={40}
-                  height={40}
-                  alt={``}
-                  src={"/images/hiring-history-prof.png"}
-                />
-              </div>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table> */}
-      <div className="hidden md:block w-full">
+
+      <div className="hidden md:block w-full border-[1px] border-[#D1D5DB] rounded-t-2xl">
         {/* Header */}
-        <div className="flex flex-row rtl:flex-row-reverse bg-[#D9EDF4] dark:bg-[#263F53] py-4 font-semibold text-center">
+        <div className="flex flex-row rtl:flex-row-reverse bg-[#D9EDF4] dark:bg-[#263F53] py-2 font-semibold text-center rounded-t-2xl border-b-[1px] border-[#D1D5DB] dark:border-b-[#FFFFFF]">
           <div className="flex-1 py-2">نام آگهی استخدام</div>
           <div className="flex-1 py-2">نوع همکاری</div>
           <div className="flex-1 py-2">حقوق</div>

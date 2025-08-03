@@ -6,8 +6,26 @@ export default function AdvCountries() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   return (
     <>
-      <div className="flex flex-row justify-end gap-4">
-        <div className="text-right scroll-hidden">
+      <div className="flex flex-row gap-4">
+        <div className="rtl:text-right text-left">
+          {/* Countries List */}
+          <ul className="w-44 border-r-[1px] border-gray-400 rtl:border-r-0 rtl:border-l-[1px] rtl:border-gray-400 py-3 px-2">
+            {countries.map((country) => (
+              <li
+                key={country.code}
+                onClick={() => setSelectedCountry(country)}
+                className={`rtl:text-right py-2 cursor-pointer px-2  ${
+                  selectedCountry?.code === country.code
+                    ? "bg-[#F0F9FB] dark:bg-[#142738] border-l-2 border-[#4299C1] rtl:border-l-0 rtl:border-r-2 rtl:border-[#4299C1] font-[600] text-[#4299C1]"
+                    : " text-gray-600 dark:text-[#fff]"
+                } `}
+              >
+                {country.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="rtl:text-right scroll-hidden">
           {/* Provinces List (if selected country has provinces) */}
           {selectedCountry?.provinces && (
             <ul className="flex flex-col gap-2 w-auto border-gray-400 py-2 items-end">
@@ -21,24 +39,6 @@ export default function AdvCountries() {
               ))}
             </ul>
           )}
-        </div>
-        <div className="text-right ">
-          {/* Countries List */}
-          <ul className="w-44 border-l border-gray-400 py-2 ">
-            {countries.map((country) => (
-              <li
-                key={country.code}
-                onClick={() => setSelectedCountry(country)}
-                className={`text-right py-2 cursor-pointer px-2  ${
-                  selectedCountry?.code === country.code
-                    ? "bg-[#F0F9FB] dark:bg-[#142738] border-r-2 border-[#4299C1] font-[600] text-[#4299C1]"
-                    : " text-gray-600 dark:text-[#fff]"
-                } `}
-              >
-                {country.name}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </>

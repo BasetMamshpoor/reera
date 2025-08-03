@@ -7,11 +7,11 @@ import Sidebar from "@/components/Advertisements/Sidebar";
 export default function Home() {
   return (
     <>
-      <Sidebar />
-      {/* <Searchbar />
+      {/* <Sidebar /> */}
+      <Searchbar />
       <Hero />
       <Categories />
-      <Advertisements /> */}
+      <Advertisements />
     </>
   );
 }

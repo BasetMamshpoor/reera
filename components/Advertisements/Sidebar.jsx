@@ -93,10 +93,10 @@ const Sidebar = () => {
           <div className="relative w-full transition-all duration-300 ease-in-out">
             <button
               onClick={() => setIsCountrySelectOn((prev) => !prev)}
-              className="flex flex-row items-center justify-between border-2 border-gray-200 py-2.5 px-2 rounded-2xl text-gray-500 cursor-pointer w-full"
+              className="flex flex-row items-center justify-between border-2 border-gray-200 py-2.5 px-4 rounded-2xl text-gray-500 cursor-pointer w-full"
             >
-              <Arrowdown className="fill-gray-500 dark:fill-white" />
               <span>انتخاب شهر و کشور</span>
+              <Arrowdown className="fill-gray-500 dark:fill-white" />
             </button>
             {isCountrySelectOn && (
               <>

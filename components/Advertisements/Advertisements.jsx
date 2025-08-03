@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 
@@ -13,29 +14,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useDirection } from "@/hooks/useDirection";
 function toFarsiDigits(number) {
   const farsiDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number.toString().replace(/\d/g, (d) => farsiDigits[parseInt(d)]);
 }
 
-const Advertisements = ({isOnProfile=false}) => {
+const Advertisements = ({ isOnProfile = false }) => {
+  const dir = useDirection();
   return (
     <>
-    {!isOnProfile && <div className="flex flex-row items-center justify-between mt-12">
-      <Link
-          href={`/`}
-          className="flex flex-row gap-2 cursor-pointer items-center justify-center"
+      {!isOnProfile && (
+        <div className="flex flex-row items-center justify-between mt-12">
+          <Link
+            href={`/`}
+            className="flex flex-row gap-2 cursor-pointer items-center justify-center"
+          >
+            <ChevronLeft />
+            <span className="font-[600] text-sm">مشاهده همه</span>
+          </Link>
+          <div className="flex flex-row items-center gap-4">
+            <h2 className="text-[#000000] dark:text-[#D9EDF4] font-[600] text-2xl">
+              آگهی های ریرا
+            </h2>
+          </div>
+        </div>
+      )}
+      <div
+        dir={dir}
+        className={`grid grid-cols-1 gap-y-10 mt-10 sm:grid-cols-2 sm:gap-x-4  ${
+          isOnProfile ? "lg:grid-cols-3" : "lg:grid-cols-4"
+        } lg:gap-x-6 `}
       >
-        <ChevronLeft />
-        <span className="font-[600] text-sm">مشاهده همه</span>
-      </Link>
-      <div className="flex flex-row items-center gap-4">
-        <h2 className="text-[#000000] dark:text-[#D9EDF4] font-[600] text-2xl">
-          آگهی های ریرا
-        </h2>
-      </div>
-    </div>}
-      <div className={`grid grid-cols-1 gap-y-10 mt-10 sm:grid-cols-2 sm:gap-x-4  ${isOnProfile?'lg:grid-cols-3':'lg:grid-cols-4'} lg:gap-x-6 `}>
         {/* first Item */}
         <div className="relative flex items-center flex-col h-140 rounded-4xl bg-[#ffffff] space-y-4 sm:h-120 md:h-130  cursor-pointer dark:bg-[#252C36]">
           <div className="absolute py-1 px-2 top-2 right-4 rounded-lg bg-[#DCFCE8] flex flex-row gap-1">
@@ -65,13 +75,13 @@ const Advertisements = ({isOnProfile=false}) => {
               <span>متر</span>
               <span>{toFarsiDigits("50")}</span>
             </span>
-            <Home className={`fill-black dark:fill-white`}/>
+            <Home className={`fill-black dark:fill-white`} />
           </div>
           <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
             <span className="flex flex-row gap-1 items-center">
               <span>ترکیه استانبول</span>
             </span>
-            <Location className={`fill-black dark:fill-white`}/>
+            <Location className={`fill-black dark:fill-white`} />
           </div>
           <h2 className="self-start px-4  font-[600] text-2xl">
             {" "}
@@ -108,13 +118,13 @@ const Advertisements = ({isOnProfile=false}) => {
               <span>متر</span>
               <span>{toFarsiDigits("50")}</span>
             </span>
-            <Home className={`fill-black dark:fill-white`}/>
+            <Home className={`fill-black dark:fill-white`} />
           </div>
           <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
             <span className="flex flex-row gap-1 items-center">
               <span>ترکیه استانبول</span>
             </span>
-            <Location className={`fill-black dark:fill-white`}/>
+            <Location className={`fill-black dark:fill-white`} />
           </div>
           <h2 className="self-start px-4  font-[600] text-2xl">
             {" "}
@@ -152,13 +162,13 @@ const Advertisements = ({isOnProfile=false}) => {
               <span>متر</span>
               <span>{toFarsiDigits("50")}</span>
             </span>
-            <Home className={`fill-black dark:fill-white`}/>
+            <Home className={`fill-black dark:fill-white`} />
           </div>
           <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
             <span className="flex flex-row gap-1 items-center">
               <span>ترکیه استانبول</span>
             </span>
-            <Location className={`fill-black dark:fill-white`}/>
+            <Location className={`fill-black dark:fill-white`} />
           </div>
           <h2 className="self-start px-4  font-[600] text-2xl">
             {" "}
@@ -195,13 +205,13 @@ const Advertisements = ({isOnProfile=false}) => {
               <span>متر</span>
               <span>{toFarsiDigits("50")}</span>
             </span>
-            <Home className={`fill-black dark:fill-white`}/>
+            <Home className={`fill-black dark:fill-white`} />
           </div>
           <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
             <span className="flex flex-row gap-1 items-center">
               <span>ترکیه استانبول</span>
             </span>
-            <Location className={`fill-black dark:fill-white`}/>
+            <Location className={`fill-black dark:fill-white`} />
           </div>
           <h2 className="self-start px-4  font-[600] text-2xl">
             {" "}

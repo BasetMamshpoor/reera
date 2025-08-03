@@ -3,7 +3,7 @@ import Image from "next/image";
 import ArrowRight from "@/assets/icons/arrow-right.svg";
 import GreenTick from "@/assets/icons/tick-circle.svg";
 import Star from "@/assets/icons/star.svg";
-
+import ImageOverlay from "@/assets/images/wave-haikei.svg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Breadcrumb,
@@ -18,6 +18,7 @@ import Advertisements from "@/components/Advertisements/Advertisements";
 import SellerComments from "@/app/[locale]/seller/_components/SellerComments";
 import HiringHistory from "@/app/[locale]/seller/_components/HiringHistory";
 import InformationContent from "@/app/[locale]/seller/_components/InformationContent";
+import CurvedOverlay from "../_components/CurverOverlay";
 const Page = () => {
   return (
     <>
@@ -51,15 +52,57 @@ const Page = () => {
           </Breadcrumb>
         </div>
         {/* Image */}
-        <div className={`w-full relative`}>
-          <Image
-            src={`/images/city.png`}
-            alt="0"
-            width={100}
-            className={`w-full h-full`}
-            height={200}
-          />
-          <div className={`flex flex-row-reverse justify-end  w-full`}>
+        <div className={`w-full`}>
+          <div className="relative">
+            <Image
+              src={`/images/city-profile.jpg`}
+              alt="0"
+              width={100}
+              className={`w-full h-full`}
+              height={200}
+            />
+            <div className="w-full absolute bottom-0">
+              <ImageOverlay className="!w-full !h-full fill-[#F9FAFB] dark:fill-[#14181D]" />
+            </div>
+            <div className="w-full absolute bottom-30 start-10 flex flex-row justify-between ">
+              <div className="flex flex-row gap-4">
+                <div className="bg-[#fff] p-2 rounded-2xl">
+                  <Image
+                    src="/images/digi.png"
+                    className=""
+                    width={100}
+                    height={100}
+                    alt=""
+                  />
+                </div>
+                <div className="flex flex-col gap-4 self-end">
+                  <h2 className="text-2xl font-[500]">سعید اسدی</h2>
+                  <div className="flex flex-row gap-2 items-center">
+                    <Star className="fill-[#F59E0B]" />
+                    <span>4</span>
+                  </div>
+                </div>
+                <div className="self-center">
+                  <div className="bg-[#DCFCE8] rounded-lg px-2 flex flex-row py-2 gap-2">
+                    <GreenTick className="fill-[#16A34A]" />
+                    <h2 className="font-[500] text-[#16A34A]">تایید شده</h2>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-row items-center gap-4 pr-20 self-end rtl:pl-20">
+                <div className="flex flex-row gap-2">
+                  <h2>موقعیت:</h2>
+                  <span>استانبول، ترکیه</span>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <h2>مدت عضویت:</h2>
+                  <span>1‌سال و 4ماه</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={`flex flex-row-reverse justify-end w-full`}>
             <div
               className={`flex flex-row gap-4 mr-16  justify-start items-start h-24 w-full`}
             >
