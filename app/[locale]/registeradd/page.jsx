@@ -1,7 +1,7 @@
 import React from "react";
 import MainPagination from "./_components/MainPagination";
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <div className="px-4 mx-auto w-full relative">
@@ -11,4 +11,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

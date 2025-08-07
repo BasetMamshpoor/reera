@@ -21,6 +21,9 @@ import { request } from "@/lib/api";
 import { useEffect } from "react";
 import LocationForm from "./LocationForm";
 import Facilities from "./Facilities";
+import UploadPics from "./UploadPics";
+import ContactInfo from "./ContactInfo";
+import Conditions from "./Conditions";
 const categoryTree = [
   {
     id: 1,
@@ -95,7 +98,8 @@ const categoryTree = [
 ];
 
 export default function CategorySelector() {
-  const [currentStep, setCurrentStep] = React.useState(4);
+  const [currentStep, setCurrentStep] = React.useState(1);
+
   const [path, setPath] = useState([
     {
       title: "دسته‌بندی‌ها",
@@ -154,9 +158,8 @@ export default function CategorySelector() {
           <>
             <div className="relative group w-full lg:hidden block py-4">
               <Search className="absolute top-1/2 -translate-y-1/2 right-2 fill-[#A4A6B0] group-focus-within:opacity-0 dark:fill-white" />
-
               <Input
-                className={`w-full max-w-4xl placeholder:px-6 placeholder:text-[#A4A6B0] placeholder:group-focus-within:opacity-0 dark:placeholder:text-white py-6 rounded-xl`}
+                className={`w-full max-w-4xl placeholder:px-6 placeholder:text-[#A4A6B0] placeholder:group-focus-within:opacity-0 dark:placeholder:text-white py-6 rounded-xl focus:placeholder:opacity-0`}
                 placeholder="جستجو"
               />
             </div>
@@ -193,9 +196,9 @@ export default function CategorySelector() {
                 {path.length > 1 ? (
                   <button
                     onClick={handleBack}
-                    className="lg:flex items-center gap-1 text-sm text-[#4299C1]  hidden"
+                    className="lg:flex items-center gap-1 text-sm text-[#4299C1] cursor-pointer hidden"
                   >
-                    <ArrowRight className="w-4 h-4 fill-[#4299C1] " />
+                    <ArrowRight className="w-4 h-4 fill-[#4299C1] ltr:rotate-180" />
                     بازگشت
                   </button>
                 ) : (
@@ -207,7 +210,7 @@ export default function CategorySelector() {
                   <Search className="absolute top-1/2 -translate-y-1/2 right-2 fill-[#A4A6B0] group-focus-within:opacity-0" />
 
                   <Input
-                    className={`w-full max-w-4xl placeholder:px-6 placeholder:text-[#A4A6B0] placeholder:group-focus-within:opacity-0`}
+                    className={`w-full max-w-4xl placeholder:px-6 placeholder:text-[#A4A6B0] focus:placeholder:opacity-0`}
                     placeholder="جستجو"
                   />
                 </div>
@@ -222,7 +225,7 @@ export default function CategorySelector() {
                   >
                     <span className="text-md">{item.title}</span>
                     {item.children && item.children.length > 0 && (
-                      <ArrowLeft className="w-4 h-4 dark:fill-white fill-black" />
+                      <ArrowLeft className="w-4 h-4 dark:fill-white fill-black ltr:rotate-180" />
                     )}
                   </li>
                 ))}
@@ -258,9 +261,20 @@ export default function CategorySelector() {
         )}
         {currentStep === 4 && (
           <>
-            <Facilities />
+            <Facilities setCurrentStep={setCurrentStep} />
           </>
         )}
+        {currentStep === 5 && (
+          <>
+            <UploadPics setCurrentStep={setCurrentStep} />
+          </>
+        )}
+        {currentStep === 6 && (
+          <>
+            <ContactInfo setCurrentStep={setCurrentStep} />
+          </>
+        )}
+        {currentStep === 7 && <Conditions />}
       </div>
     </>
   );
