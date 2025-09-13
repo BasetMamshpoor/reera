@@ -24,8 +24,8 @@ const schema = z.object({
       invalid_type_error: "سال ساخت باید یک عدد باشد",
     })
     .int("سال ساخت باید عدد صحیح باشد"),
-  bedrooms: z.string().min(1, "اتاق خواب را انتخاب کنید"),
-  bathrooms: z.string().min(1, "سرویس بهداشتی را انتخاب کنید"),
+  number_of_bedrooms: z.string().min(1, "اتاق خواب را انتخاب کنید"),
+  number_of_bathrooms: z.string().min(1, "سرویس بهداشتی را انتخاب کنید"),
 });
 
 export default function AdForm({ setCurrentStep, selectedCategory }) {
@@ -53,9 +53,13 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
   // });
 
   const onSubmit = (data) => {
+    const payload = {
+      ...data,
+      category_id: selectedCategory?.id, // ✅ Only pass the id as category_id
+    };
     // send to api
     // mutation.mutate(data);
-    console.log("User submitted data:", data, selectedCategory);
+    console.log("User submitted data:", payload);
     // simulate sending to backend
     setTimeout(() => {
       setCurrentStep((prev) => prev + 1);
@@ -65,7 +69,7 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-between gap-10 w-full lg:px-10 px-6 py-8 bg-white rounded-lg h-160 dark:bg-[#252C36]"
+      className="flex flex-col justify-between gap-10 w-full lg:px-10 px-6 py-8 bg-surface rounded-lg h-160 "
     >
       <div className="flex flex-col gap-4 lg:gap-10">
         <div>
@@ -75,7 +79,9 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
             className="focus:placeholder:opacity-0 py-6 rounded-xl"
           />
           {errors.title && (
-            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
+            <p className="text-error-main text-sm mt-1">
+              {errors.title.message}
+            </p>
           )}
         </div>
 
@@ -88,7 +94,9 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
               {...register("area")}
             />
             {errors.area && (
-              <p className="text-red-500 text-sm mt-1">{errors.area.message}</p>
+              <p className="text-error-main text-sm mt-1">
+                {errors.area.message}
+              </p>
             )}
           </div>
           <div className="w-full">
@@ -99,14 +107,18 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
               {...register("year")}
             />
             {errors.year && (
-              <p className="text-red-500 text-sm mt-1">{errors.year.message}</p>
+              <p className="text-error-main text-sm mt-1">
+                {errors.year.message}
+              </p>
             )}
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row w-full items-center gap-4">
           <div className="w-full">
-            <Select onValueChange={(val) => setValue("bedrooms", val)}>
+            <Select
+              onValueChange={(val) => setValue("number_of_bedrooms", val)}
+            >
               <SelectTrigger className="w-full py-6 rounded-xl">
                 <SelectValue placeholder="تعداد اتاق خواب" />
               </SelectTrigger>
@@ -118,15 +130,17 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
                 ))}
               </SelectContent>
             </Select>
-            {errors.bedrooms && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.bedrooms.message}
+            {errors.number_of_bedrooms && (
+              <p className="text-error-main text-sm mt-1">
+                {errors.number_of_bedrooms.message}
               </p>
             )}
           </div>
 
           <div className="w-full">
-            <Select onValueChange={(val) => setValue("bathrooms", val)}>
+            <Select
+              onValueChange={(val) => setValue("number_of_bathrooms", val)}
+            >
               <SelectTrigger className="w-full py-6 rounded-xl ">
                 <SelectValue placeholder="تعداد سرویس بهداشتی" />
               </SelectTrigger>
@@ -138,9 +152,9 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
                 ))}
               </SelectContent>
             </Select>
-            {errors.bathrooms && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.bathrooms.message}
+            {errors.number_of_bathrooms && (
+              <p className="text-error-main text-sm mt-1">
+                {errors.number_of_bathrooms.message}
               </p>
             )}
           </div>
@@ -150,17 +164,17 @@ export default function AdForm({ setCurrentStep, selectedCategory }) {
       <div className="flex flex-row items-center w-full rtl:justify-end gap-6 mt-auto justify-end">
         <button
           type="button"
-          className="py-2 lg:w-32 border-[2px] w-full cursor-pointer border-[#F59E0B] text-[#F59E0B] rounded-lg"
+          className="py-2 lg:w-32 border-[2px] w-full cursor-pointer border-warning-main text-warning-main rounded-lg"
         >
           انصراف
         </button>
         <button
           type="submit"
-          className="flex cursor-pointer w-full flex-row gap-4 items-center justify-center text-white bg-[#4299C1] py-2 lg:w-32  rounded-lg"
+          className="flex cursor-pointer w-full flex-row gap-4 items-center justify-center text-white bg-Primary-400 py-2 lg:w-32  rounded-lg"
         >
           {/* <span>{mutation.isLoading ? "در حال ارسال..." : "بعدی"}</span> */}
           <span>بعدی</span>
-          <Arrowleft className="fill-white" />
+          <Arrowleft className="fill-white ltr:rotate-180" />
         </button>
       </div>
     </form>

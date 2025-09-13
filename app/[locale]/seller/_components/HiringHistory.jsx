@@ -36,7 +36,7 @@ const HiringHistory = () => {
         >
           <AccordionItem value="item-1">
             <AccordionTrigger
-              className={`flex flex-row items-center justify-around `}
+              className={`flex flex-row items-center justify-center gap-12 xl:justify-between`}
             >
               <div
                 className={`py-1 px-2 max-w-38 bg-[#DCFCE8] text-[#16A34A] rounded-md`}

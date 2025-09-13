@@ -18,10 +18,13 @@ import AdvPagination from "@/components/AdvPagination";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "../../TranslationContext";
 
 const AdvsRes = ({ page }) => {
   const router = useRouter();
   const [isRow, setIsRow] = useState(false);
+  const dic = useTranslation();
+  const a = dic.all_ads.sidebar;
   // const [page, setPage] = useState(1);
 
   const { data, isLoading, isError, error } = useQuery({
@@ -44,20 +47,21 @@ const AdvsRes = ({ page }) => {
       <div className="flex flex-col gap-10 w-full">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-3 w-fit">
-            <p className="text-base font-bold dark:text-[#D9EDF4]">
-              نمایش آگهی:
-            </p>
+            <p className="text-Text-Primary font-bold "> {a.show_ads}:</p>
             <Select className="">
-              <SelectTrigger className="border-none shadow-none gap-2 font-bold">
-                <SelectValue placeholder="جدیدترین" />
+              <SelectTrigger className="border-none shadow-none gap-2 font-bold data-[placeholder]:text-Text-Secondary">
+                <SelectValue placeholder={a.newest} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup className="bg-white">
-                  <SelectItem className="bg-white font-bold" value="apple">
-                    پربازدیدترین
+                  <SelectItem
+                    className="bg-white font-bold"
+                    value="most-viewed"
+                  >
+                    {a.newest}
                   </SelectItem>
-                  <SelectItem className="bg-white font-bold" value="apple1">
-                    جدیدترین
+                  <SelectItem className="bg-white font-bold" value="newest">
+                    {a.most_viewed}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -66,12 +70,16 @@ const AdvsRes = ({ page }) => {
           <div className="flex items-center gap-6">
             <button onClick={() => setIsRow(true)}>
               <Linear
-                className={`${isRow ? "fill-blue-500" : "fill-gray-700"}`}
+                className={`cursor-pointer ${
+                  isRow ? "fill-Primary-400" : "fill-Gray-700"
+                }`}
               />
             </button>
             <button onClick={() => setIsRow(false)}>
               <Element
-                className={`${!isRow ? "fill-blue-500" : "fill-gray-700"}`}
+                className={`cursor-pointer ${
+                  !isRow ? "fill-Primary-400" : "fill-Gray-700"
+                }`}
               />
             </button>
           </div>

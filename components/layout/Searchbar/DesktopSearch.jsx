@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import CountriesPage from "@/app/[locale]/countries/CountriesPage";
 import CategoriesSelect from "./CategoriesSelect";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import {
   Select,
   SelectContent,
@@ -238,7 +238,7 @@ const DesktopSearch = () => {
       {searchUIState === "category" && (
         <div
           ref={categoryLayerRef}
-          className="absolute top-12 right-0 w-310 bg-[#fff] dark:bg-[#252C36] shadow-sm rounded-md px-4 py-6 z-50 h-60 flex scroll-hidden flex-row gap-2 justify-end mt-1.5"
+          className="absolute top-12 start-0 w-310 bg-[#fff] dark:bg-[#252C36] shadow-sm rounded-md px-4 py-6 z-50 h-60 flex scroll-hidden flex-row gap-2 justify-end mt-1.5"
         >
           <CategoriesSelect />
         </div>

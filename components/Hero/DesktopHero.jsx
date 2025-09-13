@@ -1,6 +1,6 @@
 "use client";
 
-import LogoSpin from "../Navbar/LogoSpin";
+import LogoSpin from "../layout/Navbar/LogoSpin";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { useTheme } from "next-themes";
 import React, { useEffect, useRef, useState } from "react";
@@ -42,7 +42,7 @@ const DesktopHero = ({ slides }) => {
     if (intervalRef.current) clearInterval(intervalRef.current);
   };
   return (
-    <div className="hidden relative w-full h-150 mt-12 lg:flex flex-row">
+    <div className="hidden relative w-full h-150 mt-12 lg:flex flex-row rtl:flex-row-reverse">
       <LogoSpin />
       <div className="absolute h-full w-1/2 rounded-tr-[100px] bg-[#4299C1] z-[3] rounded-bl-[100px] flex justify-center items-center p-12">
         <Image src={currentSlide.image} alt="" className=":hover"></Image>
@@ -51,13 +51,13 @@ const DesktopHero = ({ slides }) => {
             onClick={handlePrev}
             className="bg-black dark:bg-[#ffffff] rounded-full w-8 h-8 flex items-center justify-center cursor-pointer"
           >
-            <ArrowLeft className="fill-white dark:fill-black" />
+            <ArrowLeft className="fill-white dark:fill-black rtl:rotate-180" />
           </button>
           <button
             onClick={handleNext}
             className="bg-black dark:bg-[#ffffff] rounded-full w-8 h-8 flex items-center justify-center cursor-pointer"
           >
-            <ArrowRight className="fill-white dark:fill-black" />
+            <ArrowRight className="fill-white dark:fill-black rtl:rotate-180" />
           </button>
         </div>
       </div>
@@ -65,7 +65,7 @@ const DesktopHero = ({ slides }) => {
       <div className="bg-inherit absolute z-[1] h-full w-1/2 right-0 bottom-0.5 rounded-bl-[100px]"></div>
       <div className="bg-[#4299C1] absolute h-1/2 z-[1] left-0 w-1/2 rounded-tr-[100px]"></div>
       <div className="bg-[#f9fafb] dark:bg-[#14181d] absolute h-full z-[3] w-1/2 right-0 rounded-bl-[100px] bottom-0.5 flex flex-col justify-center items-center px-10 gap-10">
-        <h2 className="text-right font-[600] text-5xl self-end dark:text-[#ffffff]">
+        <h2 className="text-right font-[600] text-5xl ltr:self-end rtl:self-start dark:text-[#ffffff]">
           {currentSlide.title}
         </h2>
         <span className="text-right self-end pl-50 text-2xl">
@@ -73,7 +73,7 @@ const DesktopHero = ({ slides }) => {
         </span>
         <Link
           href={`/`}
-          className="flex flex-row items-center justify-center gap-4 bg-[#4299C1] px-8 py-3 self-end cursor-pointer rounded-lg"
+          className="flex flex-row items-center justify-center gap-4 bg-[#4299C1] px-8 py-3 ltr:self-end rtl:self-start cursor-pointer rounded-lg "
         >
           <span className="text-[#ffffff] dark:text-[#000000] font-[600]">
             مشاهده آگهی

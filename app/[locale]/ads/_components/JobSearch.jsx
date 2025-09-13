@@ -34,42 +34,42 @@ const JobSearch = ({ isRow }) => {
                     استخدام فرانت‌اند دولوپر
                   </p>
                 </div>
-                <p className="hidden md:flex text-xs font-bold text-gray-700">
+                <p className="hidden md:flex text-xs font-bold text-Gray-700">
                   اسنپ
                 </p>
               </div>
               <div className="flex flex-col md:flex-row items-center md:gap-2">
                 <div className="flex items-center md:justify-between p-2 md:border rounded-lg gap-2 w-full">
-                  <p className="text-xs font-medium md:font-bold text-gray-700">
+                  <p className="text-xs font-medium md:font-bold text-Gray-700">
                     حقوق
                   </p>
-                  <p className="text-xs md:text-sm text-[#294A61] font-medium md:font-bold">
+                  <p className="text-xs md:text-sm text-Primary-200 font-medium md:font-bold">
                     ۴۰ میلیون تومان
                   </p>
                 </div>
                 <div className="flex items-center md:justify-between p-2 md:border rounded-lg gap-2 w-full">
-                  <p className="text-xs font-medium md:font-bold text-gray-700">
+                  <p className="text-xs font-medium md:font-bold text-Gray-700">
                     نوع همکاری
                   </p>
-                  <p className="text-xs md:text-sm text-[#294A61] font-medium md:font-bold">
+                  <p className="text-xs md:text-sm text-Primary-200 font-medium md:font-bold">
                     تمام وقت
                   </p>
                 </div>
               </div>
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-2">
-                  <Location className="w-4 h-4 fill-gray-500" />
-                  <p className="flex items-center justify-center text-xs md:text-sm text-gray-500">
+                  <Location className="w-4 h-4 fill-Gray-500" />
+                  <p className="flex items-center justify-center text-xs md:text-sm text-Gray-500">
                     اتریش
                   </p>
                 </div>
               </div>
             </div>
             <div className="flex flex-col gap-1 md:flex-row justify-between w-full">
-              <p className="text-xs md:text-sm bg-custom-primary-400 text-gray-500">
+              <p className="text-xs md:text-sm bg-custom-primary-400 text-Gray-500">
                 ۵ دقیقه پیش
               </p>
-              <button className="flex items-center justify-center py-2 px-8 w-full md:w-1/2 lg:w-1/3 bg-[#4299C1] rounded-xl text-base font-bold text-white whitespace-nowrap">
+              <button className="flex items-center justify-center py-2 px-8 w-full md:w-1/2 lg:w-1/3 bg-Primary-400 rounded-xl text-base font-bold text-white whitespace-nowrap">
                 ارسال رزومه
               </button>
             </div>
@@ -97,7 +97,7 @@ const JobSearch = ({ isRow }) => {
                 <p className="text-sm md:text-base font-bold">
                   استخدام فرانت‌اند دولوپر
                 </p>
-                <p className="hidden md:flex text-xs font-bold text-gray-700">
+                <p className="hidden md:flex text-xs font-bold text-Gray-700">
                   اسنپ
                 </p>
               </div>
@@ -107,35 +107,35 @@ const JobSearch = ({ isRow }) => {
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
                 <div className="flex flex-col p-2 border rounded-lg gap-1 w-full">
-                  <p className="text-xs font-medium md:font-bold text-gray-700">
+                  <p className="text-xs font-medium md:font-bold text-Gray-700">
                     حقوق
                   </p>
-                  <p className="text-xs md:text-sm text-[#294A61] font-medium md:font-bold">
+                  <p className="text-xs md:text-sm text-Primary-200 font-medium md:font-bold">
                     ۴۰ میلیون تومان
                   </p>
                 </div>
                 <div className="flex flex-col p-2 border rounded-lg gap-1 w-full">
-                  <p className="text-xs font-medium md:font-bold text-gray-700">
+                  <p className="text-xs font-medium md:font-bold text-Gray-700">
                     نوع همکاری
                   </p>
-                  <p className="text-xs md:text-sm text-[#294A61] font-medium md:font-bold">
+                  <p className="text-xs md:text-sm text-Primary-200 font-medium md:font-bold">
                     تمام وقت
                   </p>
                 </div>
               </div>
               <div className="flex items-center justify-between w-full">
                 <div className="flex gap-2">
-                  <Location className="w-4 h-4 fill-gray-500" />
-                  <p className="flex items-center justify-center text-xs md:text-sm text-gray-500">
+                  <Location className="w-4 h-4 fill-Gray-500" />
+                  <p className="flex items-center justify-center text-xs md:text-sm text-Gray-500">
                     اتریش
                   </p>
                 </div>
-                <p className="text-xs md:text-sm bg-custom-primary-400 text-gray-500">
+                <p className="text-xs md:text-sm bg-custom-primary-400 text-Gray-500">
                   ۵ دقیقه پیش
                 </p>
               </div>
             </div>
-            <button className="flex items-center justify-center py-1 md:py-3 px-2 md:px-6 bg-[#4299C1] w-full rounded-xl text-base font-bold text-white whitespace-nowrap">
+            <button className="flex items-center justify-center py-1 md:py-3 px-2 md:px-6 bg-Primary-400 w-full rounded-xl text-base font-bold text-white whitespace-nowrap">
               ارسال رزومه
             </button>
           </div>

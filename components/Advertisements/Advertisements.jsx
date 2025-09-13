@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-
 import Home from "@/assets/icons/home-hashtag.svg";
 import Location from "@/assets/icons/location.svg";
 import GreenTick from "@/assets/icons/tick-circle.svg";
@@ -14,210 +13,153 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
-import { useDirection } from "@/hooks/useDirection";
+
+import { useTranslation } from "@/app/[locale]/TranslationContext";
+import { useParams } from "next/navigation";
+
 function toFarsiDigits(number) {
   const farsiDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number.toString().replace(/\d/g, (d) => farsiDigits[parseInt(d)]);
 }
 
 const Advertisements = ({ isOnProfile = false }) => {
-  const dir = useDirection();
+  const dic = useTranslation();
+  const ads = dic.ads;
+  const locale = useParams();
+
+  // Advertisement data array
+  const advertisements = [
+    {
+      id: 1,
+      title: "خرید آپارتمان در استانبول",
+      price: "2/200/000",
+      area: "50",
+      location: "ترکیه استانبول",
+      time: "پنج دقیقه پیش",
+      category: "آپارتمان مبله",
+      image: "/images/advimage.png",
+      verified: true,
+      imageWidth: 302,
+      imageHeight: 194,
+    },
+    {
+      id: 2,
+      title: "خرید آپارتمان در استانبول",
+      price: "2/200/000",
+      area: "50",
+      location: "ترکیه استانبول",
+      time: "پنج دقیقه پیش",
+      category: "آپارتمان مبله",
+      image: "/images/advimage.png",
+      verified: true,
+      imageWidth: 302,
+      imageHeight: 194,
+    },
+    {
+      id: 3,
+      title: "خرید آپارتمان در استانبول",
+      price: "2/200/000",
+      area: "50",
+      location: "ترکیه استانبول",
+      time: "پنج دقیقه پیش",
+      category: "آپارتمان مبله",
+      image: "/images/advimage.png",
+      verified: true,
+      imageWidth: 302,
+      imageHeight: 194,
+    },
+    {
+      id: 4,
+      title: "خرید آپارتمان در استانبول",
+      price: "2/200/000",
+      area: "50",
+      location: "ترکیه استانبول",
+      time: "پنج دقیقه پیش",
+      category: "آپارتمان مبله",
+      image: "/images/advimage.png",
+      verified: true,
+      imageWidth: 302,
+      imageHeight: 194,
+    },
+  ];
+
   return (
     <>
       {!isOnProfile && (
         <div className="flex flex-row items-center justify-between mt-12">
-          <Link
-            href={`/`}
-            className="flex flex-row gap-2 cursor-pointer items-center justify-center"
-          >
-            <ChevronLeft />
-            <span className="font-[600] text-sm">مشاهده همه</span>
-          </Link>
           <div className="flex flex-row items-center gap-4">
             <h2 className="text-[#000000] dark:text-[#D9EDF4] font-[600] text-2xl">
-              آگهی های ریرا
+              {ads.reera_ads}
             </h2>
           </div>
+          <Link
+            href={`en/ads`}
+            className="flex flex-row gap-2 cursor-pointer items-center justify-center"
+          >
+            <span className="font-[600] text-sm">{ads.view_all}</span>
+            <ChevronLeft className="ltr:rotate-180" />
+          </Link>
         </div>
       )}
+
       <div
-        dir={dir}
-        className={`grid grid-cols-1 gap-y-10 mt-10 sm:grid-cols-2 sm:gap-x-4  ${
+        className={`grid grid-cols-1 gap-y-10 mt-10 sm:grid-cols-2 sm:gap-x-4 px-6 xl:px-0 ${
           isOnProfile ? "lg:grid-cols-3" : "lg:grid-cols-4"
-        } lg:gap-x-6 `}
+        } lg:gap-x-6`}
       >
-        {/* first Item */}
-        <div className="relative flex items-center flex-col h-140 rounded-4xl bg-[#ffffff] space-y-4 sm:h-120 md:h-130  cursor-pointer dark:bg-[#252C36]">
-          <div className="absolute py-1 px-2 top-2 right-4 rounded-lg bg-[#DCFCE8] flex flex-row gap-1">
-            <span className="text-[#16A34A]">تایید شده</span>
-            <GreenTick className="fill-[#16A34A]" />
-          </div>
-          <Image
-            src="/images/advimage.png"
-            className="w-full rounded-2xl"
-            width={302}
-            height={194}
-            alt=""
-          />
-          <div className="flex flex-row justify-between items-center w-full px-4">
-            <span className="text-xs text-gray-400 dark:text-[#ffffff]">
-              پنج دقیقه پیش
-            </span>
-            <span className="text-sm py-1 px-2 bg-[#F0F9FB] text-[#4299C1] rounded-md  font-[900] dark:bg-[#374151] dark:text-[#ffffff]">
-              آپارتمان مبله
-            </span>
-          </div>
-          <h2 className=" font-[500] text-lg text-right self-end px-4">
-            خرید آپارتمان در استانبول
-          </h2>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2 ">
-            <span className="flex flex-row gap-1 items-center">
-              <span>متر</span>
-              <span>{toFarsiDigits("50")}</span>
-            </span>
-            <Home className={`fill-black dark:fill-white`} />
-          </div>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
-            <span className="flex flex-row gap-1 items-center">
-              <span>ترکیه استانبول</span>
-            </span>
-            <Location className={`fill-black dark:fill-white`} />
-          </div>
-          <h2 className="self-start px-4  font-[600] text-2xl">
-            {" "}
-            {toFarsiDigits("2/200/000")} تومان
-          </h2>
-        </div>
-        {/* Second item */}
-        <div className="relative flex items-center flex-col h-140 rounded-4xl bg-[#ffffff] space-y-4 sm:h-120 md:h-130  cursor-pointer dark:bg-[#252C36]">
-          <div className="absolute py-1 px-2 top-2 right-4 rounded-lg bg-[#DCFCE8] flex flex-row gap-1">
-            <span className="text-[#16A34A]">تایید شده</span>
-            <GreenTick className="fill-[#16A34A]" />
-          </div>
-          <Image
-            src="/images/advimage.png"
-            className="w-full rounded-2xl"
-            width={302}
-            height={194}
-            alt=""
-          />
+        {advertisements.map((ad) => (
+          <div
+            key={ad.id}
+            className="relative flex items-center flex-col h-160 rounded-4xl bg-[#ffffff] space-y-4 sm:h-120 cursor-pointer dark:bg-[#252C36]"
+          >
+            {ad.verified && (
+              <div className="absolute py-1 px-2 top-2 right-4 rounded-lg bg-[#DCFCE8] flex flex-row gap-1">
+                <span className="text-[#16A34A]">{ads.verified}</span>
+                <GreenTick className="fill-[#16A34A]" />
+              </div>
+            )}
 
-          <div className="flex flex-row justify-between items-center w-full px-4">
-            <span className="text-xs text-gray-400 dark:text-[#ffffff]">
-              پنج دقیقه پیش
-            </span>
-            <span className="text-sm py-1 px-2 bg-[#F0F9FB] text-[#4299C1] rounded-md  font-[900] dark:bg-[#374151] dark:text-[#ffffff]">
-              آپارتمان مبله
-            </span>
-          </div>
-          <h2 className=" font-[500] text-lg text-right self-end px-4">
-            خرید آپارتمان در استانبول
-          </h2>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2 ">
-            <span className="flex flex-row gap-1 items-center">
-              <span>متر</span>
-              <span>{toFarsiDigits("50")}</span>
-            </span>
-            <Home className={`fill-black dark:fill-white`} />
-          </div>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
-            <span className="flex flex-row gap-1 items-center">
-              <span>ترکیه استانبول</span>
-            </span>
-            <Location className={`fill-black dark:fill-white`} />
-          </div>
-          <h2 className="self-start px-4  font-[600] text-2xl">
-            {" "}
-            {toFarsiDigits("2/200/000")} تومان
-          </h2>
-        </div>
+            <Image
+              src={ad.image}
+              className="w-full rounded-2xl"
+              width={ad.imageWidth}
+              height={ad.imageHeight}
+              alt={ad.title}
+            />
 
-        {/* Third Item */}
-        <div className="relative flex items-center flex-col h-140 rounded-4xl bg-[#ffffff] space-y-4 sm:h-120 md:h-130  cursor-pointer dark:bg-[#252C36]">
-          <div className="absolute py-1 px-2 top-2 right-4 rounded-lg bg-[#DCFCE8] flex flex-row gap-1">
-            <span className="text-[#16A34A]">تایید شده</span>
-            <GreenTick className="fill-[#16A34A]" />
-          </div>
-          <Image
-            src="/images/advimage.png"
-            className="w-full rounded-2xl"
-            width={302}
-            height={194}
-            alt=""
-          />
+            <div className="flex flex-row justify-between items-center w-full px-4">
+              <span className="text-xs text-gray-400 dark:text-[#ffffff]">
+                {ad.time}
+              </span>
+              <span className="text-sm py-1 px-2 bg-[#F0F9FB] text-[#4299C1] rounded-md font-[900] dark:bg-[#374151] dark:text-[#ffffff]">
+                {ad.category}
+              </span>
+            </div>
 
-          <div className="flex flex-row justify-between items-center w-full px-4">
-            <span className="text-xs text-gray-400 dark:text-[#ffffff]">
-              پنج دقیقه پیش
-            </span>
-            <span className="text-sm py-1 px-2 bg-[#F0F9FB] text-[#4299C1] rounded-md  font-[900] dark:bg-[#374151] dark:text-[#ffffff]">
-              آپارتمان مبله
-            </span>
-          </div>
-          <h2 className=" font-[500] text-lg text-right self-end px-4">
-            خرید آپارتمان در استانبول
-          </h2>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2 ">
-            <span className="flex flex-row gap-1 items-center">
-              <span>متر</span>
-              <span>{toFarsiDigits("50")}</span>
-            </span>
-            <Home className={`fill-black dark:fill-white`} />
-          </div>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
-            <span className="flex flex-row gap-1 items-center">
-              <span>ترکیه استانبول</span>
-            </span>
-            <Location className={`fill-black dark:fill-white`} />
-          </div>
-          <h2 className="self-start px-4  font-[600] text-2xl">
-            {" "}
-            {toFarsiDigits("2/200/000")} تومان
-          </h2>
-        </div>
-        {/* Fourth Item */}
-        <div className="relative flex items-center flex-col h-140 rounded-4xl bg-[#ffffff] space-y-4 sm:h-120 md:h-130 cursor-pointer dark:bg-[#252C36]">
-          <div className="absolute py-1 px-2 top-2 right-4 rounded-lg bg-[#DCFCE8] flex flex-row gap-1">
-            <span className="text-[#16A34A]">تایید شده</span>
-            <GreenTick className="fill-[#16A34A]" />
-          </div>
-          <Image
-            src="/images/advimage.png"
-            className="w-full rounded-2xl"
-            width={302}
-            height={194}
-            alt=""
-          />
+            <h2 className="font-[500] text-lg text-right self-end px-4">
+              {ad.title}
+            </h2>
 
-          <div className="flex flex-row justify-between items-center w-full px-4">
-            <span className="text-xs text-gray-400 dark:text-[#ffffff]">
-              پنج دقیقه پیش
-            </span>
-            <span className="text-sm py-1 px-2 bg-[#F0F9FB] text-[#4299C1] rounded-md  font-[900] dark:bg-[#374151] dark:text-[#ffffff]">
-              آپارتمان مبله
-            </span>
+            <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
+              <span className="flex flex-row gap-1 items-center">
+                <span>{ads.meter}</span>
+                <span>{toFarsiDigits(ad.area)}</span>
+              </span>
+              <Home className="fill-black dark:fill-white" />
+            </div>
+
+            <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
+              <span className="flex flex-row gap-1 items-center">
+                <span>{ad.location}</span>
+              </span>
+              <Location className="fill-black dark:fill-white" />
+            </div>
+
+            <h2 className="self-start px-4 font-[600] text-2xl">
+              {toFarsiDigits(ad.price)} تومان
+            </h2>
           </div>
-          <h2 className=" font-[500] text-lg text-right self-end px-4">
-            خرید آپارتمان در استانبول
-          </h2>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2 ">
-            <span className="flex flex-row gap-1 items-center">
-              <span>متر</span>
-              <span>{toFarsiDigits("50")}</span>
-            </span>
-            <Home className={`fill-black dark:fill-white`} />
-          </div>
-          <div className="self-end px-4 flex flex-row items-center justify-end gap-2">
-            <span className="flex flex-row gap-1 items-center">
-              <span>ترکیه استانبول</span>
-            </span>
-            <Location className={`fill-black dark:fill-white`} />
-          </div>
-          <h2 className="self-start px-4  font-[600] text-2xl">
-            {" "}
-            {toFarsiDigits("2/200/000")} تومان
-          </h2>
-        </div>
+        ))}
       </div>
     </>
   );

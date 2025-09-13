@@ -47,8 +47,10 @@ const slides = [
 const Hero = () => {
   return (
     <>
-      {/* mobile Hero */}
-      <MobileHero slides={slides} />
+      <div className="px-6">
+        {/* mobile Hero */}
+        {/* <MobileHero slides={slides} /> */}
+      </div>
 
       {/* Desktop Hero */}
       <DesktopHero slides={slides} />

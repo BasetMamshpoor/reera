@@ -64,7 +64,10 @@ const Page = () => {
             <div className="w-full absolute bottom-0">
               <ImageOverlay className="!w-full !h-full fill-[#F9FAFB] dark:fill-[#14181D]" />
             </div>
-            <div className="w-full absolute bottom-30 start-10 flex flex-row justify-between ">
+            <div className="w-full bg-white h-24 absolute -translate-x-1/2 xl:bottom-30 bototm-20 left-1/2 max-w-280 mx-auto z-40 text-black">
+              12222222222222222222222
+            </div>
+            {/* <div className="w-full absolute xl:bottom-30 bottom-10 start-10 flex flex-row justify-between ">
               <div className="flex flex-row gap-4">
                 <div className="bg-[#fff] p-2 rounded-2xl">
                   <Image
@@ -77,19 +80,23 @@ const Page = () => {
                 </div>
                 <div className="flex flex-col gap-4 self-end">
                   <h2 className="text-2xl font-[500]">سعید اسدی</h2>
-                  <div className="flex flex-row gap-2 items-center">
+                  <div className="xl:flex hidden flex-row gap-2 items-center">
                     <Star className="fill-[#F59E0B]" />
                     <span>4</span>
                   </div>
                 </div>
-                <div className="self-center">
+                <div className="self-end">
                   <div className="bg-[#DCFCE8] rounded-lg px-2 flex flex-row py-2 gap-2">
                     <GreenTick className="fill-[#16A34A]" />
                     <h2 className="font-[500] text-[#16A34A]">تایید شده</h2>
                   </div>
                 </div>
+                <div className="xl:hidden flex flex-row gap-2 items-center self-end">
+                  <Star className="fill-[#F59E0B]" />
+                  <span>4.5</span>
+                </div>
               </div>
-              <div className="flex flex-row items-center gap-4 pr-20 self-end rtl:pl-20">
+              <div className="xl:flex hidden flex-row items-center gap-4 pr-20 self-end rtl:pl-20">
                 <div className="flex flex-row gap-2">
                   <h2>موقعیت:</h2>
                   <span>استانبول، ترکیه</span>
@@ -99,25 +106,11 @@ const Page = () => {
                   <span>1‌سال و 4ماه</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className={`flex flex-row-reverse justify-end w-full`}>
-            <div
-              className={`flex flex-row gap-4 mr-16  justify-start items-start h-24 w-full`}
-            >
-              <div
-                className={`flex flex-row items-center gap-4 w-full justify-between`}
-              >
-                <div
-                  className={`flex flex-row gap-4 items-center ml-30 rtl:mr-20`}
-                ></div>
-              </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div
-          className={`px-8 w-full mx-auto flex flex-row justify-between md:justify-end md:gap-4`}
+          className={`px-8 w-full mx-auto xl:hidden flex flex-row justify-between md:justify-end md:gap-4`}
         >
           <div className={`flex flex-row items-center gap-2`}>
             <h2 className={`text-gray-700 dark:text-[#B0B8C7]`}>:موقعیت</h2>
@@ -131,7 +124,7 @@ const Page = () => {
         {/*    tabs*/}
         <div className="flex w-full flex-col gap-6 mt-4 py-4 rounded-xl">
           <Tabs defaultValue="comments" className={``}>
-            <TabsList className="flex flex-row rtl:flex-row-reverse bg-transparent w-full border-b-[1px] border-b-[#D1D5DB] dark:border-b-[#374151] rounded-none">
+            <TabsList className="flex flex-row rtl:flex-row-reverse bg-transparent w-full border-b border-b-[#D1D5DB] dark:border-b-[#374151] rounded-none">
               <TabsTrigger
                 className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-[#4299C1] dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-[#4299C1] data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-[#4299C1] data-[state=active]:shadow-none data-[state=active]:text-[#4299C1] md:max-w-42 py-4`}
                 value="hiring-history"

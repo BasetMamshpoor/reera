@@ -13,7 +13,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import CitySearch from "./CitySearch";
-
+import Arrowleft from "@/assets/icons/arrow-left.svg";
 // Custom marker icon
 const customIcon = new L.Icon({
   iconUrl: "/icons/mymarker.svg",
@@ -86,6 +86,13 @@ export default function MapComponent({
         }
       );
     }
+    if (mapRef.current) {
+      L.control
+        .zoom({
+          position: "bottomleft",
+        })
+        .addTo(mapRef.current);
+    }
   }, []);
 
   const { mutate, isPending, isError, error, isSuccess } = useMutation({
@@ -107,21 +114,25 @@ export default function MapComponent({
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full relative">
-      <CitySearch
-        onSelectCity={({ lat, lon }) => {
-          setPosition({ latitude: lat, longitude: lon });
-          if (mapRef.current) {
-            mapRef.current.flyTo([lat, lon], 13);
-          }
-        }}
-      />
+    <div className="flex flex-col gap-4 w-full h-full relative bg-white  rounded-lg px-10 py-12">
+      <div className="relative mx-auto w-full">
+        <CitySearch
+          onSelectCity={({ lat, lon }) => {
+            setPosition({ latitude: lat, longitude: lon });
+            if (mapRef.current) {
+              mapRef.current.flyTo([lat, lon], 13);
+            }
+          }}
+        />
+      </div>
+
       <MapContainer
         center={[position.latitude, position.longitude]}
         zoom={13}
         scrollWheelZoom={false}
+        zoomControl={false}
         style={{ height: "400px", width: "100%" }}
-        className="rounded-xl z-10 "
+        className="rounded-xl z-10"
         whenCreated={(map) => {
           mapRef.current = map;
         }}
@@ -151,6 +162,23 @@ export default function MapComponent({
         {isSuccess && (
           <p className="text-green-500 text-sm">موقعیت با موفقیت ثبت شد</p>
         )}
+      </div>
+      {/* buttons */}
+      <div className="flex flex-row items-center w-full rtl:justify-end gap-6 mt-auto justify-end">
+        <button
+          type="button"
+          className="py-2 lg:w-32 border-[2px] w-full cursor-pointer border-[#F59E0B] text-[#F59E0B] rounded-lg"
+        >
+          انصراف
+        </button>
+        <button
+          type="submit"
+          className="flex cursor-pointer w-full flex-row gap-4 items-center justify-center text-white bg-[#4299C1] py-2 lg:w-32  rounded-lg"
+        >
+          {/* <span>{mutation.isLoading ? "در حال ارسال..." : "بعدی"}</span> */}
+          <span>بعدی</span>
+          <Arrowleft className="fill-white ltr:rotate-180" />
+        </button>
       </div>
     </div>
   );

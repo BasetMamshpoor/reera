@@ -28,10 +28,8 @@ const Page = async ({ searchParams }) => {
     <>
       <div className="container flex flex-col gap-16">
         <div className="flex items-center flex-col gap-1">
-          <p className="text-xl font-bold text-[#142738] dark:text-[#F0F9FB]">
-            آگهی‌های
-          </p>
-          <p className="text-4xl text-[#4299C1] font-bold">ریـــــرا</p>
+          <p className="text-xl font-bold text-Primary-950 ">آگهی‌های</p>
+          <p className="text-4xl text-Primary-400 font-bold">ریـــــرا</p>
         </div>
         <div className="flex gap-6">
           <Providers dehydratedState={dehydrate(queryClient)}>

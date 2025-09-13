@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import Close from "@/assets/icons/close.svg";
 import { useState } from "react";
 import { gsap } from "gsap";

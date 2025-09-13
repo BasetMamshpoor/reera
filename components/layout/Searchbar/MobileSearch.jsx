@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import SearchIcon from "@/assets/icons/search.svg";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import MobileSearchOverlay from "./MobileSearchOverlay";
 import Location from "@/assets/icons/search/location.svg";
 import MobileLocationOverlay from "./MobileLocationOverlay";

@@ -45,10 +45,10 @@ const AdvPagination = ({ page, totalPages, setPage }) => {
           <button
             onClick={handleNext}
             // disabled={page === totalPages}
-            className={`rounded-lg px-4 py-2 border text-xl ${
+            className={`rounded-lg px-4 py-2 border text-xl cursor-pointer ${
               page === totalPages
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "border-blue-500 text-blue-500"
+                : "border-Primary-400 text-Primary-400"
             }`}
           >
             &#x276F;

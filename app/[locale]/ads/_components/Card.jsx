@@ -36,19 +36,19 @@ const Card = ({
                 <p className="font-bold text-base md:text-lg text-gray-950">
                   {title}
                 </p>
-                <div className="flex items-center justify-center px-2 md:px-3 py-1 w-fit rounded-lg text-xs md:text-sm text-[#4299C1] bg-[#F0F9FB]">
+                <div className="flex items-center justify-center px-2 md:px-3 py-1 w-fit rounded-lg text-xs md:text-sm text-Primary-400 bg-Primary-50">
                   {category}
                 </div>
               </div>
               <div className="flex flex-col gap-1 md:gap-3">
                 <div className="flex items-center gap-2">
-                  <Category className="w-3 h-3 md:w-4 md:h-4 fill-gray-500" />
+                  <Category className="w-3 h-3 md:w-4 md:h-4 fill-Gray-500" />
                   <p className="flex items-center justify-center text-sm md:text-base">
                     {}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Location className="w-3 h-3 md:w-4 md:h-4 fill-gray-500" />
+                  <Location className="w-3 h-3 md:w-4 md:h-4 fill-Gray-500" />
                   <p className="flex items-center justify-center text-sm md:text-base">
                     {city}
                   </p>
@@ -68,7 +68,7 @@ const Card = ({
               </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between w-full">
-              <p className="text-xs md:text-sm  text-gray-500 whitespace-nowrap">
+              <p className="text-xs md:text-sm  text-Gray-500 whitespace-nowrap">
                 {created}
               </p>
               <div className="flex justify-end w-full">
@@ -92,22 +92,22 @@ const Card = ({
           <div className="flex flex-col justify-between px-4 md:px-5 gap-4 h-full">
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between w-full">
-                <div className="flex items-center justify-center px-2 md:px-3 py-1 rounded-lg text-xs md:text-sm text-[#4299C1] bg-[#F0F9FB]">
+                <div className="flex items-center justify-center px-2 md:px-3 py-1 rounded-lg text-xs md:text-sm text-Primary-400 bg-Primary-50">
                   {category}
                 </div>
                 <p className="text-xs md:text-sm  text-gray-500">{created}</p>
               </div>
-              <p className="font-bold text-base md:text-lg text-gray-950">
+              <p className="font-bold text-base md:text-lg text-Gray-950">
                 {title}
               </p>
               <div className="flex items-center gap-2">
-                <Category className="w-3 h-3 md:w-4 md:h-4  fill-gray-500" />
+                <Category className="w-3 h-3 md:w-4 md:h-4  fill-Gray-500" />
                 <p className="flex items-center justify-center text-sm md:text-base">
                   {}
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Location className="w-3 h-3 md:w-4 md:h-4  fill-gray-500" />
+                <Location className="w-3 h-3 md:w-4 md:h-4  fill-Gray-500" />
                 <p className="flex items-center justify-center text-sm md:text-base">
                   {city}
                 </p>
