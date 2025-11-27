@@ -1,0 +1,166 @@
+"use client";
+import React, {useMemo, useRef, useState} from "react";
+import CloseSquare from "@/assets/icons/closesquare.svg";
+import Filter from "@/assets/icons/filter.svg";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
+import useSwipeScroll from "@/hooks/useHorizontalScroll";
+import {useQuery} from "@tanstack/react-query";
+import {request} from "@/lib/api";
+import {useForm} from "react-hook-form";
+import RecMobileFilter from "./RecMobileFilter";
+import RecruitmentFilterContent from "@/components/Filters/RecruitmentFilterContent";
+
+const RecruitmentSidebar = () => {
+    const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState("");
+    const [cityOpen, setCityOpen] = useState(false);
+    const [citySearch, setCitySearch] = useState("");
+    const [priceRange, setPriceRange] = useState([0, 100000]);
+    const [brandOpen, setBrandOpen] = useState(false);
+    const [typeOpen, setTypeOpen] = useState(false);
+    const [brandSearch, setBrandSearch] = useState("");
+    const [typeSearch, setTypeSearch] = useState("");
+    const [isProduct_status, setIsProduct_status] = useState("");
+    const {watch, setValue} = useForm();
+    const dic = useTranslation();
+    const scrollRef = useSwipeScroll();
+    const s = dic.all_ads.sidebar;
+
+    const {data: countriesData, isLoading: loadingCountries} = useQuery({
+        queryKey: ["countries"],
+        queryFn: async () => request({method: "GET", url: `/getCountries`}),
+    });
+
+    const selectedCountryId = watch("country_id");
+    const selectedBrand = watch("brand");
+    const selectedType = watch("product_type");
+    const categories = [
+        s.administration_management,
+        s.janitorial_cleaning,
+        s.architecture_civil_engineering,
+        s.shop_restaurant_services,
+        s.computer_it,
+        s.financial_accounting_legal,
+        s.marketing_sales,
+        s.industrial_technical_engineering,
+        s.educational,
+        s.medical_beauty_health,
+        s.art_media,
+    ];
+    const workTypeOptions = [
+        {id: "full_time", title: "تمام وقت"},
+        {id: "part_time", title: "پاره وقت"},
+        {id: "remote", title: "دورکاری"},
+    ];
+    const {data: citiesData, isLoading: loadingCities} = useQuery({
+        queryKey: ["cities", selectedCountryId],
+        queryFn: async () => {
+            if (!selectedCountryId) return {data: {cities: []}};
+            return request({
+                method: "GET",
+                url: `/getCountries`,
+                query: {country: selectedCountryId},
+            });
+        },
+        enabled: !!selectedCountryId,
+    });
+
+    const countryOptions = useMemo(
+        () =>
+            countriesData?.data?.countries?.map((c) => ({
+                value: c.id.toString(),
+                label: c.name,
+            })) || [],
+        [countriesData]
+    );
+    const filteredCountries = useMemo(
+        () =>
+            countryOptions.filter((country) =>
+                country.label.toLowerCase().includes(search.toLowerCase())
+            ),
+        [search, countryOptions]
+    );
+
+    const cityOptions = useMemo(
+        () =>
+            citiesData?.data?.city?.map((city) => ({
+                value: city.id.toString(),
+                label: city.name,
+            })) || [],
+        [citiesData]
+    );
+    const filteredCities = useMemo(
+        () =>
+            cityOptions.filter((city) =>
+                city.label.toLowerCase().includes(citySearch.toLowerCase())
+            ),
+        [citySearch, cityOptions]
+    );
+
+    const sharedProps = {
+        categories,
+        workTypeOptions,
+        isProduct_status,
+        setIsProduct_status,
+        brandOpen,
+        setBrandOpen,
+        brandSearch,
+        setBrandSearch,
+        selectedBrand,
+        typeOpen,
+        setTypeOpen,
+        typeSearch,
+        setTypeSearch,
+        selectedType,
+        open,
+        setOpen,
+        search,
+        setSearch,
+        countryOptions,
+        filteredCountries,
+        loadingCountries,
+        selectedCountryId,
+        cityOpen,
+        setCityOpen,
+        citySearch,
+        setCitySearch,
+        cityOptions,
+        filteredCities,
+        loadingCities,
+        priceRange,
+        setPriceRange,
+        watch,
+        setValue,
+    };
+
+    return (
+        <>
+            <div
+                className="border-2 h-fit border-default-divider hidden lg:flex bg-transparent rounded-xl w-full max-w-92">
+                <div className="flex flex-col gap-4 p-6">
+                    <div className="flex flex-row items-center justify-between">
+                        <div className="flex flex-row items-center justify-between gap-2 dark:text-white">
+                            <Filter className="dark:fill-white"/>
+                            <span>{s.filter}</span>
+                        </div>
+                        <button className="flex flex-row items-center gap-2 text-error-main cursor-pointer">
+                            <span className="font-[600]">{s.categories_of}</span>
+                            <CloseSquare className="fill-error-main"/>
+                        </button>
+                    </div>
+                    <RecruitmentFilterContent {...sharedProps} />
+                </div>
+            </div>
+            <div className="hidden">
+                <div
+                    ref={scrollRef}
+                    className="px-4 overflow-x-auto flex items-center cursor-pointer  pb-4 scrollbar-hide"
+                >
+                    <RecMobileFilter {...sharedProps} />
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default RecruitmentSidebar;
