@@ -3,13 +3,15 @@ import Providers from "../../../Providers";
 import {QueryClient, dehydrate} from "@tanstack/react-query";
 
 import EstateTabs from "./_components/EstateTabs";
-import AdvsRes from "../housing/_components/AdvsRes";
 import HousingSidebar from "./_components/HousingSidebar";
+import {request} from "@/lib/api";
+import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
 
 export const metadata = {
     title: `Reera | Housing Ads`,
 };
-const Page = async ({searchParams}) => {
+const Page = async ({searchParams, params}) => {
+    const locale = await params.locale
     const page = Number(searchParams.page || 1);
     const categoryId = searchParams.category_id;
 
@@ -17,21 +19,23 @@ const Page = async ({searchParams}) => {
 
     await queryClient.prefetchQuery({
         queryKey: ["housing-filters", categoryId],
-        queryFn: () =>
-            request({
-                url: `/ads/digital/get_filters`,
+        queryFn: async () =>
+            await request({
+                url: `/ads/housing/get_filters`,
                 method: "get",
                 query: categoryId ? {category_id: categoryId} : {},
             }),
     });
 
     await queryClient.prefetchQuery({
-        queryKey: ["housing-ads", page, categoryId],
-        queryFn: () =>
-            request({
-                url: `/ads?category_slug=housing`,
+        queryKey: ["ads", page, "housing", categoryId],
+        queryFn: async () =>
+            await request({
+                url: `/ads`,
                 method: "get",
-                query: {page, ...(categoryId && {category_id: categoryId})},
+                query: {
+                    page, category_id: categoryId, category_slug: "housing"
+                },
             }),
     });
 
@@ -60,7 +64,8 @@ const Page = async ({searchParams}) => {
                 <div className="flex gap-6 w-full lg:flex-row flex-col">
                     <Providers dehydratedState={dehydrate(queryClient)}>
                         <HousingSidebar/>
-                        <AdvsRes/>
+                        <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"housing"}
+                                 page={page}/>
                     </Providers>
                 </div>
             </div>
