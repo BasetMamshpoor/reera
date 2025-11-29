@@ -1,31 +1,35 @@
 "use client";
 
 import {createContext, useContext, useState} from "react";
-import {useQuery} from "@tanstack/react-query";
+import {keepPreviousData, useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 
 const CountryContext = createContext();
 
 export const CountryProvider = ({children}) => {
     const [country_id, setCountry_id] = useState(1)
-    const {data, isLoading, error} = useQuery({
+    const [cities, setCities] = useState([])
+    const {data, isFetching, error} = useQuery({
         queryKey: ["allCountries", country_id],
         queryFn: async () =>
             await request({
                 url: `/getCountries`,
-                queryKey: {country: country_id},
+                query: {country: country_id},
             }),
+        placeholderData: keepPreviousData,
     });
 
     return (
         <CountryContext.Provider
             value={{
-                countries: data?.data?.countries,
-                cities: data?.data?.city,
+                countries: data?.data?.countries || [],
+                cities: data?.data?.city || [],
+                selectedCities: cities,
+                isLoading: isFetching,
                 setCountry_id,
                 country_id,
-                isLoading,
-                error
+                setCities,
+                error,
             }}>
             {children}
         </CountryContext.Provider>

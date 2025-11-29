@@ -17,7 +17,7 @@ const Page = async ({searchParams, params}) => {
 
 
     await queryClient.prefetchQuery({
-        queryKey: ["ads", page, "recruitment", categoryId],
+        queryKey: ["ads", page, "recruitment", categoryId, "newest"],
         queryFn: () =>
             request({
                 url: `/ads`,

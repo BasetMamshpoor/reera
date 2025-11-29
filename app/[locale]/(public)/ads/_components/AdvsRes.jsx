@@ -19,12 +19,14 @@ import Spinner from "@/components/Spinner";
 import ColAds from "./ColAds";
 import RowsAds from "./RowsAds";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
+import {useCountry} from "@/app/[locale]/CountryProvider";
 
 const AdvsRes = ({page, link, category_slug, category_id}) => {
     const router = useRouter();
     const [isRow, setIsRow] = useState(false);
     const [sort, setSort] = useState("newest");
     const dic = useTranslation();
+    const {selectedCities} = useCountry()
     const a = dic.all_ads.sidebar;
 
     const {data, isLoading} = useQuery({

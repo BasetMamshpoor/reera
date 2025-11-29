@@ -13,7 +13,7 @@ const Page = async ({searchParams, params}) => {
     const queryClient = new QueryClient();
     const page = Number(searchParams.page || 1);
     await queryClient.prefetchQuery({
-        queryKey: ["ads", page, undefined, undefined],
+        queryKey: ["ads", page, undefined, undefined, "newest"],
         queryFn: async () =>
             await request({
                 url: "/ads",

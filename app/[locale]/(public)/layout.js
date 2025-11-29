@@ -20,9 +20,10 @@ export default async function RootLayout({children, params}) {
         })
     });
     await queryClient.prefetchQuery({
-        queryKey: ["allCountries", undefined],
+        queryKey: ["allCountries", 1],
         queryFn: async () => await request({
             url: `/getCountries`,
+            query: {country: 1},
         })
     });
     return (
