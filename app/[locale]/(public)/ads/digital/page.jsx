@@ -10,13 +10,12 @@ export const metadata = {
 };
 
 const Page = async ({searchParams, params}) => {
-    const locale = await params.locale
+    const locale = await params.locale;
     const page = Number(searchParams.page || 1);
     const categoryId = searchParams.category_id;
 
     const queryClient = new QueryClient();
 
-    // Prefetch with current filters
     await queryClient.prefetchQuery({
         queryKey: ["digital-filters", categoryId],
         queryFn: () =>
