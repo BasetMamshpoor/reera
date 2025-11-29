@@ -12,7 +12,6 @@ const Providers = ({ children, dehydratedState, session }) => {
     const qc = new QueryClient({
       defaultOptions: {
         queries: {
-          // You can set default options here if needed
           staleTime: 60 * 1000, // 1 minute
           retry: 1,
         },

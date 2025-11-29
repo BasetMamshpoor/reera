@@ -1,16 +1,14 @@
 import MobileSearch from "./MobileSearch";
 import MainSearchbar from "../../MainSearchbar";
-import {categories} from "@/data/mock";
 
 const Searchbar = () => {
     return (
-        <>
-            <div className="px-6">
+        <div className="mb-4">
+            <div className="px-6 pb-4">
                 <MobileSearch/>
             </div>
-            {/* <DesktopSearch /> */}
-            <MainSearchbar categories={categories}/>
-        </>
+            <MainSearchbar/>
+        </div>
     );
 };
 

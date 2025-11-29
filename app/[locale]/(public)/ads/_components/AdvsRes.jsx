@@ -5,7 +5,6 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
@@ -24,17 +23,21 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 const AdvsRes = ({page, link, category_slug, category_id}) => {
     const router = useRouter();
     const [isRow, setIsRow] = useState(false);
+    const [sort, setSort] = useState("newest");
     const dic = useTranslation();
     const a = dic.all_ads.sidebar;
 
     const {data, isLoading} = useQuery({
-        queryKey: ["ads", page, category_slug, category_id],
+        queryKey: ["ads", page, category_slug, category_id, sort],
         queryFn: async () =>
             await request({
                 url: `/ads`,
                 method: "get",
                 query: {
-                    page, category_id, category_slug
+                    page,
+                    category_id,
+                    category_slug,
+                    sort,
                 },
             }),
     });
@@ -56,21 +59,18 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
             <div className="flex flex-col gap-10 w-full">
                 <div className="flex items-center justify-between w-full px-4 lg:mx-0">
                     <div className="flex items-center gap-3 w-fit">
-                        <p className="text-Text-Primary font-bold "> {a.show_ads}:</p>
-                        <Select className="">
+                        <p className="text-Text-Primary font-bold">{a.show_ads}:</p>
+                        <Select value={sort} onValueChange={(v) => setSort(v)}>
                             <SelectTrigger
                                 className="border-none shadow-none gap-2 font-bold data-[placeholder]:text-Text-Secondary">
                                 <SelectValue placeholder={a.newest}/>
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup className="bg-white">
-                                    <SelectItem
-                                        className="bg-white font-bold"
-                                        value="most-viewed"
-                                    >
+                                    <SelectItem className="bg-white font-bold" value="newest">
                                         {a.newest}
                                     </SelectItem>
-                                    <SelectItem className="bg-white font-bold" value="newest">
+                                    <SelectItem className="bg-white font-bold" value="most-viewed">
                                         {a.most_viewed}
                                     </SelectItem>
                                 </SelectGroup>
@@ -80,16 +80,12 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
                     <div className="flex items-center gap-6">
                         <button onClick={() => setIsRow(true)}>
                             <Linear
-                                className={`cursor-pointer ${
-                                    isRow ? "fill-Primary-400" : "fill-Gray-700"
-                                }`}
+                                className={`cursor-pointer ${isRow ? "fill-Primary-400" : "fill-Gray-700"}`}
                             />
                         </button>
                         <button onClick={() => setIsRow(false)}>
                             <Element
-                                className={`cursor-pointer ${
-                                    !isRow ? "fill-Primary-400" : "fill-Gray-700"
-                                }`}
+                                className={`cursor-pointer ${!isRow ? "fill-Primary-400" : "fill-Gray-700"}`}
                             />
                         </button>
                     </div>

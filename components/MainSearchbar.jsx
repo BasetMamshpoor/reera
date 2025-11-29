@@ -5,7 +5,6 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import {Input} from "@/components/ui/input";
 import Category from "../assets/icons/Category.svg";
 import Search from "../assets/icons/search.svg";
-import {useForm} from "react-hook-form";
 import {
     animateCategoryPanelIn,
     animateCategoryPanelOut,
@@ -14,17 +13,15 @@ import {
     animateSubcategoryPanelIn,
 } from "@/utils/animationUtils";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
-import {useQuery} from "@tanstack/react-query";
-import {request} from "@/lib/api";
-import {ReusableDialog} from "@/components/modified_shadcn/Dialog";
 import SelectLocationComponent from "@/components/layout/Searchbar/SelectLocationComponent";
 import {useParams, useRouter} from "next/navigation";
+import {useCategories} from "@/app/[locale]/CategoryProvider";
+import Link from "next/link";
 
-const MainSearchbar = ({categories}) => {
+const MainSearchbar = ({}) => {
     const dic = useTranslation();
     const n = dic.navbar;
-    const {setValue, watch} = useForm({});
-
+    const {categories, isLoading, error} = useCategories();
     const [uiState, setUiState] = useState("default");
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -36,16 +33,7 @@ const MainSearchbar = ({categories}) => {
     const categorySubPanelRef = useRef(null);
     const hoverTimeoutRef = useRef(null);
     const hasMounted = useRef(false);
-    const router = useRouter();
-    const [isLocationPanelOpen, setIsLocationPanelOpen] = useState(false);
     const {locale} = useParams();
-    const {data: countriesData} = useQuery({
-        queryKey: ["countries-data"],
-        queryFn: async () =>
-            await request({
-                url: "/getCountries",
-            }),
-    });
 
     // Handle outside click
     useEffect(() => {
@@ -153,19 +141,6 @@ const MainSearchbar = ({categories}) => {
         }, 200);
     };
 
-    const handleSubcategoryClick = (subcategory) => {
-        if (!hoveredCategory) return; // safety check
-        const slug = hoveredCategory.slug;
-
-        // Close panels if you want
-        closeAllPanels();
-
-        // Navigate with query
-        router.push(
-            `/${locale}/ads/${slug}/?category=${encodeURIComponent(subcategory)}`
-        );
-    };
-
     const handleCategoryButtonLeave = () => {
         if (openTimeoutRef.current) {
             clearTimeout(openTimeoutRef.current);
@@ -230,29 +205,27 @@ const MainSearchbar = ({categories}) => {
         }
     };
 
-    // Helper function to get all subcategories recursively
     const getAllSubcategories = (category) => {
         const subcategories = [];
 
         const collectSubcategories = (items) => {
             items.forEach((item) => {
                 if (item.title) {
-                    subcategories.push(item.title);
+                    subcategories.push(item);
                 }
-                if (item.subcategories && item.subcategories.length > 0) {
-                    collectSubcategories(item.subcategories);
+                if (item.children && item.children.length > 0) {
+                    collectSubcategories(item.children);
                 }
             });
         };
 
-        if (category.subcategories) {
-            collectSubcategories(category.subcategories);
+        if (category.children) {
+            collectSubcategories(category.children);
         }
 
         return subcategories;
     };
 
-    // Clean up timeouts
     useEffect(() => {
         return () => {
             if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -299,59 +272,7 @@ const MainSearchbar = ({categories}) => {
                         placeholder={n.search}
                     />
                 </div>
-
-                <ReusableDialog
-                    contentProps={{
-                        className: "w-full max-w-160",
-                    }}
-                    open={isLocationPanelOpen}
-                    setOpen={setIsLocationPanelOpen}
-                    trigger={
-                        <button
-                            onClick={() => setIsLocationPanelOpen(true)}
-                            className="w-full max-w-62 border border-default-divider rounded-md py-2 cursor-pointer transition-all ease-in-out duration-200 hover:bg-Primary-100"
-                        >
-                            {n.select_location}
-                        </button>
-                    }
-                >
-                    <div className="p-4">
-                        <h2 className="text-xl font-bold">انتخاب موقعیت</h2>
-                        <SelectLocationComponent
-                            setIsLocationPanelOpen={setIsLocationPanelOpen}
-                        />
-                    </div>
-                </ReusableDialog>
-
-                {/* Location panel */}
-                <div
-                    ref={locationPanelRef}
-                    className="absolute start-0 top-12 h-80 w-full bg-surface text-secondary z-50 rounded-lg shadow-lg hidden"
-                >
-                    <ScrollArea className="w-full rtl:text-right h-full rounded-md border p-4">
-                        <div className="space-y-2">
-                            {[
-                                "New York",
-                                "London",
-                                "Tokyo",
-                                "Paris",
-                                "Sydney",
-                                "Berlin",
-                                "Moscow",
-                                "Beijing",
-                            ].map((location) => (
-                                <div
-                                    key={location}
-                                    className="p-2 rounded-md cursor-pointer hover:bg-gray-100 transition-colors duration-200"
-                                    onClick={handleItemClick}
-                                >
-                                    {location}
-                                </div>
-                            ))}
-                        </div>
-                    </ScrollArea>
-                </div>
-
+                <SelectLocationComponent/>
                 <div
                     ref={categoryPanelRef}
                     onMouseEnter={handleCategoryPanelHover}
@@ -363,13 +284,12 @@ const MainSearchbar = ({categories}) => {
                         <div className="space-y-0">
                             {categories.map((category) => (
                                 <div
-                                    key={category.id || category.name}
+                                    key={category.id}
                                     className="p-4 cursor-pointer hover:bg-primary-50  flex items-center gap-2 text-lg  transition-all duration-200 rtl:flex-row-reverse rtl:justify-start ltr:hover:border-r-4 ltr:hover:border-r-Primary-400 rtl:hover:border-r-0 rtl:hover:border-l-4 rtl:hover:border-l-Primary-400 hover:bg-Primary-50"
                                     onMouseEnter={() => setHoveredCategory(category)}
                                     onClick={handleItemClick}
                                 >
-                                    <div>{category.icon}</div>
-                                    <span>{category.name || category.title}</span>
+                                    <span>{category.title}</span>
                                 </div>
                             ))}
                         </div>
@@ -382,18 +302,19 @@ const MainSearchbar = ({categories}) => {
                         >
                             <div className="p-4">
                                 <h3 className="font-semibold text-lg mb-3 text-gray-800">
-                                    {hoveredCategory.name || hoveredCategory.title}
+                                    {hoveredCategory.title}
                                 </h3>
                                 <div className="grid grid-cols-2 gap-2">
                                     {getAllSubcategories(hoveredCategory).map(
                                         (subcategory, index) => (
-                                            <div
-                                                key={`${subcategory}-${index}`}
+                                            <Link
+                                                href={`/${locale}/ads/${hoveredCategory.slug}/?category=${encodeURIComponent(subcategory.id)}`}
+                                                key={subcategory.id}
                                                 className="p-2 rounded-md cursor-pointer text-lg hover:bg-Primary-50 transition-colors duration-200"
-                                                onClick={() => handleSubcategoryClick(subcategory)}
+                                                onClick={closeAllPanels}
                                             >
-                                                {subcategory}
-                                            </div>
+                                                {subcategory.title}
+                                            </Link>
                                         )
                                     )}
                                 </div>
