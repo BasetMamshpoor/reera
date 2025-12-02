@@ -17,6 +17,8 @@ const AdvPagination = ({page, totalPages, setPage}) => {
     const handleNext = () => {
         if (page < totalPages) setPage(page + 1);
     };
+    if (totalPages < 2)
+        return;
     return (
         <Pagination className="flex justify-center w-full mt-6 py-4">
             <PaginationContent className="flex items-center gap-2 rtl">
@@ -35,7 +37,8 @@ const AdvPagination = ({page, totalPages, setPage}) => {
                 </PaginationItem>
 
                 <PaginationItem>
-                    <div className="flex flex-row gap-2 text-base text-[#142738] px-4 py-2 rounded-lg bg-white shadow">
+                    <div
+                        className="flex flex-row gap-2 text-base text-[#142738] px-4 py-2 rounded-lg bg-white shadow">
                         {/* {page} از {totalPages} */}
                         <div>{totalPages}</div>
                         <div>از</div>

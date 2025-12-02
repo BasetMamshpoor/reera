@@ -1,4 +1,3 @@
-import SidebarWrapper from "@/components/SidebarWrapper";
 export const metadata = {
   title: `Reera | Profile`,
 };

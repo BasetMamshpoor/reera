@@ -1,271 +1,270 @@
 "use client";
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, {useMemo, useRef, useState, useEffect} from "react";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import Filter from "@/assets/icons/filter.svg";
-import { useTranslation } from "@/app/[locale]/TranslationContext";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
 import useSwipeScroll from "@/hooks/useHorizontalScroll";
-import { useQuery } from "@tanstack/react-query";
-import { request } from "@/lib/api";
-import { useForm } from "react-hook-form";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {useQuery} from "@tanstack/react-query";
+import {request} from "@/lib/api";
+import {useForm} from "react-hook-form";
+import {useParams, useRouter, useSearchParams} from "next/navigation";
 import RecMobileFilter from "./RecMobileFilter";
 import HousingFilterContent from "@/components/Filters/HousingFilterContent";
 
 const HousingSidebar = () => {
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const [cityOpen, setCityOpen] = useState(false);
-  const [citySearch, setCitySearch] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 100000]);
-  const [brandOpen, setBrandOpen] = useState(false);
-  const [typeOpen, setTypeOpen] = useState(false);
-  const [brandSearch, setBrandSearch] = useState("");
-  const [typeSearch, setTypeSearch] = useState("");
-  const [isProduct_status, setIsProduct_status] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState("");
+    const [cityOpen, setCityOpen] = useState(false);
+    const [citySearch, setCitySearch] = useState("");
+    const [priceRange, setPriceRange] = useState([0, 100000]);
+    const [brandOpen, setBrandOpen] = useState(false);
+    const [typeOpen, setTypeOpen] = useState(false);
+    const [brandSearch, setBrandSearch] = useState("");
+    const [typeSearch, setTypeSearch] = useState("");
+    const [isProduct_status, setIsProduct_status] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const { watch, setValue } = useForm();
-  const dic = useTranslation();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const scrollRef = useSwipeScroll();
-  const s = dic.all_ads.sidebar;
+    const {watch, setValue} = useForm();
+    const dic = useTranslation();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const scrollRef = useSwipeScroll();
+    const s = dic.all_ads.sidebar;
 
-  // Get current parameters from URL
-  const currentCategoryId = searchParams.get("category_id");
-  const { locale } = useParams(); // Adjust based on your locale detection
+    // Get current parameters from URL
+    const currentCategoryId = searchParams.get("category_id");
+    const {locale} = useParams(); // Adjust based on your locale detection
 
-  // Fetch main categories
-  const { data: mainFiltersData, isLoading: loadingMainFilters } = useQuery({
-    queryKey: ["housing-main-filters"],
-    queryFn: async () => {
-      const res = await request({
-        url: "/ads/digital/get_filters",
-        method: "get",
-      });
-      return res?.data;
-    },
-  });
+    // Fetch main categories
+    const {data: mainFiltersData, isLoading: loadingMainFilters} = useQuery({
+        queryKey: ["housing-main-filters"],
+        queryFn: async () => await request({
+            url: "/ads/housing/get_filters",
+            method: "get",
+        })
+        ,
+    });
 
-  // Fetch subcategories when a category is selected
-  const { data: subcategoriesData, isLoading: loadingSubcategories } = useQuery(
-    {
-      queryKey: ["housing-subcategories", selectedCategory],
-      queryFn: async () => {
-        if (!selectedCategory) return {};
+    // Fetch subcategories when a category is selected
+    const {data: subcategoriesData, isLoading: loadingSubcategories} = useQuery(
+        {
+            queryKey: ["housing-subcategories", selectedCategory],
+            queryFn: async () => {
+                if (!selectedCategory) return {};
 
-        const res = await request({
-          url: "/ads/digital/get_filters",
-          method: "get",
-          query: { category_id: selectedCategory },
-        });
+                const res = await request({
+                    url: "/ads/housing/get_filters",
+                    method: "get",
+                    query: {category_id: selectedCategory},
+                });
 
-        return res?.data?.selected_category || [];
-      },
-      enabled: !!selectedCategory,
-    }
-  );
+                return res?.data?.selected_category || [];
+            },
+            enabled: !!selectedCategory,
+        }
+    );
 
-  // Build category tree structure
-  const categoryTree = useMemo(() => {
-    if (!mainFiltersData?.main_category) return [];
+    // Build category tree structure
+    const categoryTree = useMemo(() => {
+        if (!mainFiltersData?.main_category) return [];
 
-    const mainCategories = mainFiltersData.main_category.map((category) => ({
-      id: category.id,
-      label: locale === "en" ? category.title_en : category.category,
-      children:
-        selectedCategory === category.id
-          ? subcategoriesData?.map((sub) => ({
-              id: sub.id,
-              label: sub.category,
-              children: [],
-            })) || []
-          : [],
-    }));
+        const mainCategories = mainFiltersData.main_category.map((category) => ({
+            id: category.id,
+            label: locale === "en" ? category.title_en : category.category,
+            children:
+                selectedCategory === category.id
+                    ? subcategoriesData?.map((sub) => ({
+                    id: sub.id,
+                    label: sub.category,
+                    children: [],
+                })) || []
+                    : [],
+        }));
 
-    return mainCategories;
-  }, [mainFiltersData, subcategoriesData, locale, selectedCategory]);
+        return mainCategories;
+    }, [mainFiltersData, subcategoriesData, locale, selectedCategory]);
 
-  // Handle category selection
-  const handleCategorySelect = (categoryId) => {
-    // If clicking the same category, deselect it
-    const newSelectedCategory =
-      selectedCategory === categoryId ? null : categoryId;
+    // Handle category selection
+    const handleCategorySelect = (categoryId) => {
+        // If clicking the same category, deselect it
+        const newSelectedCategory =
+            selectedCategory === categoryId ? null : categoryId;
 
-    setSelectedCategory(newSelectedCategory);
+        setSelectedCategory(newSelectedCategory);
 
-    // Update URL
-    const params = new URLSearchParams(searchParams.toString());
+        // Update URL
+        const params = new URLSearchParams(searchParams.toString());
 
-    if (newSelectedCategory) {
-      params.set("category_id", newSelectedCategory);
-    } else {
-      params.delete("category_id");
-    }
+        if (newSelectedCategory) {
+            params.set("category_id", newSelectedCategory);
+        } else {
+            params.delete("category_id");
+        }
 
-    // Reset page when category changes
-    params.delete("page");
-    router.push(`?${params.toString()}`, { scroll: false });
-  };
+        // Reset page when category changes
+        params.delete("page");
+        router.push(`?${params.toString()}`, {scroll: false});
+    };
 
-  // Initialize selected category from URL on mount
-  useEffect(() => {
-    if (currentCategoryId) {
-      setSelectedCategory(currentCategoryId);
-    }
-  }, []);
+    // Initialize selected category from URL on mount
+    useEffect(() => {
+        if (currentCategoryId) {
+            setSelectedCategory(currentCategoryId);
+        }
+    }, []);
 
-  // Fetch countries data
-  const { data: countriesData, isLoading: loadingCountries } = useQuery({
-    queryKey: ["countries"],
-    queryFn: async () => request({ method: "GET", url: `/getCountries` }),
-  });
+    // Fetch countries data
+    const {data: countriesData, isLoading: loadingCountries} = useQuery({
+        queryKey: ["countries"],
+        queryFn: async () => request({url: `/getCountries`}),
+    });
 
-  // Fetch currencies data
-  const { data: currenciesData } = useQuery({
-    queryKey: ["currencies-data"],
-    queryFn: async () => {
-      const res = await request({ url: "/currency" });
-      return res?.data || [];
-    },
-  });
+    // Fetch currencies data
+    const {data: currenciesData} = useQuery({
+        queryKey: ["currencies-data"],
+        queryFn: async () => {
+            const res = await request({url: "/currency"});
+            return res?.data || [];
+        },
+    });
 
-  const selectedCountryId = watch("country_id");
+    const selectedCountryId = watch("country_id");
 
-  // Fetch cities data based on selected country
-  const { data: citiesData, isLoading: loadingCities } = useQuery({
-    queryKey: ["cities", selectedCountryId],
-    queryFn: async () => {
-      if (!selectedCountryId) return { data: { cities: [] } };
-      return request({
-        method: "GET",
-        url: `/getCountries`,
-        query: { country: selectedCountryId },
-      });
-    },
-    enabled: !!selectedCountryId,
-  });
+    // Fetch cities data based on selected country
+    const {data: citiesData, isLoading: loadingCities} = useQuery({
+        queryKey: ["cities", selectedCountryId],
+        queryFn: async () => {
+            if (!selectedCountryId) return {data: {cities: []}};
+            return request({
+                method: "GET",
+                url: `/getCountries`,
+                query: {country: selectedCountryId},
+            });
+        },
+        enabled: !!selectedCountryId,
+    });
 
-  // Country options
-  const countryOptions = useMemo(
-    () =>
-      countriesData?.data?.countries?.map((c) => ({
-        value: c.id.toString(),
-        label: c.name,
-      })) || [],
-    [countriesData]
-  );
+    // Country options
+    const countryOptions = useMemo(
+        () =>
+            countriesData?.data?.countries?.map((c) => ({
+                value: c.id.toString(),
+                label: c.name,
+            })) || [],
+        [countriesData]
+    );
 
-  // Filtered countries based on search
-  const filteredCountries = useMemo(
-    () =>
-      countryOptions.filter((country) =>
-        country.label.toLowerCase().includes(search.toLowerCase())
-      ),
-    [search, countryOptions]
-  );
+    // Filtered countries based on search
+    const filteredCountries = useMemo(
+        () =>
+            countryOptions.filter((country) =>
+                country.label.toLowerCase().includes(search.toLowerCase())
+            ),
+        [search, countryOptions]
+    );
 
-  // City options
-  const cityOptions = useMemo(
-    () =>
-      citiesData?.data?.city?.map((city) => ({
-        value: city.id.toString(),
-        label: city.name,
-      })) || [],
-    [citiesData]
-  );
+    // City options
+    const cityOptions = useMemo(
+        () =>
+            citiesData?.data?.city?.map((city) => ({
+                value: city.id.toString(),
+                label: city.name,
+            })) || [],
+        [citiesData]
+    );
 
-  // Filtered cities based on search
-  const filteredCities = useMemo(
-    () =>
-      cityOptions.filter((city) =>
-        city.label.toLowerCase().includes(citySearch.toLowerCase())
-      ),
-    [citySearch, cityOptions]
-  );
+    // Filtered cities based on search
+    const filteredCities = useMemo(
+        () =>
+            cityOptions.filter((city) =>
+                city.label.toLowerCase().includes(citySearch.toLowerCase())
+            ),
+        [citySearch, cityOptions]
+    );
 
-  // Product status options
-  const product_status = [s.new, s.almost_new, s.second_hand];
+    // Product status options
+    const product_status = [s.new, s.almost_new, s.second_hand];
 
-  const sharedProps = {
-    categoryTree,
-    selectedCategory,
-    onCategorySelect: handleCategorySelect,
-    loadingCategories: loadingMainFilters || loadingSubcategories,
-    product_status,
-    isProduct_status,
-    currenciesData,
-    setIsProduct_status,
-    brandOpen,
-    setBrandOpen,
-    brandSearch,
-    setBrandSearch,
-    selectedBrand: watch("brand"),
-    typeOpen,
-    setTypeOpen,
-    typeSearch,
-    setTypeSearch,
-    selectedType: watch("product_type"),
-    open,
-    setOpen,
-    search,
-    setSearch,
-    countryOptions,
-    filteredCountries,
-    loadingCountries,
-    selectedCountryId,
-    cityOpen,
-    setCityOpen,
-    citySearch,
-    setCitySearch,
-    cityOptions,
-    filteredCities,
-    loadingCities,
-    priceRange,
-    setPriceRange,
-    watch,
-    setValue,
-  };
+    const sharedProps = {
+        categoryTree,
+        selectedCategory,
+        onCategorySelect: handleCategorySelect,
+        loadingCategories: loadingMainFilters || loadingSubcategories,
+        product_status,
+        isProduct_status,
+        currenciesData,
+        setIsProduct_status,
+        brandOpen,
+        setBrandOpen,
+        brandSearch,
+        setBrandSearch,
+        selectedBrand: watch("brand"),
+        typeOpen,
+        setTypeOpen,
+        typeSearch,
+        setTypeSearch,
+        selectedType: watch("product_type"),
+        open,
+        setOpen,
+        search,
+        setSearch,
+        countryOptions,
+        filteredCountries,
+        loadingCountries,
+        selectedCountryId,
+        cityOpen,
+        setCityOpen,
+        citySearch,
+        setCitySearch,
+        cityOptions,
+        filteredCities,
+        loadingCities,
+        priceRange,
+        setPriceRange,
+        watch,
+        setValue,
+    };
 
-  return (
-    <>
-      {/* Desktop Sidebar */}
-      <div className="border-2 h-fit border-default-divider hidden lg:block bg-transparent rounded-xl w-full max-w-92">
-        <div className="flex flex-col gap-4 p-6">
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center justify-between gap-2 dark:text-white">
-              <Filter className="dark:fill-white" />
-              <span>{s.filter}</span>
+    return (
+        <>
+            {/* Desktop Sidebar */}
+            <div
+                className="border-2 h-fit border-default-divider hidden lg:block bg-transparent rounded-xl w-full max-w-92">
+                <div className="flex flex-col gap-4 p-6">
+                    <div className="flex flex-row items-center justify-between">
+                        <div className="flex flex-row items-center justify-between gap-2 dark:text-white">
+                            <Filter className="dark:fill-white"/>
+                            <span>{s.filter}</span>
+                        </div>
+                        <button
+                            className="flex flex-row items-center gap-2 text-error-main cursor-pointer"
+                            onClick={() => {
+                                // Clear all filters
+                                setSelectedCategory(null);
+                                setValue("country_id", "");
+                                setValue("city_id", "");
+                                setValue("currency_id", "");
+                                setPriceRange([0, 100000]);
+                                router.push("?", {scroll: false});
+                            }}
+                        >
+                            <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                            <CloseSquare className="fill-error-main"/>
+                        </button>
+                    </div>
+                    <HousingFilterContent {...sharedProps} />
+                </div>
             </div>
-            <button
-              className="flex flex-row items-center gap-2 text-error-main cursor-pointer"
-              onClick={() => {
-                // Clear all filters
-                setSelectedCategory(null);
-                setValue("country_id", "");
-                setValue("city_id", "");
-                setValue("currency_id", "");
-                setPriceRange([0, 100000]);
-                router.push("?", { scroll: false });
-              }}
-            >
-              <span className="font-[600]">{s.clear_all || "Clear All"}</span>
-              <CloseSquare className="fill-error-main" />
-            </button>
-          </div>
-          <HousingFilterContent {...sharedProps} />
-        </div>
-      </div>
 
-      {/* Mobile Filter */}
-      <div
-        ref={scrollRef}
-        className="px-4 overflow-x-auto flex items-center cursor-pointer lg:hidden pb-4 scrollbar-hide"
-      >
-        <RecMobileFilter {...sharedProps} />
-      </div>
-    </>
-  );
+            {/* Mobile Filter */}
+            <div
+                ref={scrollRef}
+                className="px-4 overflow-x-auto flex items-center cursor-pointer lg:hidden pb-4 scrollbar-hide"
+            >
+                <RecMobileFilter {...sharedProps} />
+            </div>
+        </>
+    );
 };
 
 export default HousingSidebar;

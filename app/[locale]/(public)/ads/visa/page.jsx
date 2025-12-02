@@ -1,27 +1,31 @@
 import React from "react";
 
-import AdvsRes from "./_components/AdvsRes";
 import {QueryClient, dehydrate} from "@tanstack/react-query";
 import Providers from "../../../Providers";
 import {request} from "@/lib/api";
 import VehicesSidebar from "@/app/[locale]/(public)/ads/vehicles/_components/VehiclesSidebar";
-
+import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
 export const metadata = {
     title: `Reera | Visa Ads`,
 };
-const Page = async ({searchParams}) => {
-    const queryClient = new QueryClient();
+const Page = async ({searchParams, params}) => {
+    const locale = await params.locale;
     const page = Number(searchParams.page || 1);
+    const categoryId = searchParams.category_id;
+
+    const queryClient = new QueryClient();
     await queryClient.prefetchQuery({
-        queryKey: ["vehicles-ads", page],
+        queryKey: ["ads", page, "visa", categoryId, "newest"],
         queryFn: () =>
             request({
-                url: "/ads",
+                url: `/ads`,
                 method: "get",
-                query: {page},
+                query: {
+                    page, category_id: categoryId, category_slug: "visa"
+                },
             }),
     });
-    await queryClient.prefetchQuery({
+    queryClient.prefetchQuery({
         queryKey: ["advs-filter"],
         queryFn: () =>
             request({
@@ -39,7 +43,8 @@ const Page = async ({searchParams}) => {
                 <div className="flex gap-6 lg:flex-row flex-col">
                     <Providers dehydratedState={dehydrate(queryClient)}>
                         <VehicesSidebar/>
-                        <AdvsRes page={page}/>
+                        <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"visa"}
+                                 page={page}/>
                     </Providers>
                 </div>
             </div>

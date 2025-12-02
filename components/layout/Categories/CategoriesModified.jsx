@@ -1,16 +1,17 @@
 "use client";
 import React from "react";
 
-import { useTranslation } from "@/app/[locale]/TranslationContext";
-import { useParams } from "next/navigation";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
+import {useParams} from "next/navigation";
 import Link from "next/link";
 
 import Image from "next/image";
+
 const CategoriesModified = () => {
-  const dic = useTranslation();
-  const c = dic.categories;
-  const params = useParams();
-  const locale = params.locale;
+    const dic = useTranslation();
+    const c = dic.categories;
+    const params = useParams();
+    const locale = params.locale;
 
   const categories = [
     {
@@ -206,13 +207,13 @@ const CategoriesModified = () => {
           <span
             className=" font-[600] lg:text-lg text-xs
            text-[#152F56] dark:text-white text-center  whitespace-nowrap"
-          >
+                    >
             {category.name}
           </span>
-        </Link>
-      ))}
-    </div>
-  );
+                </Link>
+            ))}
+        </div>
+    );
 };
 
 export default CategoriesModified;

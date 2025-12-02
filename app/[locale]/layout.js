@@ -31,7 +31,7 @@ export default async function Layout({children, params}) {
                     <Toaster/>
                     <div className="w-full">
                         <div
-                            className="flex flex-col max-w-[1440px] mx-auto w-full min-h-200 font-farsi-primary overflow-x-hidden">
+                            className="flex flex-col container px-3 mx-auto w-full overflow-x-hidden">
                             <Navbar/>
                             {children}
                         </div>

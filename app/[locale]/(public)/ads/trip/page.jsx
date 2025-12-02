@@ -1,17 +1,19 @@
 import React from "react";
-import Sidebar from "@/app/[locale]/(public)/ads/all-ads/_components/AllAdsSidebar";
-import AdvsRes from "./_components/AdvsRes";
 import {QueryClient, dehydrate} from "@tanstack/react-query";
 import Providers from "../../../Providers";
 import {request} from "@/lib/api";
 import TripSidebar from "@/app/[locale]/(public)/ads/trip/_components/TripSidebar";
+import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
 
 export const metadata = {
     title: `Reera | Trip Ads`,
 };
-const Page = async ({searchParams}) => {
-    const queryClient = new QueryClient();
+const Page = async ({searchParams, params}) => {
+    const locale = await params.locale;
     const page = Number(searchParams.page || 1);
+    const categoryId = searchParams.category_id;
+
+    const queryClient = new QueryClient();
     await queryClient.prefetchQuery({
         queryKey: ["kitchen-ads", page],
         queryFn: () =>
@@ -22,11 +24,14 @@ const Page = async ({searchParams}) => {
             }),
     });
     await queryClient.prefetchQuery({
-        queryKey: ["advs-filter"],
+        queryKey: ["ads", page, "trip", categoryId, "newest"],
         queryFn: () =>
             request({
-                url: "/ads/get-filter",
+                url: `/ads`,
                 method: "get",
+                query: {
+                    page, category_id: categoryId, category_slug: "trip"
+                },
             }),
     });
     return (
@@ -39,7 +44,8 @@ const Page = async ({searchParams}) => {
                 <div className="flex gap-6 lg:flex-row flex-col">
                     <Providers dehydratedState={dehydrate(queryClient)}>
                         <TripSidebar/>
-                        <AdvsRes page={page}/>
+                        <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"trip"}
+                                 page={page}/>
                     </Providers>
                 </div>
             </div>

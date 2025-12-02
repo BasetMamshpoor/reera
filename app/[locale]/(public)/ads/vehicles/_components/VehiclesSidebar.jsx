@@ -48,7 +48,7 @@ const VehiclesSidebar = () => {
     queryKey: ["cities", selectedCountryId],
     queryFn: async () => {
       if (!selectedCountryId) return { data: { cities: [] } };
-      return request({
+      return await request({
         method: "GET",
         url: `/getCountries`,
         query: { country: selectedCountryId },
