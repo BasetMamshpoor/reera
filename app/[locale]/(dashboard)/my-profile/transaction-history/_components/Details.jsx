@@ -23,9 +23,9 @@ const Details = () => {
           <Table a={a} />
         </div>
 
-        {/*<div className=" w-full">*/}
-        {/*    <Null a={a}/>*/}
-        {/*</div>*/}
+        <div className=" w-full pt-4">
+            <Null a={a}/>
+        </div>
       </div>
     </>
   );

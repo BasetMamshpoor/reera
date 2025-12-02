@@ -45,11 +45,14 @@ const AdvsRes = ({ page }) => {
   //     }),
   // });
 
+
+
+
   const { data, isLoading } = useQuery({
-    queryKey: ["vehicles-ads"],
+    queryKey: ["visa-ads"],
     queryFn: async () =>
       await request({
-        url: `/ads?category_slug=vehicles`,
+        url: `/ads?category_slug=visa`,
       }),
   });
 

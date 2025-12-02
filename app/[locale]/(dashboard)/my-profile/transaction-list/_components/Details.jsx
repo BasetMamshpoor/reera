@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useState} from "react";
 
 import Transaction from "@/assets/icons/Card Recive.svg";
 import Null from "./Null";
@@ -8,22 +8,24 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Wallet from "./Wallet"
+import AdvPagination from "@/components/AdvPagination";
 
 const Details = () => {
     const dic = useTranslation();
     const a = dic.public.profile.transactions_list;
+    const [page, setPage] = useState(1)
 
     const {data, isLoading} = useQuery({
-        queryKey: ["balance"],
+        queryKey: ["balance",page],
         queryFn: async () => {
             return await request({
                 method: "get",
                 url: "/profile/transaction",
+                query: {page}
             })
         }
     })
     const isNull = data?.data.length === 0
-    console.log(isNull)
     return (
         <>
             <div className="flex flex-col bg-surface w-full py-6 px-4 lg:p-6 border border-default-divider rounded-xl">
@@ -40,8 +42,9 @@ const Details = () => {
                     <div className=" w-full">
                         <Null a={a}/>
                     </div> :
-                    <div className="w-full py-6">
+                    <div className="flex flex-col w-full py-6">
                         <Table data={data?.data} isLoading={isLoading} a={a}/>
+                        <AdvPagination setPage={setPage} totalPages={data?.last_page} page={page}/>
                     </div>
                 }
             </div>

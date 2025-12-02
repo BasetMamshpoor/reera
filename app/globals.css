@@ -109,7 +109,7 @@
 
   --color-error-main: var(--error-main);
   --color-error-txt: var(--alpha-100);
-  --color-error-accent: var(--error-main);
+  --color-error-accent: var(--error-accent);
 
   --color-warning-main: var(--warning-main);
   --color-warning-txt: var(--alpha-100);

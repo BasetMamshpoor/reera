@@ -191,7 +191,7 @@ const CategoriesModified = () => {
         />
       ),
       count: "4000",
-      href: `/${locale}/ads/transportation`,
+      href: `/${locale}/ads/visa`,
     },
   ];
   return (

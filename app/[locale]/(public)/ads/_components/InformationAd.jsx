@@ -271,7 +271,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                         </div>
                     </div>
                     <Link href="/public"
-                          className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-105 transition-transform w-full">
+                          className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-95 transition-transform w-full">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div

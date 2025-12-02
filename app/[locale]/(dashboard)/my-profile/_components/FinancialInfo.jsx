@@ -17,6 +17,9 @@ const FinancialInfo = () => {
     const [editingCard, setEditingCard] = useState(null);
     const dic = useTranslation();
     const b = dic.consultor.edit;
+
+    const [deletingId, setDeletingId] = useState(null);
+
     const queryClient = useQueryClient();
 
     const {data, isLoading, error} = useQuery({
@@ -35,7 +38,7 @@ const FinancialInfo = () => {
 
     const deleteMutation = useMutation({
         mutationFn: async (
-            id // Accept id as parameter
+            id, isPending
         ) =>
             await request({
                 url: `/profile/finances/${id}`,
@@ -51,7 +54,10 @@ const FinancialInfo = () => {
     });
 
     const handleDelete = (id) => {
-        deleteMutation.mutate(id); // Pass the id to mutation
+        setDeletingId(id);
+        deleteMutation.mutate(id, {
+            onSettled: () => setDeletingId(null),
+        });
     };
 
     if (isLoading) {
@@ -68,16 +74,16 @@ const FinancialInfo = () => {
                 <div className="flex items-center flex-col gap-4 justify-center mt-10">
                     <p className="text-Gray-700 font-semibold">{b.bank_account_note}</p>
                     <span className="text-Gray-700">
-            هیچ اطلاعاتی برای نمایش وجود ندارد{" "}
-          </span>
-                    <EmptyBox className="!w-32 !h-32 fill-Gray-400"/>
+                       هیچ اطلاعاتی برای نمایش وجود ندارد{" "}
+                    </span>
+                    <EmptyBox className="!w-32 !h-32 fill-Gray-800"/>
                     <div className="flex items-center gap-2">
                         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                             <DialogTrigger className="flex items-center gap-2 rtl:flex-row-reverse">
                                 <Plus className="fill-Primary-400"/>
                                 <span className="text-Primary-400 cursor-pointer font-semibold">
-                  {b.add_new_bank_account}
-                </span>
+                                   {b.add_new_bank_account}
+                                </span>
                             </DialogTrigger>
                             <DialogContent className="bg-surface h-90">
                                 <EnterCreditCard setIsModalOpen={setIsModalOpen} mode="add"/>
@@ -96,8 +102,8 @@ const FinancialInfo = () => {
                             >
                                 <Plus className="fill-Primary-400"/>
                                 <span className="text-Primary-400 cursor-pointer font-semibold">
-                  {b.add_new_bank_account}
-                </span>
+                                  {b.add_new_bank_account}
+                                </span>
                             </DialogTrigger>
                             <DialogContent className="bg-surface h-90">
                                 <EnterCreditCard
@@ -128,13 +134,13 @@ const FinancialInfo = () => {
                                                         : "bg-warning-accent text-warning-main"
                                                 }  py-1.5 rounded-lg px-2 font-semibold`}
                                             >
-                        {f.status}
-                      </span>
+                                              {f.status}
+                                            </span>
                                         </div>
                                         <div>
-                      <span className="text-Text-Secondary font-semibold">
-                        {f.card_number}
-                      </span>
+                                            <span className="text-Text-Secondary font-semibold">
+                                              {f.card_number}
+                                            </span>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -142,10 +148,14 @@ const FinancialInfo = () => {
                                             className="fill-Primary-400 cursor-pointer"
                                             onClick={() => handleEditClick(f)}
                                         />
-                                        <Delete
-                                            onClick={() => handleDelete(f.id)}
-                                            className="fill-error-main cursor-pointer"
-                                        />
+                                        {deletingId === f.id ? (
+                                            <Spinner size={20} />
+                                        ) : (
+                                            <Delete
+                                                onClick={() => handleDelete(f.id)}
+                                                className="fill-error-main cursor-pointer"
+                                            />
+                                        )}
                                     </div>
                                 </div>
                             );

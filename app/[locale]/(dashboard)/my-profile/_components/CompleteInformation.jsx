@@ -32,11 +32,24 @@ const schema = z.object({
 });
 
 const CompleteInformation = ({
-                                 preview,
-                                 handleFileChange,
+                                 // profile props from parent
+                                 profilePreview,
+                                 setProfilePreview,
+                                 profileFile,
+                                 setProfileFile,
+                                 handleProfileChange,
+
+                                 // identity (document) props from parent
+                                 identityPreview,
+                                 setIdentityPreview,
+                                 identityFile,
+                                 setIdentityFile,
+                                 handleIdentityChange,
+
                                  CompleteInformationData,
                                  isLoading,
                              }) => {
+
     const router = useRouter();
     const {locale} = useParams();
     const dic = useTranslation();
@@ -61,7 +74,7 @@ const CompleteInformation = ({
         },
     });
 
-    // Use useEffect to set form values when data is loaded
+    // set initial text/select values when data arrives
     useEffect(() => {
         if (CompleteInformationData?.data && !isLoading) {
             const data = CompleteInformationData.data;
@@ -71,29 +84,28 @@ const CompleteInformation = ({
             setValue("mobile", data.mobile || "");
             setValue("national_code", data.national_code || "");
 
-            // Set select values if they exist
-            if (data.language_id) {
-                setValue("language_id", data.language_id);
-            }
-            if (data.nationality_id) {
-                setValue("nationality_id", data.nationality_id);
-            }
+            // select defaults
+            if (data.language_id) setValue("language_id", data.language_id);
+            if (data.nationality_id) setValue("nationality_id", data.nationality_id);
+
+            // Note: previews are controlled in parent (EditInformation) — parent already set profilePreview/identityPreview from API
         }
     }, [CompleteInformationData, isLoading, setValue]);
 
+    // mutation: send FormData (including files if present)
     const mutation = useMutation({
-        mutationFn: async (data) =>
+        mutationFn: async (formData) =>
             await request({
                 url: "/profile/update",
                 method: "post",
-                data,
+                headers: { "Content-Type": "multipart/form-data" },
+                data: formData,
             }),
-        onSuccess: (data) => {
-            toast.success(data?.message || "Your profile has been saved");
+        onSuccess: (res) => {
+            toast.success(res?.message || "اطلاعات با موفقیت ذخیره شد");
         },
         onError: (err) => {
-            toast.error(err?.response?.data?.message || err.message || `Failed to update: ${err?.message}`
-        );
+            toast.error(err?.response?.data?.message || err.message || "خطا در ذخیره اطلاعات");
         },
     });
 
@@ -105,28 +117,62 @@ const CompleteInformation = ({
             }),
     });
 
-    const onSubmit = (data) => {
-        console.log("Submitting data:", data);
+    const onSubmit = (formValues) => {
+        // build FormData
+        const formData = new FormData();
 
-        // Convert string values to numbers for IDs
-        const payload = {
-            ...data,
-            language_id: data.language_id ? Number(data.language_id) : undefined,
-            nationality_id: data.nationality_id
-                ? Number(data.nationality_id)
-                : undefined,
-        };
+        formData.append("first_name", formValues.first_name || "");
+        formData.append("last_name", formValues.last_name || "");
+        formData.append("mobile", formValues.mobile || "");
+        formData.append("national_code", formValues.national_code || "");
 
-        mutation.mutate(payload);
+        if (formValues.language_id !== undefined && formValues.language_id !== null) {
+            formData.append("language_id", String(formValues.language_id));
+        }
+        if (formValues.nationality_id !== undefined && formValues.nationality_id !== null) {
+            formData.append("nationality_id", String(formValues.nationality_id));
+        }
+
+        // attach files only if user selected them (we use profileFile/identityFile from parent)
+        if (profileFile) {
+            formData.append("profile", profileFile);
+        }
+        if (identityFile) {
+            formData.append("identity_document", identityFile);
+        }
+        mutation.mutate(formData);
     };
 
-    // Handle select changes properly - store the ID as number
-    const handleLanguageChange = (value) => {
-        setValue("language_id", Number(value), {shouldValidate: true});
+    // helper setters in case user selects file directly inside this component (we also accept parent handlers)
+    const localHandleProfileChange = (e) => {
+        // prefer parent's handler if provided
+        if (handleProfileChange) {
+            handleProfileChange(e);
+            // parent sets profileFile and profilePreview
+            return;
+        }
+        // otherwise, local fallback (not used since parent passes handler)
+        const file = e.target.files?.[0];
+        if (file) {
+            setProfileFile?.(file);
+            const reader = new FileReader();
+            reader.onloadend = () => setProfilePreview?.(reader.result);
+            reader.readAsDataURL(file);
+        }
     };
 
-    const handleNationalityChange = (value) => {
-        setValue("nationality_id", Number(value), {shouldValidate: true});
+    const localHandleIdentityChange = (e) => {
+        if (handleIdentityChange) {
+            handleIdentityChange(e);
+            return;
+        }
+        const file = e.target.files?.[0];
+        if (file) {
+            setIdentityFile?.(file);
+            const reader = new FileReader();
+            reader.onloadend = () => setIdentityPreview?.(reader.result);
+            reader.readAsDataURL(file);
+        }
     };
 
     if (isLoading) {
@@ -147,12 +193,32 @@ const CompleteInformation = ({
                     className=" relative  flex items-center justify-center p-4 border border-[#D1D5DB] rounded-xl w-full h-full">
                     <div
                         className=" flex items-center justify-center rounded-full overflow-hidden bg-[#F6F6F7] w-full h-full ">
-                        <Profile className="fill-gray-800 !w-10 !h-10"/>
+                        {/* show uploaded preview if user picked a new profile file,
+                            else show backend profile url if exists, else icon */}
+                        {profilePreview ? (
+                            // profilePreview may be a data URL or a remote URL
+                            <Image src={profilePreview} alt="profile" fill
+                                   className="object-cover w-full h-full rounded-full"/>
+                        ) : CompleteInformationData?.data?.profile ? (
+                            <Image src={CompleteInformationData?.data?.profile} alt="profile" fill
+                                   className="object-cover w-full h-full rounded-full"/>
+                        ) : (
+                            <Profile className="fill-gray-800 !w-10 !h-10"/>
+                        )}
+
                         <div
                             className="absolute bottom-4 right-4  flex p-1 items-center justify-center border bg-white border-[#D1D5DB] rounded-md">
                             <Gallery className=" !w-3 !h-3 fill-gray-800"/>
                         </div>
                     </div>
+
+                    {/* transparent input overlay for profile upload (same spot) */}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={localHandleProfileChange}
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                    />
                 </div>
             </div>
 
@@ -218,7 +284,8 @@ const CompleteInformation = ({
 
             <div className="flex lg:flex-row rtl:flex-row-reverse flex-col items-center gap-6 w-full">
                 <div className="w-full">
-                    <Select onValueChange={handleLanguageChange}>
+                    <Select
+                        onValueChange={(v) => setValue("language_id", Number(v))}>
                         <SelectTrigger
                             className="border py-5 border-default-divider cursor-pointer w-full rounded-xl px-3 text-gray-500 text-sm lg:text-base">
                             <SelectValue placeholder={c.language}/>
@@ -245,7 +312,7 @@ const CompleteInformation = ({
                     )}
                 </div>
                 <div className="w-full">
-                    <Select onValueChange={handleNationalityChange}>
+                    <Select onValueChange={(v) => setValue("nationality_id", Number(v))}>
                         <SelectTrigger
                             className="w-full border cursor-pointer py-5 border-default-divider rounded-xl px-3 text-gray-500">
                             <SelectValue placeholder={c.nationality}/>
@@ -277,14 +344,16 @@ const CompleteInformation = ({
                 <p className="text-gray-700 dark:text-gray-300 text-base">
                     {c.upload_identification_document}
                 </p>
-                {preview ? (
+
+                {/* identity document area - show user's selected preview first, else backend url, else upload placeholder */}
+                {identityPreview ? (
                     <div className="relative flex items-center gap-6 w-full rtl:justify-end">
                         <div
                             className="flex items-center justify-center px-3 py-1 bg-[#DCFCE8] rounded-md text-sm text-[#16A34A]">
                             {c.verified}
                         </div>
                         <Image
-                            src={preview}
+                            src={identityPreview}
                             alt="Preview"
                             width={176}
                             height={176}
@@ -296,7 +365,29 @@ const CompleteInformation = ({
                             type="file"
                             accept="image/*"
                             className="absolute w-full h-full top-0 bottom-0 text-transparent cursor-pointer"
-                            onChange={handleFileChange}
+                            onChange={localHandleIdentityChange}
+                        />
+                    </div>
+                ) : CompleteInformationData?.data?.identity_document ? (
+                    <div className="relative flex items-center gap-6 w-full rtl:justify-end">
+                        <div
+                            className="flex items-center justify-center px-3 py-1 bg-[#DCFCE8] rounded-md text-sm text-[#16A34A]">
+                            {c.verified}
+                        </div>
+                        <Image
+                            src={CompleteInformationData.data.identity_document}
+                            alt="identity_document"
+                            width={176}
+                            height={176}
+                            unoptimized
+                            className="rounded-md max-w-44 max-h-44"
+                        />
+                        <input
+                            id="picture01"
+                            type="file"
+                            accept="image/*"
+                            className="absolute w-full h-full top-0 bottom-0 text-transparent cursor-pointer"
+                            onChange={localHandleIdentityChange}
                         />
                     </div>
                 ) : (
@@ -323,7 +414,7 @@ const CompleteInformation = ({
                             type="file"
                             accept="image/*"
                             className="hidden"
-                            onChange={handleFileChange}
+                            onChange={localHandleIdentityChange}
                         />
                     </label>
                 )}
@@ -332,10 +423,10 @@ const CompleteInformation = ({
             <div className="flex items-center gap-4 w-ful ltr:self-end rtl:self-start">
                 <button
                     type="submit"
-                    disabled={isSubmitting || mutation.isPending}
+                    disabled={isSubmitting || mutation.isLoading}
                     className="flex gap-2 items-center justify-center px-6 py-2 bg-Primary-400 rounded-xl text-white dark:text-black whitespace-nowrap text-base font-bold cursor-pointer transition-all duration-100 hover:scale-[0.98] ease-in-out disabled:opacity-50 disabled:cursor-not-allowed "
                 >
-                    {isSubmitting || mutation.isPending ? (
+                    {isSubmitting || mutation.isLoading ? (
                         <Spinner size="small"/>
                     ) : (
                         <>

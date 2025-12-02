@@ -303,7 +303,7 @@ const Resume = () => {
                       <Play className="fill-Gray-900" />
                     </button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-3xl">
+                  <DialogContent className="max-w-3xl h-fit">
                     {" "}
                     {/* Added className for better sizing */}
                     <DialogHeader>

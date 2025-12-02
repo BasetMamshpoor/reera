@@ -92,12 +92,12 @@ const ModalComment = ({ a }) => {
                         <div className="grid grid-cols-3 gap-4 w-full">
                             <DialogClose asChild>
                                 <Button variant="outline" className="hover:bg-transparent py-1.5 hover:text-warning-main bg-transparent text-center w-full font-bold border border-warning-main text-warning-main text-base rounded-xl">
-                                    {a.cancel}
+                                   <p className="pt-2">{a.cancel}</p>
                                 </Button>
                             </DialogClose>
-                            <div className="w-full py-2 col-span-2 font-bold bg-Primary-400 text-white text-base rounded-xl text-center">
-                                {a.submit_review}
-                            </div>
+                            <Button className="w-full py-2 col-span-2 font-bold hover:bg-Primary-400 bg-Primary-400 text-white text-base rounded-xl text-center">
+                                <p className="pt-2">{a.submit_review}</p>
+                            </Button>
                         </div>
                     </DialogFooter>
                 </DialogContent>

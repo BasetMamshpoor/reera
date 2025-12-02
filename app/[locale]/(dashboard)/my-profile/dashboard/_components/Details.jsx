@@ -19,7 +19,6 @@ const Details = () => {
     // const [label, setLabel] = useState([]);
 
     const [selected, setSelected] = useState([]);
-    console.log()
     const {locale} = useParams();
 
     const [tab, setTab] = useState("ad");
