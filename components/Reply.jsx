@@ -16,16 +16,20 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import ReplyIcon from "@/assets/icons/reply.svg";
 import {useMutation} from "@tanstack/react-query";
 import {request} from "@/lib/api";
+import {toast} from "sonner";
+import Spinner from "@/components/Spinner";
+import {Textarea} from "@/components/ui/textarea";
 
 const Reply = ({id}) => {
     const dic = useTranslation();
     const a = dic.public.profile.user_feedback;
 
     const [text, setText] = useState("");
+    const [open, setOpen] = useState(false)
 
     const data = {
         body: text,
-        parent_id : id
+        parent_id: id
     }
 
     const mutation = useMutation({
@@ -36,17 +40,18 @@ const Reply = ({id}) => {
                 data
             });
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             setText("");
-            console.log("نظر با موفقیت ارسال شد");
+            toast.success(data?.message);
+            setOpen(false)
         },
-        onError: (err) => {
-            console.error("ارسال با خطا مواجه شد", err);
+        onError: (errors) => {
+            toast.error(errors?.message);
         }
     });
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="outline" className="border-0 shadow-none bg-transparent p-0">
                     <ReplyIcon className="fill-Gray-800"/>
@@ -62,9 +67,9 @@ const Reply = ({id}) => {
 
                 <div className="flex flex-col gap-2 w-full">
                     <p className="text-Gray-800">{a.write_review}</p>
-                    <Input
+                    <Textarea
                         type="text"
-                        className="w-full h-20 text-Gray-500"
+                        className="w-full text-Gray-800"
                         placeholder={a.text}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
@@ -80,12 +85,12 @@ const Reply = ({id}) => {
                             </Button>
                         </DialogClose>
 
-                        <button
+                        <Button
                             type="button"
                             onClick={() => mutation.mutate(data)}
-                            className="w-full py-2 col-span-2 font-bold bg-Primary-400 text-white text-base rounded-xl text-center">
-                            {a.submit_review}
-                        </button>
+                            className="w-full py-2 col-span-2 font-bold bg-Primary-400 hover:bg-Primary-400 text-white text-base rounded-xl text-center">
+                            {mutation.isPending ? <Spinner size={20} color="white"/> : a.submit_review}
+                        </Button>
                     </div>
                 </DialogFooter>
             </DialogContent>

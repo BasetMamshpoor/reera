@@ -228,7 +228,7 @@ const WorkingHistory = () => {
 
                         <div className="flex items-center lg:flex-row flex-col gap-4 rtl:flex-row-reverse">
                             <Input
-                                type="text"
+                                type="number"
                                 value={history.start_month}
                                 onChange={(e) =>
                                     handleInputChange(history.id, "start_month", e.target.value)
@@ -238,7 +238,7 @@ const WorkingHistory = () => {
                             />
 
                             <Input
-                                type="text"
+                                type="number"
                                 value={history.end_month}
                                 onChange={(e) =>
                                     handleInputChange(history.id, "end_month", e.target.value)
@@ -253,7 +253,7 @@ const WorkingHistory = () => {
 
                         <div className="flex items-center lg:flex-row flex-col gap-4 rtl:flex-row-reverse">
                             <Input
-                                type="text"
+                                type="number"
                                 value={history.start_year}
                                 onChange={(e) =>
                                     handleInputChange(history.id, "start_year", e.target.value)
@@ -263,7 +263,7 @@ const WorkingHistory = () => {
                             />
 
                             <Input
-                                type="text"
+                                type="number"
                                 value={history.end_year}
                                 onChange={(e) =>
                                     handleInputChange(history.id, "end_year", e.target.value)

@@ -180,7 +180,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                     {jobSearch && <ComponentsForJobSearch locale={locale} data={data} a={a}/>}
                     <div
                         className={`grid ${data?.contact.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
-                        {data?.contact?.mobile &&
+                        {!!data?.contact?.mobile &&
                             <ModalChatAndCall data={data} locale={locale} a={a}/>
                             // <Link href="/" variant="outline"
                             //       className="shadow-none cursor-pointer hover:bg-transparent flex items-center justify-center gap-2 w-full border border-Primary-400 rounded-xl px-5 py-1">

@@ -258,7 +258,7 @@ const EducationHistory = () => {
 
                         <div className="flex lg:flex-row flex-col rtl:flex-row-reverse items-center w-full gap-4">
                             <Input
-                                type="text"
+                                type="number"
                                 value={history.startYear}
                                 onChange={(e) =>
                                     handleInputChange(history.id, "startYear", e.target.value)
@@ -267,7 +267,7 @@ const EducationHistory = () => {
                                 placeholder={e.education_start_year}
                             />
                             <Input
-                                type="text"
+                                type="number"
                                 value={history.endYear}
                                 onChange={(e) =>
                                     handleInputChange(history.id, "endYear", e.target.value)

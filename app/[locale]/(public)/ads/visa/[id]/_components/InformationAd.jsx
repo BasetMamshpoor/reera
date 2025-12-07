@@ -149,10 +149,16 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                     </div>
 
                     {/* Contact Buttons */}
-                    <div className="grid grid-cols-2 gap-4 w-full">
-                        {data?.contact?.my_phone === 1 && (
+                    <div
+                        className={`grid ${data?.contact.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
+                        {!!data?.contact?.mobile &&
                             <ModalChatAndCall data={data} locale={locale} a={a}/>
-                        )}
+                            // <Link href="/" variant="outline"
+                            //       className="shadow-none cursor-pointer hover:bg-transparent flex items-center justify-center gap-2 w-full border border-Primary-400 rounded-xl px-5 py-1">
+                            //     <Messages className="fill-Primary-400"/>
+                            //     <p className="text-base text-Primary-400 whitespace-nowrap">{a.chat}</p>
+                            // </Link>
+                        }
                         <ModalRequest id={id} data={data} locale={locale} a={a}/>
                     </div>
                 </div>
@@ -193,13 +199,13 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                                                 key={type.id}
                                                 className="px-2 py-1 bg-primary-100 text-primary-700 rounded-full text-xs"
                                             >
-                        {type.name}
-                      </span>
+                                              {type.name}
+                                            </span>
                                         ))}
                                         {(!data?.types || data.types.length === 0) && (
                                             <span className="text-xs text-gray-500">
-                        Not specified
-                      </span>
+                                              Not specified
+                                            </span>
                                         )}
                                     </div>
                                 </div>
@@ -234,24 +240,24 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                         </div>
 
                         {/* Contact Buttons */}
-                        <div className="grid grid-cols-2 gap-4 w-full">
-                            {data?.contact?.my_phone === 1 && (
+                        <div
+                            className={`grid ${data?.contact.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
+                            {!!data?.contact?.mobile &&
                                 <ModalChatAndCall data={data} locale={locale} a={a}/>
-                            )}
-                            <ModalRequest
-                                session={session}
-                                id={id}
-                                data={data}
-                                locale={locale}
-                                a={a}
-                            />
+                                // <Link href="/" variant="outline"
+                                //       className="shadow-none cursor-pointer hover:bg-transparent flex items-center justify-center gap-2 w-full border border-Primary-400 rounded-xl px-5 py-1">
+                                //     <Messages className="fill-Primary-400"/>
+                                //     <p className="text-base text-Primary-400 whitespace-nowrap">{a.chat}</p>
+                                // </Link>
+                            }
+                            <ModalRequest id={id} data={data} locale={locale} a={a}/>
                         </div>
                     </div>
 
                     {/* Seller Profile Card */}
                     <Link
                         href="/"
-                        className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-105 transition-transform w-full"
+                        className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-95 transition-transform w-full"
                     >
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
@@ -299,7 +305,6 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                             </div>
                         </div>
                     </Link>
-
                     <Modal locale={locale} id={id}/>
                 </div>
             </div>

@@ -98,7 +98,7 @@ const CompleteInformation = ({
             await request({
                 url: "/profile/update",
                 method: "post",
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: {"Content-Type": "multipart/form-data"},
                 data: formData,
             }),
         onSuccess: (res) => {
@@ -312,7 +312,9 @@ const CompleteInformation = ({
                     )}
                 </div>
                 <div className="w-full">
-                    <Select onValueChange={(v) => setValue("nationality_id", Number(v))}>
+                    <Select
+                        onValueChange={(v) => setValue("nationality_id", Number(v))}
+                    >
                         <SelectTrigger
                             className="w-full border cursor-pointer py-5 border-default-divider rounded-xl px-3 text-gray-500">
                             <SelectValue placeholder={c.nationality}/>
@@ -341,7 +343,7 @@ const CompleteInformation = ({
             </div>
 
             <div className="flex flex-col gap-4 w-full rtl:items-end ">
-                <p className="text-gray-700 dark:text-gray-300 text-base">
+                <p className="text-Gray-700 text-base">
                     {c.upload_identification_document}
                 </p>
 
