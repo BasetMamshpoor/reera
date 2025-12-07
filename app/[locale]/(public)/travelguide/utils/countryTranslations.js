@@ -1,16 +1,7 @@
 // Complete translations for all 250+ countries in 4 languages
 // Data source: i18n-iso-countries library
 
-interface CountryTranslations {
-  [isoCode: string]: {
-    fa: string;
-    en: string;
-    ar: string;
-    tr: string;
-  };
-}
-
-const countryData: CountryTranslations = {
+const countryData = {
   "AD": { fa: "آندورا", en: "Andorra", ar: "أندورا", tr: "Andorra" },
   "AE": { fa: "امارات متحده عربی", en: "United Arab Emirates", ar: "الإمارات العربية المتحدة", tr: "Birleşik Arap Emirlikleri" },
   "AF": { fa: "افغانستان", en: "Afghanistan", ar: "أفغانستان", tr: "Afganistan" },
@@ -263,18 +254,18 @@ const countryData: CountryTranslations = {
   "ZW": { fa: "زیمبابوه", en: "Zimbabwe", ar: "زيمبابوي", tr: "Zimbabve" },
 };
 
-export function getCountryNameByCode(
-  isoCode: string,
-  lang: "fa" | "en" | "ar" | "tr"
-): string {
-  return countryData[isoCode]?.[lang] || countryData[isoCode]?.en || isoCode;
-}
-
-export function getAllCountriesTranslated(lang: "fa" | "en" | "ar" | "tr") {
-  return Object.keys(countryData)
-    .map(code => ({
-      isoCode: code,
-      name: getCountryNameByCode(code, lang)
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name, lang));
-}
+// export function getCountryNameByCode(
+//   isoCode,
+//   lang: "fa" | "en" | "ar" | "tr"
+// ) {
+//   return countryData[isoCode]?.[lang] || countryData[isoCode]?.en || isoCode;
+// }
+//
+// export function getAllCountriesTranslated(lang: "fa" | "en" | "ar" | "tr") {
+//   return Object.keys(countryData)
+//     .map(code => ({
+//       isoCode: code,
+//       name: getCountryNameByCode(code, lang)
+//     }))
+//     .sort((a, b) => a.name.localeCompare(b.name, lang));
+// }

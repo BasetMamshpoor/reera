@@ -1,33 +1,6 @@
 // Real immigration pathways data
 
-interface PathwayTemplate {
-  id: string;
-  title: string;
-  country: string;
-  baseSuccessRate: number;
-  cost: string;
-  duration: string;
-  requirements: string[];
-  documents: string[];
-  timeline: { step: string; duration: string }[];
-  nextSteps: string[];
-  officialLinks: { title: string; url: string }[];
-  difficulty: 'آسان' | 'متوسط' | 'سخت';
-  pros: string[];
-  cons: string[];
-  conditions: {
-    minAge?: number;
-    maxAge?: number;
-    minEducation?: string[];
-    minBudget?: string[];
-    minWorkExp?: number;
-    languages?: string[];
-    countries?: string[];
-    goals?: string[];
-  };
-}
-
-export const pathwayTemplates: PathwayTemplate[] = [
+export const pathwayTemplates = [
   // Germany Job Seeker Visa
   {
     id: 'germany_jobseeker',

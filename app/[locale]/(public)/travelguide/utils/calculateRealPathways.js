@@ -1,40 +1,8 @@
 import { pathwayTemplates } from './pathwayData';
 
-interface UserProfile {
-  age: string;
-  education: string;
-  workExperience: string;
-  workField: string;
-  languageType: string;
-  languageLevel: string;
-  maritalStatus: string;
-  familyMembers: string;
-  budget: string;
-  targetCountry: string;
-  immigrationGoal: string;
-}
 
-interface PathwayOption {
-  id: string;
-  title: string;
-  country: string;
-  successRate: number;
-  cost: string;
-  duration: string;
-  requirements: string[];
-  documents: string[];
-  timeline: { step: string; duration: string }[];
-  nextSteps: string[];
-  officialLinks: { title: string; url: string }[];
-  recommended: boolean;
-  difficulty: 'آسان' | 'متوسط' | 'سخت';
-  matchScore: number;
-  pros: string[];
-  cons: string[];
-}
-
-export function calculateRealPathways(profile: UserProfile): PathwayOption[] {
-  const pathways: PathwayOption[] = [];
+export function calculateRealPathways(profile) {
+  const pathways = [];
   const age = parseInt(profile.age);
   const workExp = parseInt(profile.workExperience);
 

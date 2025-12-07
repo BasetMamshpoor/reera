@@ -1,16 +1,8 @@
 // Complete translations for major cities worldwide in 4 languages
 // Organized by country for better maintainability
 
-interface CityTranslations {
-  [cityName: string]: {
-    fa: string;
-    en: string;
-    ar: string;
-    tr: string;
-  };
-}
 
-const cityData: CityTranslations = {
+const cityData = {
   // United States
   "New York": { fa: "نیویورک", en: "New York", ar: "نيويورك", tr: "New York" },
   "Los Angeles": { fa: "لس‌آنجلس", en: "Los Angeles", ar: "لوس أنجلوس", tr: "Los Angeles" },
@@ -4260,16 +4252,16 @@ const cityData: CityTranslations = {
 };
 
 export function getCityNameByName(
-  cityName: string,
-  lang: "fa" | "en" | "ar" | "tr"
-): string {
+  cityName,
+  lang
+) {
   return cityData[cityName]?.[lang] || cityName;
 }
 
 // Alias for backward compatibility
 export const getCityName = getCityNameByName;
 
-export function getAllCitiesTranslated(lang: "fa" | "en" | "ar" | "tr") {
+export function getAllCitiesTranslated(lang) {
   return Object.keys(cityData)
     .map(name => ({
       name: name,
@@ -4278,7 +4270,7 @@ export function getAllCitiesTranslated(lang: "fa" | "en" | "ar" | "tr") {
     .sort((a, b) => a.translatedName.localeCompare(b.translatedName, lang));
 }
 
-export function searchCities(query: string, lang: "fa" | "en" | "ar" | "tr", limit: number = 10) {
+export function searchCities(query, lang, limit = 10) {
   const lowerQuery = query.toLowerCase();
   return Object.keys(cityData)
     .filter(cityName => {
