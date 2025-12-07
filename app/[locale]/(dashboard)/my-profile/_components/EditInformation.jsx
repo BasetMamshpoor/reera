@@ -17,17 +17,38 @@ const EditInformation = () => {
     const dic = useTranslation();
     const e = dic.dashboard.myprofile.edit_information;
 
-    const [preview, setPreview] = useState(null);
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+    // profilePreview: data URL (local preview) OR remote URL from API
+    const [profilePreview, setProfilePreview] = useState(null);
+    const [identityPreview, setIdentityPreview] = useState(null);
+
+    // store actual File objects to send to backend
+    const [profileFile, setProfileFile] = useState(null);
+    const [identityFile, setIdentityFile] = useState(null);
+
+    const handleProfileChange = (e) => {
+        const file = e.target.files?.[0];
         if (file) {
+            setProfileFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPreview(reader.result);
+                setProfilePreview(reader.result);
             };
             reader.readAsDataURL(file);
         }
     };
+
+    const handleIdentityChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setIdentityFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setIdentityPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const {data: CompleteInformationData, isLoading} = useQuery({
         queryKey: ["complete-info"],
         queryFn: async () =>
@@ -36,6 +57,20 @@ const EditInformation = () => {
                 url: "/profile",
             }),
     });
+
+    // set initial previews from backend if exist (only once when data arrives)
+    React.useEffect(() => {
+        if (CompleteInformationData?.data) {
+            const p = CompleteInformationData.data;
+            // only set remote URL if there's no local preview/file (so we don't override user selection)
+            if (p.profile && !profileFile) {
+                setProfilePreview(p.profile);
+            }
+            if (p.identity_document && !identityFile) {
+                setIdentityPreview(p.identity_document);
+            }
+        }
+    }, [CompleteInformationData]); // do not include profileFile/identityFile to avoid overriding local selection
 
     return (
         <>
@@ -78,8 +113,21 @@ const EditInformation = () => {
                         </TabsList>
                         <TabsContent value="account-info">
                             <CompleteInformation
-                                preview={preview}
-                                handleFileChange={handleFileChange}
+                                // profile preview/file
+                                profilePreview={profilePreview}
+                                setProfilePreview={setProfilePreview}
+                                profileFile={profileFile}
+                                setProfileFile={setProfileFile}
+                                handleProfileChange={handleProfileChange}
+
+                                // identity preview/file
+                                identityPreview={identityPreview}
+                                setIdentityPreview={setIdentityPreview}
+                                identityFile={identityFile}
+                                setIdentityFile={setIdentityFile}
+                                handleIdentityChange={handleIdentityChange}
+
+                                // other props
                                 CompleteInformationData={CompleteInformationData}
                                 isLoading={isLoading}
                             />

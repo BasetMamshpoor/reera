@@ -1,214 +1,252 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Upload from "@/assets/icons/upload.svg";
 import Close from "@/assets/icons/close.svg";
 import Tick from "@/assets/icons/tick-circle.svg";
 import Spinner from "@/components/Spinner";
 import { useTranslation } from "@/app/[locale]/TranslationContext";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { request } from "@/lib/api";
 import { toast } from "sonner";
 
 const ResumeTab = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const fileInputRef = useRef(null);
-  const dic = useTranslation();
-  const r = dic.consultor.edit;
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
-  };
+    const fileInputRef = useRef(null);
+    const dic = useTranslation();
+    const r = dic.consultor.edit;
+    const queryClient = useQueryClient();
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
+    // selectedFile: File object that user picked (not yet uploaded)
+    // previewUrl: data URL (for local file) or remote URL (from server)
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
 
-      if (file.type.startsWith("image/")) {
+    // removedExisting: true if user chose to remove the existing server image (and didn't pick a new one)
+    // This flag will inform submit to send remove=1 so backend can delete the old file (optional)
+    const [removedExisting, setRemovedExisting] = useState(false);
+
+    // -----------------------
+    // fetch existing image from server (if any)
+    // -----------------------
+    const { data, isLoading: isFetching } = useQuery({
+        queryKey: ["show_resume_file"],
+        queryFn: async () =>
+            await request({
+                url: "/profile/show_resume_file",
+                method: "get",
+            }),
+        // don't refetch on window focus by default (optional)
+        staleTime: 1000 * 60 * 2,
+    });
+
+    // If server returns an image url, and user hasn't selected a new file, show it
+    useEffect(() => {
+        if (!selectedFile && data?.data?.video_url) {
+            setPreviewUrl(data.data.video_url);
+            setRemovedExisting(false);
+        }
+    }, [data, selectedFile]);
+
+    // cleanup object URL when component unmounts or previewUrl changes from a local blob
+    useEffect(() => {
+        return () => {
+            // if we created an object URL for selectedFile, revoke it
+            if (previewUrl && previewUrl.startsWith("blob:")) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // -----------------------
+    // handle file selection (user picks a new image)
+    // -----------------------
+    const handleFileSelect = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // revoke previous local object URL if existed
+        if (previewUrl && previewUrl.startsWith("blob:")) {
+            URL.revokeObjectURL(previewUrl);
+        }
+
         const url = URL.createObjectURL(file);
+        setSelectedFile(file);
         setPreviewUrl(url);
-      }
+        setRemovedExisting(false); // user replaced existing image with a new one
+    };
 
-      console.log("Selected file:", file);
-    }
-  };
+    // user clicks the big box to open file picker
+    const handleDivClick = () => {
+        fileInputRef.current?.click();
+    };
 
-  const handleDivClick = () => {
-    fileInputRef.current?.click();
-  };
+    // user removes preview (local or server) — mark removedExisting if server image was present
+    const handleRemove = () => {
+        // revoke local blob url if any
+        if (previewUrl && previewUrl.startsWith("blob:")) {
+            URL.revokeObjectURL(previewUrl);
+        }
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
+        // clear selectedFile and preview
+        setSelectedFile(null);
+        setPreviewUrl(null);
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+        // if server had an image (data) mark it removed so submit will tell backend to remove it
+        if (data?.data?.video_url) {
+            setRemovedExisting(true);
+        } else {
+            setRemovedExisting(false);
+        }
 
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      const file = files[0];
-      setSelectedFile(file);
+        // also clear file input element
+        if (fileInputRef.current) fileInputRef.current.value = "";
+    };
 
-      if (file.type.startsWith("image/")) {
-        const url = URL.createObjectURL(file);
-        setPreviewUrl(url);
-      }
+    // -----------------------
+    // upload mutation
+    // -----------------------
+    // On success: we update previewUrl with response url (if available), invalidate queries if needed
+    const mutation = useMutation({
+        mutationFn: async (formData) =>
+            await request({
+                url: "/profile/store_resume_file",
+                method: "post",
+                data: formData,
+                headers: { "Content-Type": "multipart/form-data" },
+            }),
+        onSuccess: (res) => {
+            toast.success("عکس با موفقیت ذخیره شد");
+            // if backend returns the new image url, update preview
+            const newUrl = res?.data?.video_url || res?.data?.resume_url || null;
+            if (newUrl) {
+                setPreviewUrl(newUrl);
+                setSelectedFile(null);
+                setRemovedExisting(false);
+            }
+            // optionally refresh the query that shows the image
+            queryClient.invalidateQueries(["show_resume_file"]);
+        },
+        onError: (e) => {
+            toast.error(e?.response?.data?.message || "خطا در آپلود فایل");
+        },
+    });
 
-      console.log("Dropped file:", file);
-    }
-  };
+    // -----------------------
+    // submit handler
+    // -----------------------
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-  const removeFile = () => {
-    setSelectedFile(null);
-    setPreviewUrl(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
+        // If user removed existing and didn't pick a new file -> tell backend to remove it
+        if (!selectedFile && removedExisting) {
+            const formData = new FormData();
+            formData.append("remove", "1"); // backend should handle this flag (optional)
+            mutation.mutate(formData);
+            return;
+        }
 
-  const mutation = useMutation({
-    mutationFn: async (data) =>
-      await request({
-        url: "/profile/resumeUpdate",
-        method: "post",
-        data,
-      }),
+        // if user picked a new file -> upload it (will replace server-side)
+        if (selectedFile) {
+            const formData = new FormData();
+            formData.append("resume_file", selectedFile); // change key if your backend expects different name
+            mutation.mutate(formData);
+            return;
+        }
 
-    onSuccess: () => {
-      toast.success("Your resume has been Updated");
-    },
-    onError: (e) => {
-      toast.error(`${e?.message} failed to update`);
-    },
-  });
+        // nothing to do
+        toast("تغییری برای ذخیره وجود ندارد");
+    };
 
-  return (
-    <div className=" flex flex-col gap-6 w-full h-full">
-      <div className="flex flex-col gap-4 w-full rtl:items-end">
-        <div className="w-full flex rtl:justify-end">
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileSelect}
-            accept="image/*,video/*"
-            className="hidden"
-          />
+    // -----------------------
+    // render
+    // -----------------------
+    return (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full h-full">
+            <div className="flex flex-col gap-4 w-full rtl:items-end">
+                <div className="w-full flex flex-col lg:flex-row gap-4 rtl:justify-end">
+                    {/* hidden file input */}
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileSelect}
+                        accept="image/*"
+                        className="hidden"
+                    />
 
-          <div
-            className="border w-full max-w-lg p-6 bg-alphaw-100 border-dashed rounded-lg border-default-divider flex flex-col items-center justify-center py-4 gap-4 cursor-pointer hover:border-Primary-300 transition-colors duration-200"
-            onClick={handleDivClick}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            style={{ minHeight: "200px" }}
-          >
-            <button className="p-4 bg-Gray-100 rounded-full hover:bg-Gray-200 transition-colors duration-200">
-              <Upload />
-            </button>
-            <div className="flex flex-col gap-2 text-center">
-              <div className="flex items-center gap-2 rtl:flex-row-reverse">
+                    {/* Upload box */}
+                    <div
+                        className="border w-full max-w-lg p-6 bg-alphaw-100 border-dashed rounded-lg border-default-divider flex flex-col items-center justify-center py-4 gap-4 cursor-pointer hover:border-Primary-300 transition-colors duration-200"
+                        onClick={handleDivClick}
+                        style={{ minHeight: "200px" }}
+                    >
+                        <button
+                            type="button"
+                            className="p-4 bg-Gray-100 rounded-full hover:bg-Gray-200 transition-colors duration-200"
+                        >
+                            <Upload />
+                        </button>
+
+                        <div className="flex flex-col gap-2 text-center">
+                            <div className="flex items-center gap-2 rtl:flex-row-reverse">
                 <span className="text-Primary-500 cursor-pointer hover:text-Primary-600">
                   کلیک کنید
                 </span>
-                <span className="text-Text-Secondary">
-                  یا فایل خود را در این محل قرار دهید
+                                <span className="text-Text-Secondary">
+                  یا عکس خود را در اینجا قرار دهید
                 </span>
-              </div>
-              <span className="text-Gray-400">
-                SVG, PNG, JPG or GIF (max. 800x400px)
-              </span>
-            </div>
-          </div>
+                            </div>
+                            <span className="text-Gray-400">JPG • PNG • GIF</span>
+                        </div>
+                    </div>
 
-          {previewUrl && (
-            <div className="flex flex-col gap-3 w-full max-w-lg rtl:items-end">
-              <div className="flex items-center justify-between w-full">
-                <h3 className="text-Gray-600 font-medium">پیش‌نمایش تصویر:</h3>
+                    {/* preview */}
+                    {previewUrl && (
+                        <div className="flex flex-col gap-3 w-full max-w-lg rtl:items-end border border-default-divider rounded-lg p-3 bg-alphaw-100">
+                            <div className="flex items-center justify-between w-full">
+                                <h3 className="text-Gray-600 font-medium">پیش‌نمایش تصویر:</h3>
+
+                                <div className="flex items-center gap-3">
+                                    {/* Remove preview (local or server) */}
+                                    <button
+                                        type="button"
+                                        onClick={handleRemove}
+                                        className="text-error-main hover:text-error-dark flex items-center gap-2 transition-colors duration-200"
+                                    >
+                                        <Close className="w-4 h-4 fill-error-main" />
+                                        حذف تصویر
+                                    </button>
+                                </div>
+                            </div>
+
+                            <img
+                                src={previewUrl}
+                                alt="preview"
+                                className="max-w-full max-h-64 object-contain rounded-md"
+                            />
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* actions */}
+            <div className="flex items-center gap-4 w-ful ltr:self-end rtl:self-start">
                 <button
-                  onClick={removeFile}
-                  className="text-error-main hover:text-error-dark flex items-center gap-2 transition-colors duration-200"
+                    type="submit"
+                    disabled={mutation.isPending || isFetching}
+                    className="flex gap-2 items-center justify-center px-6 py-2 bg-Primary-400 rounded-xl text-white dark:text-black whitespace-nowrap text-base font-bold cursor-pointer transition-all duration-100 hover:scale-[0.98] ease-in-out disabled:opacity-50 disabled:cursor-not-allowed "
                 >
-                  <Close className="w-4 h-4 fill-error-main" />
-                  حذف تصویر
+                    {mutation.isPending || isFetching ? (
+                        <Spinner size="small" />
+                    ) : (
+                        <>
+                            <Tick className="fill-white dark:fill-black w-5 h-5" />
+                            <p>{r.save_information}</p>
+                        </>
+                    )}
                 </button>
-              </div>
-
-              <div className="border border-default-divider rounded-lg p-3 bg-alphaw-100 w-full">
-                <div className="flex flex-col items-center gap-3">
-                  <img
-                    src={previewUrl}
-                    alt="پیش‌نمایش تصویر آپلود شده"
-                    className="max-w-full max-h-64 object-contain rounded-md"
-                    onLoad={() => URL.revokeObjectURL(previewUrl)}
-                  />
-                  <div className="text-center">
-                    <p className="text-Text-Secondary text-sm">
-                      {selectedFile.name}
-                    </p>
-                    <p className="text-Gray-400 text-xs">
-                      {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
-          )}
-
-          {selectedFile &&
-            selectedFile.type.startsWith("video/") &&
-            !previewUrl && (
-              <div className="flex flex-col gap-3 w-full max-w-lg rtl:items-end">
-                <div className="flex items-center justify-between w-full">
-                  <h3 className="text-Gray-600 font-medium">فایل ویدیویی:</h3>
-                  <button
-                    onClick={removeFile}
-                    className="text-error-main hover:text-error-dark flex items-center gap-2 transition-colors duration-200"
-                  >
-                    <Close className="w-4 h-4 fill-error-main" />
-                    حذف فایل
-                  </button>
-                </div>
-
-                <div className="border border-default-divider rounded-lg p-4 bg-alphaw-100 w-full">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-Primary-100 rounded-full">
-                      <Upload className="w-6 h-6 fill-Primary-500" />
-                    </div>
-                    <div className="flex flex-col">
-                      <p className="text-Text-Secondary text-sm font-medium">
-                        {selectedFile.name}
-                      </p>
-                      <p className="text-Gray-400 text-xs">
-                        {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-        </div>
-      </div>
-
-      <div className="flex items-center gap-4 w-ful ltr:self-end rtl:self-start">
-        <button
-          type="submit"
-          disabled={mutation.isPending}
-          className="flex gap-2 items-center justify-center px-6 py-2 bg-Primary-400 rounded-xl text-white dark:text-black whitespace-nowrap text-base font-bold cursor-pointer transition-all duration-100 hover:scale-[0.98] ease-in-out disabled:opacity-50 disabled:cursor-not-allowed "
-        >
-          {mutation.isPending ? (
-            <Spinner size="small" />
-          ) : (
-            <>
-              <p>{r.save_information}</p>
-              <Tick className="fill-white dark:fill-black w-5 h-5" />
-            </>
-          )}
-        </button>
-      </div>
-    </div>
-  );
+        </form>
+    );
 };
 
 export default ResumeTab;

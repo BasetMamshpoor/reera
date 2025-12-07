@@ -54,15 +54,15 @@ const Information = ({a, data}) => {
                     </p>
                     <div
                         className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6 ">
-                        {data?.cash === 1 && <div className="flex items-center gap-2">
+                        {!!data?.cash && <div className="flex items-center gap-2">
                             <Info className="fill-Primary-500"/>
                             <p className="text-sm lg:text-base text-secondary pt-1">{a.cash}</p>
                         </div>}
-                        {data?.check === 1 && <div className="flex items-center gap-2">
+                        {!!data?.check  && <div className="flex items-center gap-2">
                             <Info className="fill-Primary-500"/>
                             <p className="text-sm lg:text-base text-secondary pt-1">{a.check}</p>
                         </div>}
-                        {data?.installments === 1 && <div className="flex items-center gap-2">
+                        {!!data?.installments && <div className="flex items-center gap-2">
                             <Info className="fill-Primary-500"/>
                             <p className="text-sm lg:text-base text-secondary pt-1">{a.installments}</p>
                         </div>}

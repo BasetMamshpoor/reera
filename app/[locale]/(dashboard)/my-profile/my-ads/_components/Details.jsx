@@ -57,6 +57,15 @@ const Details = () => {
                             </p>
                         </TabsTrigger>
                         <TabsTrigger
+                            className="flex items-center max-w-[133px] w-full gap-4 px-3 py-2 border border-default-divider rounded-lg data-[state=active]:bg-Primary-400 data-[state=active]:text-white cursor-pointer"
+                            value="rejected"
+                            onClick={() => setTab("rejected")}
+                        >
+                            <p className="text-sm data-[state=active]:text-white pt-1">
+                                {a.rejected}
+                            </p>
+                        </TabsTrigger>
+                        <TabsTrigger
                             className="flex items-center rtl:max-w-[133px] ltr:max-w-[180px] w-full gap-4 px-3 py-2 border border-default-divider rounded-lg data-[state=active]:bg-Primary-400 data-[state=active]:text-white cursor-pointer"
                             value="pending"
                             onClick={() => setTab("pending")}
@@ -67,11 +76,11 @@ const Details = () => {
                         </TabsTrigger>
                         <TabsTrigger
                             className="flex items-center max-w-[133px] w-full gap-4 px-3 py-2 border border-default-divider rounded-lg data-[state=active]:bg-Primary-400 data-[state=active]:text-white cursor-pointer"
-                            value="rejected"
-                            onClick={() => setTab("rejected")}
+                            value="expired"
+                            onClick={() => setTab("expired")}
                         >
                             <p className="text-sm data-[state=active]:text-white pt-1">
-                                {a.rejected}
+                                {a.expired}
                             </p>
                         </TabsTrigger>
                         <TabsTrigger
@@ -80,9 +89,10 @@ const Details = () => {
                             onClick={() => setTab("sold")}
                         >
                             <p className="text-sm data-[state=active]:text-white pt-1">
-                                {a.expired}
+                                {a.sold}
                             </p>
                         </TabsTrigger>
+
                     </TabsList>
                     <div className="pt-6 w-full">
                         {isLoading ? (

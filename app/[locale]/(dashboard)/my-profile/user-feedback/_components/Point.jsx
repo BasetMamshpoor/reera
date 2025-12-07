@@ -23,7 +23,7 @@ const Point = ({a}) => {
             <div
                 className="flex flex-col lg:flex-row items-center p-6 gap-10 border border-gray-200 dark:border-[#374151] rounded-xl bg-white dark:bg-Surface-2 ">
                 <div
-                    className="flex flex-col items-center justify-center gap-3 pl-6 lg:border-l border-gray-200 dark:border-[#374151] h-full">
+                    className="flex flex-col items-center justify-center gap-3 px-6 ltr:lg:border-r rtl:lg:border-l border-gray-200 dark:border-[#374151] h-full">
                     <p className="text-xl text-[#142738] dark:text-[#D9EDF4] font-bold whitespace-nowrap">
                         {a.total_ratings}
                     </p>

@@ -61,18 +61,12 @@ const Information = ({data}) => {
                             </p>
                         </div>
                         <div className="flex flex-col lg:flex-row gap-2">
-                            <p className="text-sm text-Gray-700 whitespace-nowrap">
-                                {a.language}
-                            </p>
-                            <p className="text-sm text-secondary font-medium"></p>
+                            <p className="text-sm text-Gray-700 whitespace-nowrap">{a.language}</p>
+                            <p className="text-sm text-secondary font-medium">{data?.general?.language}</p>
                         </div>
                         <div className="flex flex-col lg:flex-row gap-2">
-                            <p className="text-sm text-Gray-700 whitespace-nowrap">
-                                {a.degree}
-                            </p>
-                            <p className="text-sm text-secondary font-medium whitespace-nowrap">
-                                {/*{data?.category}*/}
-                            </p>
+                            <p className="text-sm text-Gray-700 whitespace-nowrap">{a.degree}</p>
+                            <p className="text-sm text-secondary font-medium whitespace-nowrap">{data?.general?.degree}</p>
                         </div>
                         <div className="flex flex-col lg:flex-row gap-2">
                             <p className="text-sm text-Gray-700 whitespace-nowrap">

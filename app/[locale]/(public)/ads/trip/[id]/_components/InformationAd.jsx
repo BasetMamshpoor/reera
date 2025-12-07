@@ -13,10 +13,10 @@ import User from "@/assets/icons/profile.svg";
 import { useMutation } from "@tanstack/react-query";
 import { request } from "@/lib/api";
 import Spinner from "@/components/Spinner";
-import ModalRequest from "./ModalRequest";
+import ModalRequest from "../../../_components/ModalRequest";
 
 import { useParams } from "next/navigation";
-import ModalChatAndCall from "../_components/ModalChatAndCall";
+import ModalChatAndCall from "../../../_components/ModalCall";
 
 const InformationAd = ({ a, locale, data, isLoading, session }) => {
   const [currencySelect, setCurrencySelect] = useState("IRT"); // Default currency for Iran
@@ -246,7 +246,7 @@ const InformationAd = ({ a, locale, data, isLoading, session }) => {
           {/* Seller Profile Card */}
           <Link
             href="/"
-            className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-105 transition-transform w-full"
+            className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-95 transition-transform w-full"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">

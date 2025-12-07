@@ -5,7 +5,6 @@ import Providers from "../../../Providers";
 import {request} from "@/lib/api";
 import VehicesSidebar from "@/app/[locale]/(public)/ads/vehicles/_components/VehiclesSidebar";
 import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
-
 export const metadata = {
     title: `Reera | Visa Ads`,
 };

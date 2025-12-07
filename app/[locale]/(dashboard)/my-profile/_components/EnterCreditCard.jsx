@@ -35,7 +35,7 @@ const EnterCreditCard = ({ setIsModalOpen, mode = "add", cardData = null }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data, isPending) => {
       const url =
         mode === "edit"
           ? `/profile/finances/${cardData.id}`
@@ -83,12 +83,6 @@ const EnterCreditCard = ({ setIsModalOpen, mode = "add", cardData = null }) => {
     <div className="flex flex-col gap-6 justify-between h-full p-8">
       <div className="flex flex-row w-full justify-between items-center">
         <h2 className="text-xl font-semibold text-Gray-700">{title}</h2>
-        <Close
-          onClick={() => {
-            setIsModalOpen(false);
-          }}
-          className="fill-error-main cursor-pointer"
-        />
       </div>
 
       <span className="w-full max-w-md text-lg text-Text-Secondary">
@@ -118,22 +112,22 @@ const EnterCreditCard = ({ setIsModalOpen, mode = "add", cardData = null }) => {
           )}
         </div>
 
-        <div className="flex flex-row items-center w-full self-start gap-6 mt-auto ltr:justify-end rtl:justify-start">
+        <div className="grid grid-cols-2 items-center w-full gap-6 mt-auto ltr:justify-end rtl:justify-start">
           <button
             onClick={() => {
               setIsModalOpen(false);
             }}
             type="button"
-            className="py-4 lg:w-32 flex-1 border-[2px] w-full cursor-pointer border-warning-main text-warning-main rounded-lg"
+            className="py-2 flex-1 border-[2px] w-full cursor-pointer border-warning-main text-warning-main rounded-lg"
           >
             {e.cancel}
           </button>
           <button
             type="submit"
-            disabled={isSubmitting}
-            className="flex cursor-pointer flex-1 w-full flex-row gap-4 items-center justify-center text-white bg-Primary-400 py-4 lg:w-42 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={mutation.isPending}
+            className="flex cursor-pointer flex-1 w-full flex-row gap-4 items-center justify-center text-white bg-Primary-400 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? loadingText : submitText}
+            {mutation.isPending ? <p className="text-xl">...</p> : e.submit}
           </button>
         </div>
       </form>
