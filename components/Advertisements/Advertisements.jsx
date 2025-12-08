@@ -261,7 +261,7 @@ const Advertisements = ({isOnProfile = false}) => {
                     isOnProfile ? "lg:grid-cols-3" : "lg:grid-cols-4"
                 } lg:gap-x-6`}
             >
-                {adsToShow.map((ad) => (
+                {adsToShow?.map((ad) => (
                     <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
                 ))}
             </div>
@@ -300,7 +300,7 @@ const Advertisements = ({isOnProfile = false}) => {
                         </button>
 
                         {/* Page Numbers */}
-                        {pageNumbers.map((page, index) => (
+                        {pageNumbers?.map((page, index) => (
                             <button
                                 key={index}
                                 onClick={() =>
