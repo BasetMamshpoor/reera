@@ -17,10 +17,10 @@ export const links = [
       pathname === `/${locale}/transportation`,
   },
   {
-    href: "/[locale]/legaladviser",
+    href: "/[locale]/legal-services",
     label: { en: "Legal Advisor", fa: "مشاور یار" },
     activeCondition: (pathname, locale) =>
-      pathname === `/${locale}/legaladviser`,
+      pathname === `/${locale}/legal-services`,
   },
   {
     href: "/[locale]/weblog",
