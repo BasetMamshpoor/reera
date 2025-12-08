@@ -197,7 +197,7 @@ const CategoriesModified = () => {
   ];
   return (
     <div className="w-full lg:flex lg:flex-wrap grid grid-cols-3 justify-center gap-2  mt-8 px-4 lg:px-0">
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <Link
           key={category.id}
           href={category.href}

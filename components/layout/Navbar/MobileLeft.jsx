@@ -46,7 +46,7 @@ const MobileLeft = () => {
       />
       {open && (
         <div className="absolute top-6 mt-2 start-2 bg-white shadow rounded w-20 overflow-hidden">
-          {languages.map((lang) => (
+          {languages?.map((lang) => (
             <button
               key={lang.code}
               onClick={() => {

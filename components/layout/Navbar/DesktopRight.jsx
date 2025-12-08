@@ -32,7 +32,7 @@ const DesktopRight = () => {
 
             {open && (
                 <div className="absolute start-28 top-2 mt-2 bg-white shadow rounded w-20 overflow-hidden">
-                    {languages.map((lang) => (
+                    {languages?.map((lang) => (
                         <button
                             key={lang.code}
                             onClick={() => {

@@ -282,7 +282,7 @@ const MainSearchbar = ({}) => {
                     <ScrollArea
                         className="w-72 h-full ltr:border-r ltr:border-r-gray-200 rtl:border-r-0 rtl:border-l rtl:border-l-gray-200">
                         <div className="space-y-0">
-                            {categories.map((category) => (
+                            {categories?.map((category) => (
                                 <div
                                     key={category.id}
                                     className="p-4 cursor-pointer hover:bg-primary-50  flex items-center gap-2 text-lg  transition-all duration-200 rtl:flex-row-reverse rtl:justify-start ltr:hover:border-r-4 ltr:hover:border-r-Primary-400 rtl:hover:border-r-0 rtl:hover:border-l-4 rtl:hover:border-l-Primary-400 hover:bg-Primary-50"
@@ -305,7 +305,7 @@ const MainSearchbar = ({}) => {
                                     {hoveredCategory.title}
                                 </h3>
                                 <div className="grid grid-cols-2 gap-2">
-                                    {getAllSubcategories(hoveredCategory).map(
+                                    {getAllSubcategories(hoveredCategory)?.map(
                                         (subcategory, index) => (
                                             <Link
                                                 href={`/${locale}/ads/${hoveredCategory.slug}/?category=${encodeURIComponent(subcategory.id)}`}
