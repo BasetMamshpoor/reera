@@ -6,6 +6,7 @@ import { DocumentTimeline } from './DocumentTimeline';
 import { CheckCircle2, AlertCircle, Clock, DollarSign, FileText, ArrowRight, TrendingUp, Award, ChevronRight, ChevronLeft, Globe, Briefcase, GraduationCap, Users, Languages, Target, Wallet, ExternalLink, ThumbsUp, ThumbsDown, MessageCircle } from 'lucide-react';
 import { calculateRealPathways } from '../../travelguide/utils/calculateRealPathways';
 import {useParams, useRouter} from "next/navigation";
+import Link from "next/link";
 
 export function LegalServicesPage() {
     const router = useRouter();
@@ -768,13 +769,13 @@ export function LegalServicesPage() {
                     </p>
 
                     {/* Chat Button */}
-                    <button
-                        onClick={() => router.push(`${locale}/migration-chatbot`)}
+                    <Link href={`/${locale}/migration-chatbot`}
                         className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-xl hover:shadow-xl transition-all transform hover:-translate-y-1 font-medium"
                     >
                         <MessageCircle className="w-5 h-5" />
-                        یا با مهاجریار چت کنید (مثل ChatGPT)
-                    </button>
+                        <p className="pt-1">یا با مهاجریار چت کنید (مثل ChatGPT)</p>
+
+                    </Link>
                 </div>
             </div>
 
@@ -808,14 +809,14 @@ export function LegalServicesPage() {
                                 <div className="hidden lg:block text-xs text-center text-[#64656f]">
                                     {getStepTitle(step)}
                                 </div>
-                                {step < totalSteps && (
-                                    <div
-                                        className={`absolute h-1 w-[calc(100%/6)] mt-5 transition-all ${
-                                            step < currentStep ? 'bg-green-500' : 'bg-gray-200'
-                                        }`}
-                                        style={{ right: `${(6 - step) * (100 / 6)}%` }}
-                                    />
-                                )}
+                                {/*{step < totalSteps && (*/}
+                                {/*    <div*/}
+                                {/*        className={`absolute h-1 w-[calc(100%/6)] mt-5 transition-all ${*/}
+                                {/*            step < currentStep ? 'bg-green-500' : 'bg-gray-200'*/}
+                                {/*        }`}*/}
+                                {/*        style={{ right: `${(6 - step) * (100 / 6)}%` }}*/}
+                                {/*    />*/}
+                                {/*)}*/}
                             </div>
                         ))}
                     </div>

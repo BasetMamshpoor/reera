@@ -139,8 +139,8 @@ const countriesData = [
 ];
 
 export function CountryComparison() {
-    const [selectedCountries, setSelectedCountries] = useState>(['germany', 'canada', 'australia']);
-    const [viewMode, setViewMode] = useState<'radar' | 'bar' | 'table'>('radar');
+    const [selectedCountries, setSelectedCountries] = useState(['germany', 'canada', 'australia']);
+    const [viewMode, setViewMode] = useState('radar');
     const [showDetails, setShowDetails] = useState(false);
 
     const toggleCountry = (countryId) => {
