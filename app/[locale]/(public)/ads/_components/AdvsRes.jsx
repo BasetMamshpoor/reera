@@ -20,6 +20,7 @@ import ColAds from "./ColAds";
 import RowsAds from "./RowsAds";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useCountry} from "@/app/[locale]/CountryProvider";
+import JobSearch from "@/components/Advertisements/JobSearch";
 
 const AdvsRes = ({page, link, category_slug, category_id}) => {
     const router = useRouter();
@@ -28,6 +29,7 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
     const dic = useTranslation();
     const {selectedCities} = useCountry()
     const a = dic.all_ads.sidebar;
+    const d = dic.public.profile.dashboard;
 
     const {data, isLoading} = useQuery({
         queryKey: ["ads", page, category_slug, category_id, sort],
@@ -43,7 +45,7 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
                 },
             }),
     });
-
+    console.log(data)
     const goToPage = (newPage) => {
         router.push(`?page=${newPage}`);
     };
@@ -93,11 +95,11 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
                     </div>
                 </div>
             </div>
-            {isRow ? (
-                <RowsAds link={link} data={data?.data || []} isRow={isRow}/>
-            ) : (
-                <ColAds link={link} data={data?.data || []} isRow={isRow}/>
-            )}
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full`}>
+                {data?.data?.map((item) => (
+                    <JobSearch key={item.id} link={link} isRow={isRow} item={item} d={d}/>
+                ))}
+            </div>
             <AdvPagination
                 setPage={goToPage}
                 totalPages={data?.last_page}

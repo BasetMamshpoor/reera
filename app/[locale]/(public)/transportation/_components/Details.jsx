@@ -8,6 +8,7 @@ import {
 // import {MobileNavAndSearch} from './MobileNavAndSearch';
 import {TrustBadge, UrgentBadge} from '../_components/TrustBadge';
 import {useParams, useRouter} from "next/navigation";
+import {Button} from "@/components/ui/button";
 
 
 // Mock data - در production از API گرفته می‌شود
@@ -502,7 +503,7 @@ export function Details() {
     if (!ad) {
         return (
             <div className="min-h-screen bg-[#f5f7fa] flex items-center justify-center">
-                <p className="text-[#64656f]">آگهی یافت نشد</p>
+                <p className="text-Gray-600">آگهی یافت نشد</p>
             </div>
         );
     }
@@ -512,20 +513,20 @@ export function Details() {
         : ad.rating || 0;
 
     return (
-        <div className="min-h-screen bg-[#f5f7fa]" dir="rtl">
+        <div className="h-full overflow-hidden scroll-hidden w-full">
 
             {/* Mobile Navbar */}
             <div className="md:hidden">
                 {/*<MobileNavAndSearch currentPage="transport"/>*/}
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-8 mt-16 md:mt-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-8 ">
                 {/* Back Button */}
                 <button
                     onClick={() => router.back()}
-                    className="flex items-center gap-2 text-[#64656f] hover:text-[#142738] mb-4 md:mb-6 transition-colors"
+                    className="flex items-center gap-2 text-Gray-600 cursor-pointer mb-4 md:mb-6 transition-colors"
                 >
-                    <ArrowRight className="size-5 scale-x-[-1]" />
+                    <ArrowRight className="size-5 scale-x-[-1] rtl:rotate-180" />
                     <span>بازگشت</span>
                 </button>
 
@@ -533,11 +534,11 @@ export function Details() {
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-4 md:space-y-6">
                         {/* Ad Card */}
-                        <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm">
+                        <div className="bg-surface rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm">
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2 mb-3 flex-wrap">
-                                        <h1 className="text-[#142738]">{ad.title}</h1>
+                                        <h1 className="text-Primary-950">{ad.title}</h1>
                                         {ad.verified && (
                                             <CheckCircle className="size-5 text-[#4299c1] flex-shrink-0"/>
                                         )}
@@ -548,7 +549,7 @@ export function Details() {
                                             <TrustBadge successfulDeliveries={ad.successfulDeliveries}/>
                                         </div>
                                     )}
-                                    <div className="flex items-center gap-3 text-[#64656f] text-sm">
+                                    <div className="flex items-center gap-3 text-Gray-600 text-sm">
                                         <div className="flex items-center gap-2">
                                             <MapPin className="size-4"/>
                                             <span>{ad.from}</span>
@@ -590,8 +591,8 @@ export function Details() {
                             )}
 
                             <div className="border-t border-gray-100 pt-4 mb-4">
-                                <h3 className="text-[#142738] mb-2">توضیحات</h3>
-                                <p className="text-[#64656f] leading-relaxed">{ad.description}</p>
+                                <h3 className="text-Primary-950 mb-2">توضیحات</h3>
+                                <p className="text-Gray-600 leading-relaxed">{ad.description}</p>
                             </div>
 
                             {/* Additional Info */}
@@ -599,48 +600,48 @@ export function Details() {
                                 {ad.packageType && (
                                     <div className="flex items-center gap-2 text-sm">
                                         <Package className="size-4 text-[#4299c1]"/>
-                                        <span className="text-[#64656f]">نوع بسته:</span>
-                                        <span className="text-[#142738]">{ad.packageType}</span>
+                                        <span className="text-Gray-600">نوع بسته:</span>
+                                        <span className="text-Primary-950">{ad.packageType}</span>
                                     </div>
                                 )}
                                 {ad.weight && (
                                     <div className="flex items-center gap-2 text-sm">
                                         <Package className="size-4 text-[#4299c1]"/>
-                                        <span className="text-[#64656f]">وزن:</span>
-                                        <span className="text-[#142738]">{ad.weight}</span>
+                                        <span className="text-Gray-600">وزن:</span>
+                                        <span className="text-Primary-950">{ad.weight}</span>
                                     </div>
                                 )}
                                 {ad.capacity && (
                                     <div className="flex items-center gap-2 text-sm">
                                         <Package className="size-4 text-[#4299c1]"/>
-                                        <span className="text-[#64656f]">ظرفیت:</span>
-                                        <span className="text-[#142738]">{ad.capacity}</span>
+                                        <span className="text-Gray-600">ظرفیت:</span>
+                                        <span className="text-Primary-950">{ad.capacity}</span>
                                     </div>
                                 )}
                                 {ad.vehicle && (
                                     <div className="flex items-center gap-2 text-sm">
                                         <Car className="size-4 text-[#4299c1]"/>
-                                        <span className="text-[#64656f]">وسیله:</span>
-                                        <span className="text-[#142738]">{ad.vehicle}</span>
+                                        <span className="text-Gray-600">وسیله:</span>
+                                        <span className="text-Primary-950">{ad.vehicle}</span>
                                     </div>
                                 )}
                                 {ad.seatsAvailable && (
                                     <div className="flex items-center gap-2 text-sm">
                                         <Users className="size-4 text-[#4299c1]"/>
-                                        <span className="text-[#64656f]">صندلی خالی:</span>
-                                        <span className="text-[#142738]">{ad.seatsAvailable}</span>
+                                        <span className="text-Gray-600">صندلی خالی:</span>
+                                        <span className="text-Primary-950">{ad.seatsAvailable}</span>
                                     </div>
                                 )}
                             </div>
 
                             {ad.acceptedTypes && ad.acceptedTypes.length > 0 && (
                                 <div className="border-t border-gray-100 pt-4 mt-4">
-                                    <p className="text-[#64656f] text-sm mb-2">نوع بسته‌های قابل قبول:</p>
+                                    <p className="text-Gray-600 text-sm mb-2">نوع بسته‌های قابل قبول:</p>
                                     <div className="flex flex-wrap gap-2">
                                         {ad.acceptedTypes.map((type, idx) => (
                                             <span
                                                 key={idx}
-                                                className="px-3 py-1 bg-[#f5f7fa] text-[#142738] text-sm rounded-lg"
+                                                className="px-3 py-1 bg-[#f5f7fa] text-Primary-950 text-sm rounded-lg"
                                             >
                         {type}
                       </span>
@@ -651,23 +652,24 @@ export function Details() {
                         </div>
 
                         {/* Reviews Section */}
-                        <div className="bg-white rounded-2xl p-6 shadow-sm">
+                        <div className="bg-surface rounded-2xl p-6 shadow-sm">
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center gap-3">
-                                    <h2 className="text-[#142738]">نظرات و امتیازات</h2>
+                                    <h2 className="text-Primary-950">نظرات و امتیازات</h2>
                                     <div className="flex items-center gap-2">
                                         <Star className="size-5 text-yellow-500 fill-yellow-500"/>
-                                        <span className="text-[#142738]">{avgRating.toFixed(1)}</span>
-                                        <span className="text-[#64656f] text-sm">({reviews.length} نظر)</span>
+                                        <span className="text-Primary-950">{avgRating.toFixed(1)}</span>
+                                        <span className="text-Gray-600 text-sm">({reviews.length} نظر)</span>
                                     </div>
                                 </div>
                                 {!hasSubmittedReview && (
-                                    <button
+                                    <Button
+                                        type="button"
                                         onClick={() => setShowReviewForm(!showReviewForm)}
-                                        className="px-4 py-2 bg-[#4299c1] text-white rounded-xl hover:bg-[#3a89b0] transition-colors text-sm"
+                                        className="px-8 py-2 bg-[#4299c1] text-white rounded-xl hover:bg-[#3a89b0] transition-colors text-sm"
                                     >
                                         ثبت نظر
-                                    </button>
+                                    </Button>
                                 )}
                                 {hasSubmittedReview && (
                                     <div className="flex items-center gap-2 text-sm text-green-600">
@@ -679,10 +681,10 @@ export function Details() {
 
                             {/* Review Form */}
                             {showReviewForm && (
-                                <div className="mb-6 p-4 bg-[#f5f7fa] rounded-xl">
-                                    <h3 className="text-[#142738] mb-3">نظر شما</h3>
+                                <div className="mb-6 p-4 bg-surface rounded-xl">
+                                    <h3 className="text-Primary-950 mb-3">نظر شما</h3>
                                     <div className="mb-3">
-                                        <label className="block text-sm text-[#64656f] mb-2">امتیاز</label>
+                                        <label className="block text-sm text-Gray-600 mb-2">امتیاز</label>
                                         <div className="flex gap-2">
                                             {[1, 2, 3, 4, 5].map((star) => (
                                                 <button
@@ -702,7 +704,7 @@ export function Details() {
                                         </div>
                                     </div>
                                     <div className="mb-3">
-                                        <label className="block text-sm text-[#64656f] mb-2">نظر شما</label>
+                                        <label className="block text-sm text-Gray-600 mb-2">نظر شما</label>
                                         <textarea
                                             value={newReview.comment}
                                             onChange={(e) => setNewReview({...newReview, comment: e.target.value})}
@@ -712,18 +714,20 @@ export function Details() {
                                         />
                                     </div>
                                     <div className="flex gap-2">
-                                        <button
+                                        <Button
+                                            type="button"
                                             onClick={handleSubmitReview}
-                                            className="px-4 py-2 bg-[#4299c1] text-white rounded-xl hover:bg-[#3a89b0] transition-colors"
+                                            className="px-8 py-2 bg-[#4299c1] text-white rounded-xl hover:bg-[#3a89b0] transition-colors"
                                         >
                                             ثبت نظر
-                                        </button>
-                                        <button
+                                        </Button>
+                                        <Button
+                                            type="button"
                                             onClick={() => setShowReviewForm(false)}
-                                            className="px-4 py-2 bg-gray-200 text-[#142738] rounded-xl hover:bg-gray-300 transition-colors"
+                                            className="px-8 py-2 bg-Gray-200 text-Primary-950 rounded-xl hover:bg-Gray-300 transition-colors"
                                         >
                                             انصراف
-                                        </button>
+                                        </Button>
                                     </div>
                                 </div>
                             )}
@@ -740,25 +744,25 @@ export function Details() {
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-[#142738]">{review.userName}</span>
+                                                        <span className="text-Primary-950">{review.userName}</span>
                                                         {review.verified && (
                                                             <CheckCircle className="size-4 text-[#4299c1]"/>
                                                         )}
                                                     </div>
-                                                    <span className="text-xs text-[#64656f]">{review.date}</span>
+                                                    <span className="text-xs text-Gray-600">{review.date}</span>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 <Star className="size-4 text-yellow-500 fill-yellow-500"/>
-                                                <span className="text-[#142738] text-sm">{review.rating}</span>
+                                                <span className="text-Primary-950 text-sm">{review.rating}</span>
                                             </div>
                                         </div>
-                                        <p className="text-[#64656f] pr-12">{review.comment}</p>
+                                        <p className="text-Gray-600 pr-12">{review.comment}</p>
                                     </div>
                                 ))}
 
                                 {reviews.length === 0 && (
-                                    <p className="text-center text-[#64656f] py-8">
+                                    <p className="text-center text-Gray-600 py-8">
                                         هنوز نظری ثبت نشده است
                                     </p>
                                 )}
@@ -768,7 +772,7 @@ export function Details() {
 
                     {/* Sidebar */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm lg:sticky lg:top-24">
+                        <div className="bg-surface rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm lg:sticky lg:top-24">
                             {/* Owner Info */}
                             <div className="mb-6 pb-6 border-b border-gray-100">
                                 <div className="flex items-center gap-3 mb-4">
@@ -778,7 +782,7 @@ export function Details() {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-2">
-                                            <h3 className="text-[#142738]">{ad.ownerName}</h3>
+                                            <h3 className="text-Primary-950">{ad.ownerName}</h3>
                                             {ad.verified && (
                                                 <Shield className="size-4 text-[#4299c1]"/>
                                             )}
@@ -786,7 +790,7 @@ export function Details() {
                                         {ad.rating && (
                                             <div className="flex items-center gap-1 mt-1">
                                                 <Star className="size-4 text-yellow-500 fill-yellow-500"/>
-                                                <span className="text-sm text-[#64656f]">
+                                                <span className="text-sm text-Gray-600">
                           {ad.rating} ({ad.reviewCount} نظر)
                         </span>
                                             </div>
@@ -802,13 +806,13 @@ export function Details() {
                                 )}
 
                                 {ad.ownerPhone && (
-                                    <div className="flex items-center gap-2 text-sm text-[#64656f] mb-2">
+                                    <div className="flex items-center gap-2 text-sm text-Gray-600 mb-2">
                                         <Phone className="size-4"/>
                                         <span>{ad.ownerPhone}</span>
                                     </div>
                                 )}
                                 {ad.ownerEmail && (
-                                    <div className="flex items-center gap-2 text-sm text-[#64656f]">
+                                    <div className="flex items-center gap-2 text-sm text-Gray-600">
                                         <Mail className="size-4"/>
                                         <span>{ad.ownerEmail}</span>
                                     </div>
@@ -840,15 +844,15 @@ export function Details() {
                             <div className="mt-6 pt-6 border-t border-gray-100 space-y-3">
                                 <div className="flex items-center gap-3 text-sm">
                                     <Shield className="size-5 text-green-500"/>
-                                    <span className="text-[#64656f]">کاربر تایید شده</span>
+                                    <span className="text-Gray-600">کاربر تایید شده</span>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm">
                                     <Award className="size-5 text-yellow-500"/>
-                                    <span className="text-[#64656f]">عضو برتر ریرا</span>
+                                    <span className="text-Gray-600">عضو برتر ریرا</span>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm">
                                     <ThumbsUp className="size-5 text-blue-500"/>
-                                    <span className="text-[#64656f]">۹۵٪ رضایت مشتریان</span>
+                                    <span className="text-Gray-600">۹۵٪ رضایت مشتریان</span>
                                 </div>
                             </div>
                         </div>
@@ -860,22 +864,22 @@ export function Details() {
             {showChat && (
                 <div className="fixed inset-0 bg-black/50 flex items-end md:items-center justify-center md:p-4 z-50">
                     <div
-                        className="bg-white rounded-t-2xl md:rounded-2xl w-full max-w-2xl h-[90vh] md:max-h-[80vh] flex flex-col">
+                        className="bg-surface rounded-t-2xl md:rounded-2xl w-full max-w-2xl h-[90vh] md:max-h-[80vh] flex flex-col">
                         {/* Chat Header */}
-                        <div className="flex items-center justify-between p-3 md:p-4 border-b border-gray-200">
+                        <div className="flex items-center justify-between p-3 md:p-4 border-b border-Gray-200">
                             <div className="flex items-center gap-3">
                                 <div
-                                    className="size-10 bg-[#4299c1] rounded-full flex items-center justify-center text-white">
+                                    className="size-10 bg-[#4299c1] rounded-full flex items-center justify-center text-Gray-50">
                                     {ad.ownerName.charAt(0)}
                                 </div>
                                 <div>
-                                    <h3 className="text-[#142738]">{ad.ownerName}</h3>
+                                    <h3 className="text-Primary-950">{ad.ownerName}</h3>
                                     <span className="text-xs text-green-500">آنلاین</span>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setShowChat(false)}
-                                className="text-[#64656f] hover:text-[#142738] transition-colors"
+                                className="text-Gray-600 transition-colors"
                             >
                                 <X className="size-6"/>
                             </button>
@@ -892,11 +896,11 @@ export function Details() {
                                         <div className={`rounded-2xl px-4 py-2 ${
                                             msg.isCurrentUser
                                                 ? 'bg-[#4299c1] text-white'
-                                                : 'bg-[#f5f7fa] text-[#142738]'
+                                                : 'bg-Primary-50 text-Primary-950'
                                         }`}>
                                             <p>{msg.text}</p>
                                         </div>
-                                        <span className={`text-xs text-[#64656f] mt-1 block ${
+                                        <span className={`text-xs text-Gray-600 mt-1 block ${
                                             msg.isCurrentUser ? 'text-right' : 'text-left'
                                         }`}>
                       {msg.timestamp}

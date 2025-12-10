@@ -3,11 +3,11 @@ import React from "react";
 import Image from "next/image";
 import Category from "@/assets/icons/Category.svg";
 import Location from "@/assets/icons/location.svg";
-import Cut from "@/assets/images/wave-haikei.svg";
 import Home from "@/assets/icons/home-hashtag.svg";
+import Cut from "@/assets/images/wave-haikei.svg";
 import Link from "next/link";
 
-const Card = ({isRow, i, Type, link}) => {
+const Card = ({isRow, i, link}) => {
 
     return (
         <>
@@ -36,7 +36,7 @@ const Card = ({isRow, i, Type, link}) => {
                                 </div>
                                 <div className="flex flex-col gap-1 md:gap-3">
                                     <div className="flex items-center gap-2">
-                                        {Type === "housing" ?
+                                        {i.custom_info.type === "housing" ?
                                             <Home className="!w-5 !h-5 md:!w-6 md:!h-6 fill-Gray-800"/> :
                                             <Category className="!w-5 !h-5 md:!w-6 md:!h-6 fill-Gray-800"/>
                                         }
@@ -99,7 +99,7 @@ const Card = ({isRow, i, Type, link}) => {
                             <Cut className="!w-full !h-full fill-white dark:fill-surface border-0 "/>
                         </div>
                     </div>
-                    <div className="relative z-10 flex flex-col px-4 md:p-5 md:pt-0 gap-4 h-full">
+                    <div className="relative z-10 flex flex-col px-4 pb-4 md:p-5 md:pt-0 gap-4 h-full">
                         <div className="flex flex-col gap-3 flex-1">
                             <div className="flex items-center justify-between w-full">
                                 <div

@@ -1,7 +1,7 @@
 "use client"
 import {useState} from 'react';
 import {TrustBadge, UrgentBadge} from './TrustBadge';
-import {PostAdForm} from './PostAdForm';
+import {PostAdModal} from './PostAdForm';
 import {
     Package, Users, MapPin, Calendar, Clock, Car, Plane,
     Shield, CheckCircle, ArrowRight, Search, Filter, Star,
@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Link from "next/link";
 import {useParams} from "next/navigation";
+import {Button} from "@/components/ui/button";
 
 
 const samplePackageSendAds = [
@@ -257,7 +258,7 @@ const roleConfig = {
 export function TransportPage() {
     const [activeRole, setActiveRole] = useState('send-package');
     const [showForm, setShowForm] = useState(false);
-    const [showPostAdForm, setShowPostAdForm] = useState(false);
+    const [open, setOpen] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
     const [searchOrigin, setSearchOrigin] = useState('');
     const [searchDestination, setSearchDestination] = useState('');
@@ -314,27 +315,25 @@ export function TransportPage() {
     const currentAds = filterAds(getCurrentAds());
 
     return (
-        <div className="min-h-screen bg-gray-50" dir="rtl">
-            {/* Navigation */}
-
-            {/* Hero Section */}
-            <section className="relative bg-gradient-to-b from-[#4299c1]/10 to-white py-16">
-                <div className="max-w-[1440px] mx-auto px-[80px]">
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg mb-6">
+        <div className="h-full overflow-hidden scroll-hidden w-full">
+            <section className="relative w-full">
+                <div className=" mx-auto  w-full">
+                    <div className="text-center mb-8 bg-gradient-to-b from-Primary-100 to-surface py-10 w-full">
+                        <div
+                            className="inline-flex items-center gap-3 bg-surface px-6 py-3 rounded-full shadow-lg mb-6">
                             <Car className="size-6 text-[#4299c1]"/>
-                            <span className="text-[#142738]">پلتفرم هوشمند حمل و نقل اشتراکی</span>
+                            <span className="text-Primary-950 pt-1">پلتفرم هوشمند حمل و نقل اشتراکی</span>
                         </div>
-                        <h1 className="text-5xl text-[#142738] mb-4">
+                        <h1 className="text-2xl lg:text-5xl text-Primary-950 mb-4">
                             حمل و نقل اشتراکی
                         </h1>
-                        <p className="text-xl text-[#64656f] max-w-3xl mx-auto">
+                        <p className="lg:text-xl text-Gray-500 max-w-3xl mx-auto">
                             ارسال بسته با مسافر یا پیدا کردن هم‌سفر — راهی اقتصادی، سریع و مطمئن
                         </p>
                     </div>
 
                     {/* Role Selection Cards */}
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto p-6">
                         {(Object.entries(roleConfig)).map(([role, config]) => {
                             const Icon = config.icon;
                             const isActive = activeRole === role;
@@ -342,23 +341,23 @@ export function TransportPage() {
                                 <button
                                     key={role}
                                     onClick={() => setActiveRole(role)}
-                                    className={`relative p-6 rounded-2xl border-2 transition-all ${
+                                    className={`relative p-6 rounded-2xl border-2 transition-all w-full ${
                                         isActive
                                             ? 'border-[#4299c1] bg-[#4299c1]/5 shadow-lg'
-                                            : 'border-gray-200 bg-white hover:border-[#4299c1]/50'
+                                            : 'border-Gray-200 bg-surface hover:border-[#4299c1]/50'
                                     }`}
                                 >
                                     <div className="flex flex-col items-center text-center gap-3">
                                         <div className={`p-3 rounded-xl ${
-                                            isActive ? 'bg-[#4299c1]' : 'bg-gray-100'
+                                            isActive ? 'bg-[#4299c1]' : 'bg-Gray-100'
                                         }`}>
                                             <Icon className={`size-6 ${
-                                                isActive ? 'text-white' : 'text-[#64656f]'
+                                                isActive ? 'text-white' : 'text-Gray-500'
                                             }`}/>
                                         </div>
                                         <div>
-                                            <h3 className="text-base text-[#142738] mb-1">{config.title}</h3>
-                                            <p className="text-xs text-[#64656f]">{config.description}</p>
+                                            <h3 className="text-base text-Primary-950 mb-1">{config.title}</h3>
+                                            <p className="text-xs text-Gray-500">{config.description}</p>
                                         </div>
                                         {isActive && (
                                             <div className="absolute top-3 left-3">
@@ -374,8 +373,8 @@ export function TransportPage() {
             </section>
 
             {/* Search and Filter Section */}
-            <section className="bg-white border-y border-gray-200 py-6 sticky top-[96px] z-40">
-                <div className="max-w-[1440px] mx-auto px-[80px]">
+            <section className="bg-surface p-6">
+                <div className=" mx-auto">
                     <div className="grid md:grid-cols-12 gap-4">
                         <div className="md:col-span-3">
                             <input
@@ -383,7 +382,7 @@ export function TransportPage() {
                                 placeholder="شهر مبدأ"
                                 value={searchOrigin}
                                 onChange={(e) => setSearchOrigin(e.target.value)}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] focus:border-transparent"
+                                className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] focus:border-transparent"
                             />
                         </div>
                         <div className="md:col-span-3">
@@ -392,7 +391,7 @@ export function TransportPage() {
                                 placeholder="شهر مقصد"
                                 value={searchDestination}
                                 onChange={(e) => setSearchDestination(e.target.value)}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] focus:border-transparent"
+                                className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] focus:border-transparent"
                             />
                         </div>
                         <div className="md:col-span-2">
@@ -401,34 +400,37 @@ export function TransportPage() {
                                 placeholder="تاریخ (1403/09/15)"
                                 value={searchDate}
                                 onChange={(e) => setSearchDate(e.target.value)}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] focus:border-transparent"
+                                className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] focus:border-transparent"
                             />
                         </div>
                         <div className="md:col-span-1">
                             <button
                                 onClick={() => setShowFilters(!showFilters)}
-                                className={`w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-colors ${
-                                    showFilters ? 'bg-[#4299c1] text-white' : 'bg-gray-100 hover:bg-gray-200'
+                                className={`w-full flex items-center justify-center gap-2 px-4 cursor-pointer py-3 rounded-xl transition-colors ${
+                                    showFilters ? 'bg-[#4299c1] text-white' : 'bg-Gray-100 hover:bg-Gray-200'
                                 }`}
                             >
                                 <Filter className="size-5"/>
                             </button>
                         </div>
-                        <div className="md:col-span-3">
-                            <button
-                                onClick={() => setShowPostAdForm(true)}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[#4299c1] hover:bg-[#3a89b0] text-white rounded-xl transition-colors shadow-lg"
+                        <div className="md:col-span-3 py-0.5">
+                            <Button
+                                type="button"
+                                onClick={() => setOpen(true)}
+                                className="flex items-center justify-center gap-2 px-4 py-2 bg-Primary-600 hover:bg-Primary-600 text-white rounded-xl w-full h-full"
                             >
-                                <span>ثبت آگهی</span>
+                                ثبت آگهی جدید
                                 <ArrowRight className="size-5"/>
-                            </button>
+                            </Button>
+
+                            <PostAdModal open={open} onOpenChange={setOpen}/>
                         </div>
                     </div>
 
                     {/* Advanced Filters */}
                     {showFilters && (
-                        <div className="mt-4 p-4 bg-gray-50 rounded-xl">
-                            <h4 className="text-sm text-[#142738] mb-3">فیلترهای پیشرفته</h4>
+                        <div className="mt-4 p-4 bg-Gray-50 rounded-xl">
+                            <h4 className="text-sm text-Primary-950 mb-3">فیلترهای پیشرفته</h4>
                             <div className="flex flex-wrap gap-4">
                                 <label className="flex items-center gap-2 cursor-pointer">
                                     <input
@@ -437,7 +439,7 @@ export function TransportPage() {
                                         onChange={(e) => setFilterVerified(e.target.checked)}
                                         className="size-5 text-[#4299c1]"
                                     />
-                                    <span className="text-[#64656f]">فقط کاربران تایید شده</span>
+                                    <span className="text-Gray-500">فقط کاربران تایید شده</span>
                                 </label>
                                 {activeRole === 'send-package' && (
                                     <label className="flex items-center gap-2 cursor-pointer">
@@ -447,7 +449,7 @@ export function TransportPage() {
                                             onChange={(e) => setFilterUrgent(e.target.checked)}
                                             className="size-5 text-[#4299c1]"
                                         />
-                                        <span className="text-[#64656f]">فقط آگهی‌های فوری</span>
+                                        <span className="text-Gray-500">فقط آگهی‌های فوری</span>
                                     </label>
                                 )}
                                 <button
@@ -458,7 +460,7 @@ export function TransportPage() {
                                         setFilterVerified(false);
                                         setFilterUrgent(false);
                                     }}
-                                    className="mr-auto px-4 py-2 text-sm text-[#4299c1] hover:bg-white rounded-lg transition-colors"
+                                    className="mr-auto px-4 py-2 text-sm text-[#4299c1] hover:bg-surface rounded-lg transition-colors"
                                 >
                                     پاک کردن فیلترها
                                 </button>
@@ -470,15 +472,15 @@ export function TransportPage() {
 
             {/* New Ad Form */}
             {showForm && (
-                <section className="bg-[#4299c1]/5 border-b border-[#4299c1]/20 py-8">
-                    <div className="max-w-[1440px] mx-auto px-[80px]">
-                        <div className="bg-white rounded-2xl shadow-xl p-8">
+                <section className="bg-[#4299c1]/5 border-b border-[#4299c1]/20 p-6">
+                    <div className="mx-auto">
+                        <div className="bg-surface rounded-2xl shadow-xl p-8">
                             <div className="flex items-center gap-3 mb-6">
                                 {(() => {
                                     const Icon = roleConfig[activeRole].icon;
                                     return <Icon className="size-6 text-[#4299c1]"/>;
                                 })()}
-                                <h3 className="text-2xl text-[#142738]">
+                                <h3 className="text-2xl text-Primary-950">
                                     {roleConfig[activeRole].title}
                                 </h3>
                             </div>
@@ -486,17 +488,17 @@ export function TransportPage() {
                             {activeRole === 'send-package' && (
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-[#142738] mb-2">عنوان آگهی</label>
+                                        <label className="block text-Primary-950 mb-2">عنوان آگهی</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: ارسال دارو از تهران به اصفهان"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">نوع بسته</label>
+                                        <label className="block text-Primary-950 mb-2">نوع بسته</label>
                                         <select
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] bg-white">
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] bg-surface">
                                             <option value="">انتخاب کنید</option>
                                             <option value="documents">مدارک</option>
                                             <option value="food">مواد غذایی</option>
@@ -508,76 +510,76 @@ export function TransportPage() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مبدأ</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مبدأ</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: تهران"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مقصد</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مقصد</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: اصفهان"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">تاریخ تقریبی ارسال</label>
+                                        <label className="block text-Primary-950 mb-2">تاریخ تقریبی ارسال</label>
                                         <input
                                             type="text"
                                             placeholder="1403/09/15"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">وزن تقریبی</label>
+                                        <label className="block text-Primary-950 mb-2">وزن تقریبی</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: 500 گرم یا 2 کیلو"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">ابعاد تقریبی (طول × عرض ×
+                                        <label className="block text-Primary-950 mb-2">ابعاد تقریبی (طول × عرض ×
                                             ارتفاع)</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: 30 × 20 × 10 سانتی‌متر"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">مبلغ پیشنهادی به مسافر
+                                        <label className="block text-Primary-950 mb-2">مبلغ پیشنهادی به مسافر
                                             (تومان)</label>
                                         <input
                                             type="text"
                                             placeholder="150,000"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="block text-[#142738] mb-2">نیاز به مراقبت خاص؟</label>
+                                        <label className="block text-Primary-950 mb-2">نیاز به مراقبت خاص؟</label>
                                         <textarea
                                             rows={2}
                                             placeholder="مثال: باید در یخچال نگهداری شود، شکننده است، ..."
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="block text-[#142738] mb-2">توضیحات تکمیلی</label>
+                                        <label className="block text-Primary-950 mb-2">توضیحات تکمیلی</label>
                                         <textarea
                                             rows={3}
                                             placeholder="سایر توضیحات درباره بسته و نحوه تحویل..."
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
                                         <label className="flex items-center gap-2 cursor-pointer">
                                             <input type="checkbox" className="size-5 text-[#4299c1]"/>
                                             <span
-                                                className="text-[#64656f]">این بسته فوری است (باید امروز یا فردا برسد)</span>
+                                                className="text-Gray-500">این بسته فوری است (باید امروز یا فردا برسد)</span>
                                         </label>
                                     </div>
                                 </div>
@@ -586,17 +588,17 @@ export function TransportPage() {
                             {activeRole === 'carry-package' && (
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-[#142738] mb-2">عنوان مسیر</label>
+                                        <label className="block text-Primary-950 mb-2">عنوان مسیر</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: تهران به اصفهان"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">وسیله نقلیه</label>
+                                        <label className="block text-Primary-950 mb-2">وسیله نقلیه</label>
                                         <select
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] bg-white">
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1] bg-surface">
                                             <option value="">انتخاب کنید</option>
                                             <option value="personal-car">ماشین شخصی</option>
                                             <option value="bus">اتوبوس</option>
@@ -605,89 +607,90 @@ export function TransportPage() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مبدأ</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مبدأ</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: تهران"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مقصد</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مقصد</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: اصفهان"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">تاریخ دقیق حرکت</label>
+                                        <label className="block text-Primary-950 mb-2">تاریخ دقیق حرکت</label>
                                         <input
                                             type="text"
                                             placeholder="1403/09/15"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">ساعت دقیق حرکت</label>
+                                        <label className="block text-Primary-950 mb-2">ساعت دقیق حرکت</label>
                                         <input
                                             type="text"
                                             placeholder="08:00"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">ظرفیت خالی برای بسته (وزن)</label>
+                                        <label className="block text-Primary-950 mb-2">ظرفیت خالی برای بسته
+                                            (وزن)</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: 5 کیلو"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">ظرفیت خالی (ابعاد)</label>
+                                        <label className="block text-Primary-950 mb-2">ظرفیت خالی (ابعاد)</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: 50 × 40 × 30 سانتی‌متر"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="block text-[#142738] mb-2">نوع بسته‌هایی که قبول
+                                        <label className="block text-Primary-950 mb-2">نوع بسته‌هایی که قبول
                                             می‌کنید</label>
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
                                             {['مدارک', 'مواد غذایی', 'پوشاک', 'دارو', 'هدیه', 'کتاب', 'سایر'].map((type) => (
                                                 <label key={type} className="flex items-center gap-2 cursor-pointer">
                                                     <input type="checkbox" className="size-4 text-[#4299c1]"/>
-                                                    <span className="text-sm text-[#64656f]">{type}</span>
+                                                    <span className="text-sm text-Gray-500">{type}</span>
                                                 </label>
                                             ))}
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">قیمت پیشنهادی برای حمل بسته
+                                        <label className="block text-Primary-950 mb-2">قیمت پیشنهادی برای حمل بسته
                                             (تومان)</label>
                                         <input
                                             type="text"
                                             placeholder="150,000"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">مشخصات خودرو (در صورت ماشین
+                                        <label className="block text-Primary-950 mb-2">مشخصات خودرو (در صورت ماشین
                                             شخصی)</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: پژو 206 سفید"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="block text-[#142738] mb-2">توضیحات تکمیلی</label>
+                                        <label className="block text-Primary-950 mb-2">توضیحات تکمیلی</label>
                                         <textarea
                                             rows={3}
                                             placeholder="سایر توضیحات درباره سفر، نحوه تحویل و دریافت بسته..."
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                 </div>
@@ -696,77 +699,77 @@ export function TransportPage() {
                             {activeRole === 'driver' && (
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-[#142738] mb-2">عنوان مسیر</label>
+                                        <label className="block text-Primary-950 mb-2">عنوان مسیر</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: تهران به کرج"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">مدل خودرو</label>
+                                        <label className="block text-Primary-950 mb-2">مدل خودرو</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: پژو 206"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مبدأ</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مبدأ</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: تهران"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مقصد</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مقصد</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: کرج"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">تاریخ حرکت</label>
+                                        <label className="block text-Primary-950 mb-2">تاریخ حرکت</label>
                                         <input
                                             type="text"
                                             placeholder="1403/09/15"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">ساعت حرکت</label>
+                                        <label className="block text-Primary-950 mb-2">ساعت حرکت</label>
                                         <input
                                             type="text"
                                             placeholder="08:00"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">تعداد صندلی خالی</label>
+                                        <label className="block text-Primary-950 mb-2">تعداد صندلی خالی</label>
                                         <input
                                             type="number"
                                             min="1"
                                             max="4"
                                             placeholder="2"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">قیمت هر صندلی (��ومان)</label>
+                                        <label className="block text-Primary-950 mb-2">قیمت هر صندلی (��ومان)</label>
                                         <input
                                             type="text"
                                             placeholder="50,000"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="block text-[#142738] mb-2">توضیحات</label>
+                                        <label className="block text-Primary-950 mb-2">توضیحات</label>
                                         <textarea
                                             rows={3}
                                             placeholder="توضیحات تکمیلی درباره سفر..."
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                 </div>
@@ -775,61 +778,61 @@ export function TransportPage() {
                             {activeRole === 'passenger' && (
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-[#142738] mb-2">عنوان</label>
+                                        <label className="block text-Primary-950 mb-2">عنوان</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: نیاز به سفر از تهران به اصفهان"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">تعداد مسافران</label>
+                                        <label className="block text-Primary-950 mb-2">تعداد مسافران</label>
                                         <input
                                             type="number"
                                             min="1"
                                             max="4"
                                             placeholder="1"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مبدأ</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مبدأ</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: تهران"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">شهر مقصد</label>
+                                        <label className="block text-Primary-950 mb-2">شهر مقصد</label>
                                         <input
                                             type="text"
                                             placeholder="مثال: اصفهان"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">تاریخ مورد نظر</label>
+                                        <label className="block text-Primary-950 mb-2">تاریخ مورد نظر</label>
                                         <input
                                             type="text"
                                             placeholder="1403/09/15"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[#142738] mb-2">مبلغ پیشنهادی (تومان)</label>
+                                        <label className="block text-Primary-950 mb-2">مبلغ پیشنهادی (تومان)</label>
                                         <input
                                             type="text"
                                             placeholder="400,000"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <label className="block text-[#142738] mb-2">توضیحات</label>
+                                        <label className="block text-Primary-950 mb-2">توضیحات</label>
                                         <textarea
                                             rows={3}
                                             placeholder="سایر توضیحات..."
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
+                                            className="w-full px-4 py-3 border border-Gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4299c1]"
                                         />
                                     </div>
                                 </div>
@@ -838,7 +841,7 @@ export function TransportPage() {
                             <div className="flex items-center justify-end gap-4 mt-8">
                                 <button
                                     onClick={() => setShowForm(false)}
-                                    className="px-8 py-3 border border-gray-300 hover:bg-gray-50 rounded-xl transition-colors"
+                                    className="px-8 py-3 border border-Gray-300 hover:bg-Gray-50 rounded-xl transition-colors"
                                 >
                                     انصراف
                                 </button>
@@ -853,28 +856,28 @@ export function TransportPage() {
             )}
 
             {/* Ads List Section */}
-            <section className="py-12">
-                <div className="max-w-[1440px] mx-auto px-[80px]">
+            <section className="py-12 px-6">
+                <div className="mx-auto">
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-3xl text-[#142738]">
+                        <h2 className="text-3xl text-Primary-950">
                             {roleConfig[activeRole].title}
                         </h2>
                         <div className="text-left">
               <span className="text-[#4299c1] font-['IRANSansWebFaNum:Bold',sans-serif]">
                 {currentAds.length}
               </span>
-                            <span className="text-[#64656f]"> آگهی یافت شد</span>
+                            <span className="text-Gray-500"> آگهی یافت شد</span>
                         </div>
                     </div>
 
                     {currentAds.length === 0 ? (
                         <div className="text-center py-16">
                             <div
-                                className="inline-flex items-center justify-center size-20 bg-gray-100 rounded-full mb-4">
-                                <Search className="size-10 text-gray-400"/>
+                                className="inline-flex items-center justify-center size-20 bg-Gray-100 rounded-full mb-4">
+                                <Search className="size-10 text-Gray-400"/>
                             </div>
-                            <h3 className="text-xl text-[#142738] mb-2">آگهی یافت نشد</h3>
-                            <p className="text-[#64656f] mb-6">
+                            <h3 className="text-xl text-Primary-950 mb-2">آگهی یافت نشد</h3>
+                            <p className="text-Gray-500 mb-6">
                                 با فیلترهای انتخابی آگهی یافت نشد. لطفاً فیلترها را تغییر دهید.
                             </p>
                             <button
@@ -896,13 +899,13 @@ export function TransportPage() {
                                 <Link
                                     key={ad.id}
                                     href={`/${locale}/transportation/${ad.id}`}
-                                    className="bg-white rounded-2xl border border-gray-200 hover:border-[#4299c1] hover:shadow-xl transition-all overflow-hidden group block"
+                                    className="bg-surface rounded-2xl border border-Gray-200 hover:border-[#4299c1] hover:shadow-xl transition-all overflow-hidden group block"
                                 >
                                     {/* Header */}
                                     <div
-                                        className="bg-gradient-to-br from-[#4299c1]/10 to-[#4299c1]/5 p-6 border-b border-gray-100">
+                                        className="bg-gradient-to-br from-[#4299c1]/10 to-[#4299c1]/5 p-6 border-b border-Gray-100">
                                         <div className="flex items-center gap-2 mb-3">
-                                            <h3 className="text-base text-[#142738] flex-1 min-w-0 line-clamp-1 text-[14px]">{ad.title}</h3>
+                                            <h3 className="text-base text-Primary-950 flex-1 min-w-0 line-clamp-1 text-[14px]">{ad.title}</h3>
                                             <div className="flex items-center gap-2 shrink-0">
                                                 {ad.role === 'send-package' && ad.urgent &&
                                                     <UrgentBadge className="text-xs"/>}
@@ -930,9 +933,9 @@ export function TransportPage() {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-[#142738] text-[13px]">{ad.from}</span>
-                                                    <ArrowRight className="size-4 text-[#64656f] scale-x-[-1]"/>
-                                                    <span className="text-[#142738] text-[13px]">{ad.to}</span>
+                                                    <span className="text-Primary-950 text-[13px]">{ad.from}</span>
+                                                    <ArrowRight className="size-4 text-Gray-500 scale-x-[-1]"/>
+                                                    <span className="text-Primary-950 text-[13px]">{ad.to}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -943,11 +946,11 @@ export function TransportPage() {
                                                 <Calendar className="size-5 text-[#4299c1]"/>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-[#64656f]">{ad.date}</span>
+                                                <span className="text-Gray-500">{ad.date}</span>
                                                 {('time' in ad) && (
                                                     <>
-                                                        <span className="text-[#64656f]">—</span>
-                                                        <span className="text-[#64656f]">{ad.time}</span>
+                                                        <span className="text-Gray-500">—</span>
+                                                        <span className="text-Gray-500">{ad.time}</span>
                                                     </>
                                                 )}
                                             </div>
@@ -961,9 +964,9 @@ export function TransportPage() {
                                                         <Package className="size-5 text-[#4299c1]"/>
                                                     </div>
                                                     <span
-                                                        className="text-[#64656f]">{ad.packageType} - {ad.weight}</span>
+                                                        className="text-Gray-500">{ad.packageType} - {ad.weight}</span>
                                                 </div>
-                                                <p className="text-[#64656f] text-sm line-clamp-2">{ad.description}</p>
+                                                <p className="text-Gray-500 text-sm line-clamp-2">{ad.description}</p>
                                             </>
                                         )}
 
@@ -973,18 +976,18 @@ export function TransportPage() {
                                                     <div className="p-2 bg-[#4299c1]/10 rounded-lg">
                                                         <Car className="size-5 text-[#4299c1]"/>
                                                     </div>
-                                                    <span className="text-[#64656f]">{ad.vehicle}</span>
+                                                    <span className="text-Gray-500">{ad.vehicle}</span>
                                                 </div>
                                                 <div className="flex items-center gap-3">
                                                     <div className="p-2 bg-[#4299c1]/10 rounded-lg">
                                                         <PackageCheck className="size-5 text-[#4299c1]"/>
                                                     </div>
-                                                    <span className="text-[#64656f]">ظرفیت: {ad.capacity}</span>
+                                                    <span className="text-Gray-500">ظرفیت: {ad.capacity}</span>
                                                 </div>
                                                 <div className="flex flex-wrap gap-1">
                                                     {ad.acceptedTypes.map((type) => (
                                                         <span key={type}
-                                                              className="text-xs bg-gray-100 px-2 py-1 rounded">
+                                                              className="text-xs bg-Gray-100 px-2 py-1 rounded">
                             {type}
                           </span>
                                                     ))}
@@ -998,13 +1001,13 @@ export function TransportPage() {
                                                     <div className="p-2 bg-[#4299c1]/10 rounded-lg">
                                                         <Car className="size-5 text-[#4299c1]"/>
                                                     </div>
-                                                    <span className="text-[#64656f]">{ad.carModel}</span>
+                                                    <span className="text-Gray-500">{ad.carModel}</span>
                                                 </div>
                                                 <div className="flex items-center gap-3">
                                                     <div className="p-2 bg-[#4299c1]/10 rounded-lg">
                                                         <Users className="size-5 text-[#4299c1]"/>
                                                     </div>
-                                                    <span className="text-[#64656f]">{ad.seats} صندلی خالی</span>
+                                                    <span className="text-Gray-500">{ad.seats} صندلی خالی</span>
                                                 </div>
                                             </>
                                         )}
@@ -1014,12 +1017,12 @@ export function TransportPage() {
                                                 <div className="p-2 bg-[#4299c1]/10 rounded-lg">
                                                     <Users className="size-5 text-[#4299c1]"/>
                                                 </div>
-                                                <span className="text-[#64656f]">{ad.passengers} نفر</span>
+                                                <span className="text-Gray-500">{ad.passengers} نفر</span>
                                             </div>
                                         )}
 
                                         {/* Divider */}
-                                        <div className="border-t border-gray-100 pt-4">
+                                        <div className="border-t border-Gray-100 pt-4">
                                             <div className="flex items-center justify-between mb-3">
                                                 <div className="flex items-center gap-2">
                                                     <div
@@ -1027,7 +1030,7 @@ export function TransportPage() {
                                                         <User className="size-5 text-[#4299c1]"/>
                                                     </div>
                                                     <div>
-                          <span className="text-[#142738] block">
+                          <span className="text-Primary-950 block">
                             {ad.role === 'send-package' ? ad.sender :
                                 ad.role === 'carry-package' ? ad.carrier :
                                     ad.role === 'driver' ? ad.driver :
@@ -1037,7 +1040,7 @@ export function TransportPage() {
                                                             <div className="flex items-center gap-1 mt-0.5">
                                                                 <Star
                                                                     className="size-3 text-yellow-500 fill-yellow-500"/>
-                                                                <span className="text-xs text-[#64656f]">
+                                                                <span className="text-xs text-Gray-500">
                                 {ad.rating} ({ad.reviewCount} نظر)
                               </span>
                                                             </div>
@@ -1053,10 +1056,10 @@ export function TransportPage() {
                                                                     ad.priceOffer} تومان
                                                     </div>
                                                     {ad.role === 'driver' && (
-                                                        <div className="text-xs text-[#64656f]">هر نفر</div>
+                                                        <div className="text-xs text-Gray-500">هر نفر</div>
                                                     )}
                                                     {ad.role === 'passenger' && (
-                                                        <div className="text-xs text-[#64656f]">پیشنهادی</div>
+                                                        <div className="text-xs text-Gray-500">پیشنهادی</div>
                                                     )}
                                                 </div>
                                             </div>
@@ -1076,48 +1079,48 @@ export function TransportPage() {
             </section>
 
             {/* Info Section */}
-            <section className="bg-gradient-to-b from-white to-[#4299c1]/5 py-16">
-                <div className="max-w-[1440px] mx-auto px-[80px]">
+            <section className="text-center mb-8 bg-gradient-to-b from-Primary-100 to-surface py-10 px-6 w-full">
+                <div className="mx-auto">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl text-[#142738] mb-4">چرا حمل و نقل اشتراکی؟</h2>
-                        <p className="text-[#64656f] max-w-2xl mx-auto">
+                        <h2 className="text-3xl text-Primary-950 mb-4">چرا حمل و نقل اشتراکی؟</h2>
+                        <p className="text-Gray-500 max-w-2xl mx-auto">
                             راهی هوشمند، اقتصادی و مطمئن برای ارسال بسته یا سفر
                         </p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         <div
-                            className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
+                            className="bg-surface rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
                             <div
                                 className="inline-flex items-center justify-center size-16 bg-green-100 rounded-2xl mb-4">
                                 <DollarSign className="size-8 text-green-600"/>
                             </div>
-                            <h3 className="text-xl text-[#142738] mb-3">صرفه‌جویی در هزینه</h3>
-                            <p className="text-[#64656f]">
+                            <h3 className="text-xl text-Primary-950 mb-3">صرفه‌جویی در هزینه</h3>
+                            <p className="text-Gray-500">
                                 تا 70٪ ارزان‌تر از روش‌های سنتی حمل و نقل
                             </p>
                         </div>
 
                         <div
-                            className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
+                            className="bg-surface rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
                             <div
                                 className="inline-flex items-center justify-center size-16 bg-blue-100 rounded-2xl mb-4">
                                 <Clock className="size-8 text-blue-600"/>
                             </div>
-                            <h3 className="text-xl text-[#142738] mb-3">سریع و آسان</h3>
-                            <p className="text-[#64656f]">
+                            <h3 className="text-xl text-Primary-950 mb-3">سریع و آسان</h3>
+                            <p className="text-Gray-500">
                                 بسته شما با اولین مسافر به مقصد می‌رسد
                             </p>
                         </div>
 
                         <div
-                            className="bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
+                            className="bg-surface rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
                             <div
                                 className="inline-flex items-center justify-center size-16 bg-purple-100 rounded-2xl mb-4">
                                 <Shield className="size-8 text-purple-600"/>
                             </div>
-                            <h3 className="text-xl text-[#142738] mb-3">امن و قابل اعتماد</h3>
-                            <p className="text-[#64656f]">
+                            <h3 className="text-xl text-Primary-950 mb-3">امن و قابل اعتماد</h3>
+                            <p className="text-Gray-500">
                                 تایید هویت و رتبه‌بندی کاربران برای اطمینان شما
                             </p>
                         </div>
@@ -1126,16 +1129,16 @@ export function TransportPage() {
             </section>
 
             {/* Safety Tips Section */}
-            <section className="py-16 bg-white">
-                <div className="max-w-[1440px] mx-auto px-[80px]">
-                    <div className="bg-amber-50 border border-amber-200 rounded-2xl p-8">
+            <section className="pt-16 bg-surface">
+                <div className="mx-auto">
+                    <div className="border border-amber-200 rounded-t-2xl p-6">
                         <div className="flex items-start gap-4">
                             <div className="p-3 bg-amber-100 rounded-xl">
                                 <Shield className="size-6 text-amber-600"/>
                             </div>
                             <div className="flex-1">
-                                <h3 className="text-xl text-[#142738] mb-4">نکات ایمنی مهم</h3>
-                                <ul className="space-y-3 text-[#64656f]">
+                                <h3 className="text-xl text-Primary-950 mb-4">نکات ایمنی مهم</h3>
+                                <ul className="space-y-3 text-Gray-500">
                                     <li className="flex items-start gap-2">
                                         <CheckCircle className="size-5 text-amber-600 shrink-0 mt-0.5"/>
                                         <span>همیشه هویت طرف مقابل را بررسی و تایید کنید</span>
@@ -1163,8 +1166,6 @@ export function TransportPage() {
                 </div>
             </section>
 
-            {/* Post Ad Form Modal */}
-            {showPostAdForm && <PostAdForm onClose={() => setShowPostAdForm(false)}/>}
         </div>
     );
 }

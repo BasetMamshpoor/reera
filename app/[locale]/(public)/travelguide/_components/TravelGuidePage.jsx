@@ -395,7 +395,7 @@ export function TravelGuidePage() {
     const data = showResults ? getNationalityBasedData() : null;
 
     return (
-        <div className="min-h-screen bg-gray-50" dir="rtl">
+        <div className="min-h-screen bg-surface">
             {/* Navbar */}
             {/*<DesktopNavbar currentPage="travel-guide" />*/}
 
@@ -411,19 +411,19 @@ export function TravelGuidePage() {
 
 
             {/* Hero Section */}
-            <section className="relative bg-gradient-to-b from-[#4299c1]/10 to-white py-20">
+            <section className="relative bg-gradient-to-b from-Primary-100 to-surface py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center">
                         <div className="inline-block mb-6">
                             <div className="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg">
                                 <Sparkles className="size-6 text-[#4299c1]" />
-                                <span className="text-[#142738]">سیستم هوشمند پیشنهاد بر اساس ملیت</span>
+                                <span className="text-blue-950">سیستم هوشمند پیشنهاد بر اساس ملیت</span>
                             </div>
                         </div>
-                        <h1 className="text-5xl text-[#142738] mb-6">
+                        <h1 className="text-3xl lg:text-5xl text-Primary-950 mb-6">
                             سفریار — راهنمای هوشمند سفر
                         </h1>
-                        <p className="text-xl text-[#64656f] mb-8 max-w-3xl mx-auto">
+                        <p className="lg:text-xl text-Gray-800 mb-8 w-full mx-auto">
                             با انتخاب ملیت و مقصد، بسته کاملی از رستوران‌ها، هتل‌ها، سوپرمارکت‌ها، مراکز پزشکی، خدمات قانونی و نکات فرهنگی مخصوص شما ارائه می‌دهیم
                         </p>
                     </div>
@@ -431,29 +431,29 @@ export function TravelGuidePage() {
             </section>
 
             {/* Search Form Section */}
-            <section className="py-16 bg-white">
+            <section className="py-16 bg-Surface-2">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <form onSubmit={handleSearch} className="space-y-8">
                         {/* Nationality Selection */}
-                        <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl border-2 border-blue-200 p-8 hover:border-[#4299c1] transition-all shadow-sm">
-                            <div className="flex items-center justify-between mb-6">
+                        <div className="bg-surface rounded-2xl border-2 border-Primary-200 p-4 lg:p-8 hover:border-[#4299c1] transition-all shadow-sm">
+                            <div className="flex flex-col lg:flex-row justify-between mb-6 gap-4">
                                 <div className="flex items-center gap-3">
                                     <div className="w-12 h-12 bg-[#4299c1] rounded-xl flex items-center justify-center shadow-md">
-                                        <Flag className="size-6 text-white" />
+                                        <Flag className="size-6 text-white"/>
                                     </div>
                                     <div>
-                                        <h3 className="text-2xl text-[#142738]">ملیت شما</h3>
-                                        <p className="text-sm text-[#64656f] mt-1">کشور متولد یا اقامت فعلی</p>
+                                        <h3 className="text-lg lg:text-2xl text-Primary-950 whitespace-nowrap">ملیت شما</h3>
+                                        <p className="text-sm text-Gray-800 mt-1 whitespace-nowrap">کشور متولد یا اقامت فعلی</p>
                                     </div>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 w-full justify-end">
                                     <button
                                         type="button"
                                         onClick={() => setListLanguage('fa')}
-                                        className={`px-3 py-1.5 rounded-lg border transition-all text-sm ${
+                                        className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer h-fit text-sm ${
                                             listLanguage === 'fa'
                                                 ? 'border-[#4299c1] bg-[#4299c1] text-white'
-                                                : 'border-gray-300 bg-white text-[#64656f] hover:border-[#4299c1]'
+                                                : 'border-Gray-300 bg-surface text-Gray-800 hover:border-[#4299c1]'
                                         }`}
                                     >
                                         فارسی
@@ -461,10 +461,10 @@ export function TravelGuidePage() {
                                     <button
                                         type="button"
                                         onClick={() => setListLanguage('en')}
-                                        className={`px-3 py-1.5 rounded-lg border transition-all text-sm ${
+                                        className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer h-fit text-sm ${
                                             listLanguage === 'en'
                                                 ? 'border-[#4299c1] bg-[#4299c1] text-white'
-                                                : 'border-gray-300 bg-white text-[#64656f] hover:border-[#4299c1]'
+                                                : 'border-Gray-300 bg-surface text-Gray-800 hover:border-[#4299c1]'
                                         }`}
                                     >
                                         EN
@@ -472,10 +472,10 @@ export function TravelGuidePage() {
                                     <button
                                         type="button"
                                         onClick={() => setListLanguage('ar')}
-                                        className={`px-3 py-1.5 rounded-lg border transition-all text-sm ${
+                                        className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer h-fit text-sm ${
                                             listLanguage === 'ar'
                                                 ? 'border-[#4299c1] bg-[#4299c1] text-white'
-                                                : 'border-gray-300 bg-white text-[#64656f] hover:border-[#4299c1]'
+                                                : 'border-Gray-300 bg-surface text-Gray-800 hover:border-[#4299c1]'
                                         }`}
                                     >
                                         AR
@@ -483,10 +483,10 @@ export function TravelGuidePage() {
                                     <button
                                         type="button"
                                         onClick={() => setListLanguage('tr')}
-                                        className={`px-3 py-1.5 rounded-lg border transition-all text-sm ${
+                                        className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer h-fit text-sm ${
                                             listLanguage === 'tr'
                                                 ? 'border-[#4299c1] bg-[#4299c1] text-white'
-                                                : 'border-gray-300 bg-white text-[#64656f] hover:border-[#4299c1]'
+                                                : 'border-Gray-300 bg-surface text-Gray-800 hover:border-[#4299c1]'
                                         }`}
                                     >
                                         TR
@@ -529,14 +529,14 @@ export function TravelGuidePage() {
                         </div>
 
                         {/* Destination */}
-                        <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-[#4299c1] transition-all">
+                        <div className="bg-surface rounded-2xl border-2 border-Gray-200 p-8 hover:border-[#4299c1] transition-all">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-12 h-12 bg-[#4299c1]/10 rounded-xl flex items-center justify-center">
                                     <MapPin className="size-6 text-[#4299c1]" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl text-[#142738]">مقصد سفر</h3>
-                                    <p className="text-sm text-[#64656f] mt-1">کجا می‌خواهید بروید؟</p>
+                                    <h3 className="text-2xl text-Primary-950">مقصد سفر</h3>
+                                    <p className="text-sm text-Gray-800 mt-1">کجا می‌خواهید بروید؟</p>
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -602,12 +602,12 @@ export function TravelGuidePage() {
 
                         {/* Purpose & Date */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-[#4299c1] transition-all">
+                            <div className="bg-surface rounded-2xl border-2 border-Gray-200 p-8 hover:border-[#4299c1] transition-all">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-12 h-12 bg-[#4299c1]/10 rounded-xl flex items-center justify-center">
                                         <Users className="size-6 text-[#4299c1]" />
                                     </div>
-                                    <h3 className="text-2xl text-[#142738]">هدف سفر</h3>
+                                    <h3 className="text-2xl text-Primary-950">هدف سفر</h3>
                                 </div>
                                 <div className="grid grid-cols-1 gap-3">
                                     {purposes.map((purpose) => {
@@ -617,10 +617,10 @@ export function TravelGuidePage() {
                                                 key={purpose.value}
                                                 type="button"
                                                 onClick={() => setTravelPurpose(purpose.value)}
-                                                className={`px-5 py-4 rounded-xl border-2 transition-all flex items-center justify-center gap-2 ${
+                                                className={`px-5 py-4 rounded-xl border-2 transition-all cursor-pointer flex items-center justify-center gap-2 ${
                                                     travelPurpose === purpose.value
-                                                        ? 'border-[#4299c1] bg-[#4299c1]/10 text-[#142738]'
-                                                        : 'border-gray-200 bg-white text-[#64656f] hover:border-[#4299c1]/50'
+                                                        ? 'border-[#4299c1] bg-[#4299c1]/10 text-Primary-950'
+                                                        : 'border-Gray-200 bg-surface text-Gray-800 hover:border-[#4299c1]/50'
                                                 }`}
                                             >
                                                 <Icon className="size-5" />
@@ -631,12 +631,12 @@ export function TravelGuidePage() {
                                 </div>
                             </div>
 
-                            <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-[#4299c1] transition-all">
+                            <div className="bg-surface rounded-2xl border-2 border-Gray-200 p-8 hover:border-[#4299c1] transition-all">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-12 h-12 bg-[#4299c1]/10 rounded-xl flex items-center justify-center">
                                         <Calendar className="size-6 text-[#4299c1]" />
                                     </div>
-                                    <h3 className="text-2xl text-[#142738]">زمان ورود</h3>
+                                    <h3 className="text-2xl text-Primary-950">زمان ورود</h3>
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     {['این ماه', 'ماه بعد', '۲ ماه دیگر', '۳ ماه دیگر', '۴ ماه دیگر', '۵ ماه دیگر', '۶ ماه دیگر', 'بیشتر'].map((time) => (
@@ -644,10 +644,10 @@ export function TravelGuidePage() {
                                             key={time}
                                             type="button"
                                             onClick={() => setArrivalDate(time)}
-                                            className={`px-5 py-4 rounded-xl border-2 transition-all ${
+                                            className={`px-5 py-4 rounded-xl border-2 transition-all cursor-pointer ${
                                                 arrivalDate === time
-                                                    ? 'border-[#4299c1] bg-[#4299c1]/10 text-[#142738]'
-                                                    : 'border-gray-200 bg-white text-[#64656f] hover:border-[#4299c1]/50'
+                                                    ? 'border-[#4299c1] bg-[#4299c1]/10 text-Primary-950'
+                                                    : 'border-Gray-200 bg-surface text-Gray-800 hover:border-[#4299c1]/50'
                                             }`}
                                         >
                                             {time}
@@ -658,14 +658,14 @@ export function TravelGuidePage() {
                         </div>
 
                         {/* Languages */}
-                        <div className="bg-white rounded-2xl border-2 border-gray-200 p-8 hover:border-[#4299c1] transition-all">
+                        <div className="bg-surface rounded-2xl border-2 border-Gray-200 p-8 hover:border-[#4299c1] transition-all">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-12 h-12 bg-[#4299c1]/10 rounded-xl flex items-center justify-center">
                                     <Languages className="size-6 text-[#4299c1]" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl text-[#142738] text-[24px]">زبان‌های قابل فهم</h3>
-                                    <p className="text-sm text-[#64656f] mt-1">برای یافتن خدمات با پرسنل هم‌زبان</p>
+                                    <h3 className="text-2xl text-Primary-950 text-[24px]">زبان‌های قابل فهم</h3>
+                                    <p className="text-sm text-Gray-800 mt-1">برای یافتن خدمات با پرسنل هم‌زبان</p>
                                 </div>
                             </div>
                             <div className="flex flex-wrap gap-3">
@@ -674,10 +674,10 @@ export function TravelGuidePage() {
                                         key={lang.value}
                                         type="button"
                                         onClick={() => toggleLanguage(lang.value)}
-                                        className={`px-5 py-3 rounded-xl border-2 transition-all ${
+                                        className={`px-5 py-3 rounded-xl border-2 transition-all cursor-pointer ${
                                             selectedLanguages.includes(lang.value)
                                                 ? 'border-[#4299c1] bg-[#4299c1] text-white shadow-md'
-                                                : 'border-gray-200 bg-white text-[#64656f] hover:border-gray-300'
+                                                : 'border-Gray-200 bg-surface text-Gray-800 hover:border-gray-300'
                                         }`}
                                     >
                                         {lang.label}
@@ -685,21 +685,21 @@ export function TravelGuidePage() {
                                 ))}
                             </div>
                             {selectedLanguages.length > 0 && (
-                                <p className="mt-4 text-sm text-[#64656f]">
+                                <p className="mt-4 text-sm text-Gray-800">
                                     {selectedLanguages.length} زبان انتخاب شده
                                 </p>
                             )}
                         </div>
 
                         {/* Optional Questions Section */}
-                        <div className="bg-gradient-to-br from-purple-50 to-white rounded-2xl border-2 border-purple-200 p-8">
+                        <div className="bg-surface rounded-2xl border-1 border-Gray-300 p-8">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-md">
                                     <Sparkles className="size-6 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl text-[#142738]">پرسش‌های تکمیلی</h3>
-                                    <p className="text-sm text-[#64656f] mt-1">اختیاری ولی برای پیشنهادات بهتر توصیه می‌شود</p>
+                                    <h3 className="text-2xl text-Primary-950">پرسش‌های تکمیلی</h3>
+                                    <p className="text-sm text-Gray-800 mt-1">اختیاری ولی برای پیشنهادات بهتر توصیه می‌شود</p>
                                 </div>
                             </div>
 
@@ -708,7 +708,7 @@ export function TravelGuidePage() {
                                 <div>
                                     <div className="flex items-center gap-2 mb-3">
                                         <Utensils className="size-5 text-purple-600" />
-                                        <h4 className="text-lg text-[#142738]">ملاحظات غذایی</h4>
+                                        <h4 className="text-lg text-Primary-950">ملاحظات غذایی</h4>
                                     </div>
                                     <div className="flex flex-wrap gap-2">
                                         {dietaryOptions.map((option) => {
@@ -718,10 +718,10 @@ export function TravelGuidePage() {
                                                     key={option.value}
                                                     type="button"
                                                     onClick={() => toggleDietaryRestriction(option.value)}
-                                                    className={`px-4 py-2.5 rounded-xl border-2 transition-all flex items-center gap-2 text-sm ${
+                                                    className={`px-4 py-2.5 rounded-xl border-2 transition-all flex items-center cursor-pointer gap-2 text-sm ${
                                                         dietaryRestrictions.includes(option.value)
                                                             ? 'border-purple-500 bg-purple-500 text-white shadow-md'
-                                                            : 'border-gray-200 bg-white text-[#64656f] hover:border-purple-300'
+                                                            : 'border-Gray-200 bg-surface text-Gray-800 hover:border-purple-300'
                                                     }`}
                                                 >
                                                     <Icon className="size-4" />
@@ -741,7 +741,7 @@ export function TravelGuidePage() {
                                 <div>
                                     <div className="flex items-center gap-2 mb-3">
                                         <Church className="size-5 text-purple-600" />
-                                        <h4 className="text-lg text-[#142738]">نیازهای مذهبی</h4>
+                                        <h4 className="text-lg text-Primary-950">نیازهای مذهبی</h4>
                                     </div>
                                     <div className="flex flex-wrap gap-2">
                                         {religiousOptions.map((option) => {
@@ -751,10 +751,10 @@ export function TravelGuidePage() {
                                                     key={option.value}
                                                     type="button"
                                                     onClick={() => toggleReligiousNeed(option.value)}
-                                                    className={`px-4 py-2.5 rounded-xl border-2 transition-all flex items-center gap-2 text-sm ${
+                                                    className={`px-4 py-2.5 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-2 text-sm ${
                                                         religiousNeeds.includes(option.value)
                                                             ? 'border-purple-500 bg-purple-500 text-white shadow-md'
-                                                            : 'border-gray-200 bg-white text-[#64656f] hover:border-purple-300'
+                                                            : 'border-Gray-200 bg-surface text-Gray-800 hover:border-purple-300'
                                                     }`}
                                                 >
                                                     <Icon className="size-4" />
@@ -776,7 +776,7 @@ export function TravelGuidePage() {
                                     <div>
                                         <div className="flex items-center gap-2 mb-3">
                                             <MessageSquare className="size-5 text-purple-600" />
-                                            <h4 className="text-base text-[#142738]">سطح زبان مقصد</h4>
+                                            <h4 className="text-base text-Primary-950">سطح زبان مقصد</h4>
                                         </div>
                                         <div className="space-y-2">
                                             {languageLevels.map((level) => (
@@ -784,15 +784,15 @@ export function TravelGuidePage() {
                                                     key={level.value}
                                                     type="button"
                                                     onClick={() => setDestinationLanguageLevel(level.value)}
-                                                    className={`w-full px-4 py-3 rounded-xl border-2 transition-all text-right ${
+                                                    className={`w-full px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-right ${
                                                         destinationLanguageLevel === level.value
-                                                            ? 'border-purple-500 bg-purple-50 text-[#142738]'
-                                                            : 'border-gray-200 bg-white text-[#64656f] hover:border-purple-200'
+                                                            ? 'border-purple-500 bg-purple-500 text-white'
+                                                            : 'border-Gray-200 bg-surface text-Gray-800 hover:border-purple-200'
                                                     }`}
                                                 >
                                                     <div className="flex flex-col">
                                                         <span className="text-sm">{level.label}</span>
-                                                        <span className="text-xs opacity-70">{level.description}</span>
+                                                        <span className="text-xs">{level.description}</span>
                                                     </div>
                                                 </button>
                                             ))}
@@ -803,7 +803,7 @@ export function TravelGuidePage() {
                                     <div>
                                         <div className="flex items-center gap-2 mb-3">
                                             <UserCheck className="size-5 text-purple-600" />
-                                            <h4 className="text-base text-[#142738]">همراهان سفر</h4>
+                                            <h4 className="text-base text-Primary-950">همراهان سفر</h4>
                                         </div>
                                         <div className="space-y-2">
                                             {travelingWithOptions.map((option) => {
@@ -813,10 +813,10 @@ export function TravelGuidePage() {
                                                         key={option.value}
                                                         type="button"
                                                         onClick={() => setTravelingWith(option.value)}
-                                                        className={`w-full px-4 py-3 rounded-xl border-2 transition-all flex items-center gap-2 text-sm ${
+                                                        className={`w-full px-4 py-3 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-2 text-sm ${
                                                             travelingWith === option.value
-                                                                ? 'border-purple-500 bg-purple-50 text-[#142738]'
-                                                                : 'border-gray-200 bg-white text-[#64656f] hover:border-purple-200'
+                                                                ? 'border-purple-500 bg-purple-500 text-white'
+                                                                : 'border-Gray-200 bg-surface text-Gray-800 hover:border-purple-200'
                                                         }`}
                                                     >
                                                         <Icon className="size-4" />
@@ -831,7 +831,7 @@ export function TravelGuidePage() {
                                     <div>
                                         <div className="flex items-center gap-2 mb-3">
                                             <DollarSign className="size-5 text-purple-600" />
-                                            <h4 className="text-base text-[#142738]">بودجه اقامت</h4>
+                                            <h4 className="text-base text-Primary-950">بودجه اقامت</h4>
                                         </div>
                                         <div className="space-y-2">
                                             {budgetOptions.map((option) => {
@@ -841,16 +841,16 @@ export function TravelGuidePage() {
                                                         key={option.value}
                                                         type="button"
                                                         onClick={() => setAccommodationBudget(option.value)}
-                                                        className={`w-full px-4 py-3 rounded-xl border-2 transition-all text-right ${
+                                                        className={`w-full px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-right ${
                                                             accommodationBudget === option.value
-                                                                ? 'border-purple-500 bg-purple-50 text-[#142738]'
-                                                                : 'border-gray-200 bg-white text-[#64656f] hover:border-purple-200'
+                                                                ? 'border-purple-500 bg-purple-500 text-white'
+                                                                : 'border-Gray-200 bg-surface text-Gray-800 hover:border-purple-200'
                                                         }`}
                                                     >
                                                         <div className="flex items-center justify-between">
                                                             <div className="flex flex-col text-right">
                                                                 <span className="text-sm">{option.label}</span>
-                                                                <span className="text-xs opacity-70">{option.range}</span>
+                                                                <span className="text-xs">{option.range}</span>
                                                             </div>
                                                             <Icon className="size-4 flex-shrink-0" />
                                                         </div>

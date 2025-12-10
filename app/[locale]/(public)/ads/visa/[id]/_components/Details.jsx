@@ -55,7 +55,7 @@ const VisaDetailsPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 w-full">
                 <div className="lg:hidden flex items-center justify-end w-full px-4 gap-6">
                     <Share/>
-                    <Like id={visaData?.id} url={"/ads"}/>
+                    <Like isLike={data?.data?.is_like} id={visaData?.id} url={"/ads"}/>
                 </div>
 
                 <div className="flex flex-col gap-16 lg:col-span-2">

@@ -53,7 +53,7 @@ const Page = () => {
                     {/*    <Flag className="fill-gray-700 dark:fill-gray-300 "/>*/}
                     {/*</button>*/}
                     <Share/>
-                    <Like id={data?.data.id} url={"/ads"}/>
+                    <Like isLike={data?.data?.is_like} id={data?.data.id} url={"/ads"}/>
                 </div>
 
                 <div className="flex flex-col gap-16 lg:col-span-2">

@@ -203,27 +203,27 @@ export function CountryComparison() {
     }));
 
     return (
-        <div className="bg-gradient-to-b from-gray-50 to-white py-12 lg:py-16" dir="rtl">
+        <div className="bg-surface rounded-2xl mt-6 lg:mt-10 py-6 lg:py-8">
             <div className="max-w-7xl mx-auto px-4">
                 {/* Header */}
                 <div className="text-center mb-12">
                     <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full mb-4">
-                        <Sparkles className="w-5 h-5 text-blue-600" />
-                        <span className="text-blue-600 font-medium">مقایسه هوشمند</span>
+                        <Sparkles className="w-5 h-5 text-Primary-600" />
+                        <span className="text-Primary-600 font-medium">مقایسه هوشمند</span>
                     </div>
-                    <h2 className="text-3xl lg:text-5xl text-[#142738] mb-4">
+                    <h2 className="text-3xl lg:text-5xl text-Primary-800 mb-4">
                         مقایسه زنده کشورها
                     </h2>
-                    <p className="text-lg text-[#64656f] max-w-2xl mx-auto">
+                    <p className="text-lg text-Gray-800 max-w-2xl mx-auto">
                         کشورهای مورد نظرتان را انتخاب کنید و تمام جزئیات را با هم مقایسه کنید
                     </p>
                 </div>
 
                 {/* Country Selector */}
-                <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                <div className="bg-Surface-2 rounded-2xl shadow-lg p-6 mb-8">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl text-[#142738] font-medium">انتخاب کشورها (حداکثر 4)</h3>
-                        <span className="text-sm text-[#64656f]">{selectedCountries.length} کشور انتخاب شده</span>
+                        <h3 className="text-xl text-Primary-800 font-medium">انتخاب کشورها (حداکثر 4)</h3>
+                        <span className="text-sm text-Gray-800">{selectedCountries.length} کشور انتخاب شده</span>
                     </div>
 
                     <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
@@ -238,21 +238,21 @@ export function CountryComparison() {
                                     disabled={isDisabled}
                                     className={`relative p-4 rounded-xl border-2 transition-all ${
                                         isSelected
-                                            ? 'border-blue-500 bg-blue-50 shadow-md'
+                                            ? 'border-Primary-600 bg-Primary-100 shadow-md'
                                             : isDisabled
-                                                ? 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
-                                                : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-md'
+                                                ? 'border-Gray-200 bg-Gray-50 opacity-50 cursor-not-allowed'
+                                                : 'border-Gray-200 bg-surface hover:border-blue-300 hover:shadow-md'
                                     }`}
                                 >
                                     {isSelected && (
-                                        <div className="absolute top-2 left-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                                        <div className="absolute top-2 left-2 w-6 h-6 bg-Primary-600 rounded-full flex items-center justify-center">
                                             <Check className="w-4 h-4 text-white" />
                                         </div>
                                     )}
 
                                     <div className="text-4xl mb-2">{country.flag}</div>
-                                    <div className="text-sm text-[#142738] font-medium">{country.name}</div>
-                                    <div className="text-xs text-[#64656f] mt-1">
+                                    <div className="text-sm text-Primary-800 font-medium">{country.name}</div>
+                                    <div className="text-xs text-Gray-800 mt-1">
                                         {country.monthlyCost.toLocaleString()}€
                                     </div>
                                 </button>
@@ -265,30 +265,30 @@ export function CountryComparison() {
                 <div className="flex justify-center gap-2 mb-8">
                     <button
                         onClick={() => setViewMode('radar')}
-                        className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                        className={`px-6 py-3 rounded-xl font-medium transition-all cursor-pointer ${
                             viewMode === 'radar'
-                                ? 'bg-blue-600 text-white shadow-lg'
-                                : 'bg-white text-[#64656f] border-2 border-gray-200 hover:border-blue-300'
+                                ? 'bg-Primary-600 text-white shadow-lg'
+                                : 'bg-surface text-Gray-800 border-2 border-Gray-200 hover:border-blue-300'
                         }`}
                     >
                         نمودار راداری
                     </button>
                     <button
                         onClick={() => setViewMode('bar')}
-                        className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                        className={`px-6 py-3 rounded-xl font-medium transition-all cursor-pointer ${
                             viewMode === 'bar'
-                                ? 'bg-blue-600 text-white shadow-lg'
-                                : 'bg-white text-[#64656f] border-2 border-gray-200 hover:border-blue-300'
+                                ? 'bg-Primary-600 text-white shadow-lg'
+                                : 'bg-surface text-Gray-800 border-2 border-Gray-200 hover:border-blue-300'
                         }`}
                     >
                         نمودار میله‌ای
                     </button>
                     <button
                         onClick={() => setViewMode('table')}
-                        className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                        className={`px-6 py-3 rounded-xl font-medium transition-all cursor-pointer ${
                             viewMode === 'table'
-                                ? 'bg-blue-600 text-white shadow-lg'
-                                : 'bg-white text-[#64656f] border-2 border-gray-200 hover:border-blue-300'
+                                ? 'bg-Primary-600 text-white shadow-lg'
+                                : 'bg-surface text-Gray-800 border-2 border-Gray-200 hover:border-blue-300'
                         }`}
                     >
                         جدول مقایسه
@@ -297,8 +297,8 @@ export function CountryComparison() {
 
                 {/* Radar Chart View */}
                 {viewMode === 'radar' && (
-                    <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8 mb-8">
-                        <h3 className="text-xl text-[#142738] font-medium mb-6 text-center">
+                    <div className="bg-Surface-2 rounded-2xl shadow-lg p-6 lg:p-8 mb-8">
+                        <h3 className="text-xl text-Primary-800 font-medium mb-6 text-center">
                             مقایسه جامع شاخص‌ها
                         </h3>
 
@@ -340,11 +340,11 @@ export function CountryComparison() {
 
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
                             {selectedCountriesData.map(country => (
-                                <div key={country.id} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
+                                <div key={country.id} className="flex items-center gap-3 p-4 bg-Gray-50 rounded-xl">
                                     <div className="text-3xl">{country.flag}</div>
                                     <div>
-                                        <div className="text-[#142738] font-medium">{country.name}</div>
-                                        <div className="text-sm text-[#64656f]">
+                                        <div className="text-Primary-800 font-medium">{country.name}</div>
+                                        <div className="text-sm text-Gray-800">
                                             امتیاز کلی: {Math.round((country.qualityOfLife + country.prChance) / 2)}/100
                                         </div>
                                     </div>
@@ -358,8 +358,8 @@ export function CountryComparison() {
                 {viewMode === 'bar' && (
                     <div className="space-y-8">
                         {/* Cost vs Salary */}
-                        <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
-                            <h3 className="text-xl text-[#142738] font-medium mb-6">
+                        <div className="bg-Surface-2 rounded-2xl shadow-lg p-6 lg:p-8">
+                            <h3 className="text-xl text-Primary-800 font-medium mb-6">
                                 💰 هزینه زندگی و حقوق
                             </h3>
 
@@ -388,8 +388,8 @@ export function CountryComparison() {
                         </div>
 
                         {/* Cost Breakdown */}
-                        <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
-                            <h3 className="text-xl text-[#142738] font-medium mb-6">
+                        <div className="bg-Surface-2 rounded-2xl shadow-lg p-6 lg:p-8">
+                            <h3 className="text-xl text-Primary-800 font-medium mb-6">
                                 📊 تفکیک هزینه‌های زندگی
                             </h3>
 
@@ -420,8 +420,8 @@ export function CountryComparison() {
 
                         {/* Visa Speed and PR Chance */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
-                                <h3 className="text-xl text-[#142738] font-medium mb-6">
+                            <div className="bg-Surface-2 rounded-2xl shadow-lg p-6 lg:p-8">
+                                <h3 className="text-xl text-Primary-800 font-medium mb-6">
                                     ⏱️ سرعت پروسه ویزا (ماه)
                                 </h3>
 
@@ -429,10 +429,10 @@ export function CountryComparison() {
                                     {selectedCountriesData.map(country => (
                                         <div key={country.id}>
                                             <div className="flex items-center justify-between mb-2">
-                                                <span className="text-[#142738]">{country.flag} {country.name}</span>
-                                                <span className="font-medium text-blue-600">{country.visaSpeed} ماه</span>
+                                                <span className="text-Primary-800">{country.flag} {country.name}</span>
+                                                <span className="font-medium text-Primary-600">{country.visaSpeed} ماه</span>
                                             </div>
-                                            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                                            <div className="h-3 bg-Gray-100 rounded-full overflow-hidden">
                                                 <div
                                                     className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all"
                                                     style={{ width: `${Math.max(10, 100 - (country.visaSpeed * 5))}%` }}
@@ -444,7 +444,7 @@ export function CountryComparison() {
                             </div>
 
                             <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
-                                <h3 className="text-xl text-[#142738] font-medium mb-6">
+                                <h3 className="text-xl text-Primary-800 font-medium mb-6">
                                     🏠 شانس اقامت دائم
                                 </h3>
 
@@ -452,10 +452,10 @@ export function CountryComparison() {
                                     {selectedCountriesData.map(country => (
                                         <div key={country.id}>
                                             <div className="flex items-center justify-between mb-2">
-                                                <span className="text-[#142738]">{country.flag} {country.name}</span>
+                                                <span className="text-Primary-800">{country.flag} {country.name}</span>
                                                 <span className="font-medium text-green-600">{country.prChance}%</span>
                                             </div>
-                                            <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                                            <div className="h-3 bg-Gray-100 rounded-full overflow-hidden">
                                                 <div
                                                     className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full transition-all"
                                                     style={{ width: `${country.prChance}%` }}
@@ -474,7 +474,7 @@ export function CountryComparison() {
                     <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+                                <thead className="bg-Primary-600 text-white">
                                 <tr>
                                     <th className="px-6 py-4 text-right font-medium">کشور</th>
                                     <th className="px-6 py-4 text-center font-medium">هزینه زندگی</th>
@@ -490,30 +490,30 @@ export function CountryComparison() {
                                 {selectedCountriesData.map((country, index) => (
                                     <tr
                                         key={country.id}
-                                        className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50 transition-colors`}
+                                        className={`${index % 2 === 0 ? 'bg-Gray-50' : 'bg-Gray-100'} transition-colors`}
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <span className="text-3xl">{country.flag}</span>
                                                 <div>
-                                                    <div className="font-medium text-[#142738]">{country.name}</div>
-                                                    <div className="text-sm text-[#64656f]">{country.details.language}</div>
+                                                    <div className="font-medium text-Primary-800">{country.name}</div>
+                                                    <div className="text-sm text-Gray-800">{country.details.language}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <div className="font-medium text-[#142738]">{country.monthlyCost.toLocaleString()}€</div>
-                                            <div className="text-xs text-[#64656f]">ماهانه</div>
+                                            <div className="font-medium text-Primary-800">{country.monthlyCost.toLocaleString()}€</div>
+                                            <div className="text-xs text-Gray-800">ماهانه</div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <div className="font-medium text-green-600">{country.averageSalary.toLocaleString()}€</div>
-                                            <div className="text-xs text-[#64656f]">ماهانه</div>
+                                            <div className="text-xs text-Gray-800">ماهانه</div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
-                                            <div className="font-medium text-blue-600">
+                                            <div className="font-medium text-Primary-600">
                                                 {(country.averageSalary - country.monthlyCost).toLocaleString()}€
                                             </div>
-                                            <div className="text-xs text-[#64656f]">ماهانه</div>
+                                            <div className="text-xs text-Gray-800">ماهانه</div>
                                         </td>
                                         <td className="px-6 py-4 text-center">
                                             <div className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
@@ -549,18 +549,18 @@ export function CountryComparison() {
                         </div>
 
                         {/* Highlights Section */}
-                        <div className="border-t border-gray-200 p-6">
-                            <h4 className="text-lg text-[#142738] font-medium mb-4">✨ نکات کلیدی</h4>
+                        <div className="bg-Surface-2 border-t border-Gray-200 p-6">
+                            <h4 className="text-lg text-Primary-800 font-medium mb-4">✨ نکات کلیدی</h4>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 {selectedCountriesData.map(country => (
-                                    <div key={country.id} className="flex items-start gap-3 p-4 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl">
+                                    <div key={country.id} className="flex items-start gap-3 p-4 bg-surface rounded-xl">
                                         <div className="text-2xl">{country.flag}</div>
                                         <div className="flex-1">
-                                            <div className="font-medium text-[#142738] mb-2">{country.name}</div>
+                                            <div className="font-medium text-Primary-800 mb-2">{country.name}</div>
                                             <div className="space-y-1">
                                                 {country.highlights.map((highlight, idx) => (
-                                                    <div key={idx} className="flex items-center gap-2 text-sm text-[#64656f]">
-                                                        <div className="w-1.5 h-1.5 bg-blue-600 rounded-full"></div>
+                                                    <div key={idx} className="flex items-center gap-2 text-sm text-Gray-800">
+                                                        <div className="w-1.5 h-1.5 bg-Primary-600 rounded-full"></div>
                                                         {highlight}
                                                     </div>
                                                 ))}
@@ -588,12 +588,12 @@ export function CountryComparison() {
                     </div>
 
                     <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border-2 border-blue-200">
-                        <DollarSign className="w-8 h-8 text-blue-600 mb-3" />
+                        <DollarSign className="w-8 h-8 text-Primary-600 mb-3" />
                         <div className="text-2xl font-bold text-blue-700 mb-1">
                             {Math.min(...selectedCountriesData.map(c => c.monthlyCost)).toLocaleString()}€
                         </div>
                         <div className="text-sm text-blue-800">کمترین هزینه</div>
-                        <div className="text-xs text-blue-600 mt-1">
+                        <div className="text-xs text-Primary-600 mt-1">
                             {selectedCountriesData.find(c => c.monthlyCost === Math.min(...selectedCountriesData.map(c => c.monthlyCost)))?.flag}{' '}
                             {selectedCountriesData.find(c => c.monthlyCost === Math.min(...selectedCountriesData.map(c => c.monthlyCost)))?.name}
                         </div>
@@ -625,12 +625,12 @@ export function CountryComparison() {
                 </div>
 
                 {/* Info Box */}
-                <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-6">
+                <div className="mt-8 bg-Primary-50 rounded-2xl p-6">
                     <div className="flex items-start gap-3">
-                        <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                        <Info className="w-6 h-6 text-Primary-600 flex-shrink-0 mt-1" />
                         <div>
-                            <h4 className="text-[#142738] font-medium mb-2">💡 نکته مهم</h4>
-                            <p className="text-[#64656f] leading-relaxed">
+                            <h4 className="text-Primary-800 font-medium mb-2">💡 نکته مهم</h4>
+                            <p className="text-Gray-800 leading-relaxed">
                                 این اطلاعات بر اساس میانگین‌های سال 2024 است و می‌تواند بسته به شهر، تخصص شغلی و شرایط شخصی متفاوت باشد.
                                 برای اطلاعات دقیق‌تر حتماً با مشاور مهاجرت مشورت کنید.
                             </p>
