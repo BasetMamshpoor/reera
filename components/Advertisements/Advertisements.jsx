@@ -11,10 +11,12 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Card from "@/app/[locale]/(public)/ads/_components/Card";
+import JobSearch from "./JobSearch";
 
 const Advertisements = ({isOnProfile = false}) => {
     const dic = useTranslation();
     const ads = dic.ads;
+    const d = dic.public.profile.dashboard;
     const {locale} = useParams();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -261,9 +263,11 @@ const Advertisements = ({isOnProfile = false}) => {
                     isOnProfile ? "lg:grid-cols-3" : "lg:grid-cols-4"
                 } lg:gap-x-6`}
             >
-                {adsToShow?.map((ad) => (
-                    <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
-                ))}
+                {adsToShow?.map((ad) =>
+                    ad?.root_category_slug === "recruitment" ?
+                        <JobSearch key={ad.id} item={ad} link={`${locale}/ads`} d={d}/> :
+                        <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
+                )}
             </div>
 
             {!showPagination && (

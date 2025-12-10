@@ -25,7 +25,7 @@ const ModalCoinIncrease = () => {
     const d = dic.dashboard.myprofile.ModalCoinIncrease;
     const [selectedValue, setSelectedValue] = useState("");
 
-    const coinOptions = [2, 5, 10, 20];
+    const coinOptions = [20000, 50000, 100000, 200000];
 
     return (
         <Dialog>
@@ -37,28 +37,31 @@ const ModalCoinIncrease = () => {
                         </div>
                     </button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] h-fit">
+                <DialogContent className="sm:max-w-[425px] h-fit text-center">
                     <DialogHeader>
-                        <DialogTitle className="text-base text-[#142738] dark:text-[#D9EDF4]">
-                            {d.title}
+                        <DialogTitle className="text-base text-center text-[#142738] dark:text-[#D9EDF4]">
+                            {/*{d.title}*/}
+                            افزایش موجودی
                         </DialogTitle>
-                        <DialogDescription className="text-sm text-[#3B3E46] dark:text-[#E0E2E5]">
-                            {d.text}
+                        <DialogDescription className="text-sm text-center text-[#3B3E46] dark:text-[#E0E2E5]">
+                            {/*{d.text}*/}
+                            مقدار پول مورد نیاز برای افزایش موجودی خود را وارد کنید.
                         </DialogDescription>
                     </DialogHeader>
 
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-6 pt-4">
                         <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-1">
-                                <Info className="fill-[#51A3C3]"/>
-                                <p className="text-[#51A3C3] text-sm">{d.price}</p>
-                            </div>
+                            {/*<div className="flex items-center gap-1">*/}
+                            {/*    <Info className="fill-[#51A3C3]"/>*/}
+                            {/*    /!*<p className="text-[#51A3C3] text-sm">{d.price}</p>*!/*/}
+                            {/*    <p className="text-[#51A3C3] text-sm pt-1">افزایش موجودی</p>*/}
+                            {/*</div>*/}
 
                             <Input
                                 id="picture3"
                                 type="text"
-                                placeholder="0 سکه"
-                                value={selectedValue ? `${selectedValue} سکه` : ""}
+                                placeholder="0 ریال"
+                                value={selectedValue ? `${selectedValue} ریال` : ""}
                                 onChange={(e) => {
                                     const val = e.target.value.replace(/\D/g, "");
                                     setSelectedValue(val);
@@ -66,10 +69,10 @@ const ModalCoinIncrease = () => {
                                 className="w-full rounded-xl px-3 py-2 text-sm text-gray-400 lg:text-base"
                             />
 
-                            <p className="text-sm text-gray-400">{d.price}</p>
+                            {/*<p className="text-sm text-gray-400">{d.price}</p>*/}
                         </div>
 
-                        <div className="grid grid-cols-4 gap-6">
+                        <div className="grid grid-cols-4 gap-3">
                             {coinOptions.map((coin) => (
                                 <Button
                                     key={coin}
@@ -83,7 +86,7 @@ const ModalCoinIncrease = () => {
                                     }
                   `}
                                 >
-                                    {coin} {d.coin}
+                                    {coin} ریال
                                 </Button>
                             ))}
                         </div>
@@ -92,8 +95,9 @@ const ModalCoinIncrease = () => {
                     <DialogFooter className="w-full items-center gap-3 mt-4">
                         <DialogClose asChild>
                             <Button
-                                className="flex items-center justify-center  bg-white hover:bg-transparent dark:bg-black py-2 border border-[#F59E0B] rounded-xl w-1/2 text-[#F59E0B] text-base font-bold">
+                                className="flex items-center justify-center  bg-surface hover:bg-transparent py-2 border border-[#F59E0B] rounded-xl w-1/2 text-[#F59E0B] text-base font-bold">
                                 {d.Cancellation}
+                                انصراف
                             </Button>
                         </DialogClose>
                         <Button

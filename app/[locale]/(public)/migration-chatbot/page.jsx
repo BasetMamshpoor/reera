@@ -3,7 +3,7 @@ import {MigrationChatBot} from "./_components/MigrationChatBot"
 
 const Page = () => {
     return (
-        <div className="w-full h-screen">
+        <div className="w-full overflow-hidden h-screen">
             <MigrationChatBot/>
         </div>
     );

@@ -3,7 +3,7 @@ import {Details} from "../_components/Details"
 
 const Page = () => {
     return (
-        <div className="w-full h-screen">
+        <div className="w-full h-full  overflow-hidden">
             <Details/>
         </div>
     );

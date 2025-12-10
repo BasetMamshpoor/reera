@@ -1,70 +1,87 @@
-import React, { useState } from 'react';
-import { X, MapPin, Calendar, Package, DollarSign, AlertCircle, CheckCircle } from 'lucide-react';
-import { toast } from "sonner";
+"use client";
 
+import React, {useState} from "react";
+import {
+    X,
+    MapPin,
+    Calendar,
+    Package,
+    DollarSign,
+    AlertCircle,
+    CheckCircle
+} from "lucide-react";
 
+import {toast} from "sonner";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+    DialogClose
+} from "@/components/ui/dialog";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select";
+import {Button} from "@/components/ui/button";
 
-export const PostAdForm = ({ onClose }) => {
+export function PostAdModal({open, onOpenChange}) {
     const [formData, setFormData] = useState({
-        title: '',
-        from: '',
-        to: '',
-        date: '',
-        packageType: '',
-        weight: '',
-        description: '',
-        price: '',
+        title: "",
+        from: "",
+        to: "",
+        date: "",
+        packageType: "",
+        weight: "",
+        description: "",
+        price: "",
         isUrgent: false,
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (formData.isUrgent) {
-            toast.success('آگهی فوری شما ثبت شد! به مسافران مسیر اطلاع‌رسانی خواهد شد.', {
-                duration: 5000,
-                icon: <CheckCircle className="size-5 text-green-600" />,
-                style: { direction: 'rtl' }
-            });
-        } else {
-            toast.success('آگهی شما با موفقیت ثبت شد!', {
-                duration: 3000,
-                style: { direction: 'rtl' }
-            });
-        }
+        toast.success(
+            formData.isUrgent
+                ? "آگهی فوری شما ثبت شد!"
+                : "آگهی با موفقیت ثبت شد!",
+            {
+                duration: formData.isUrgent ? 5000 : 3000,
+                icon: formData.isUrgent ? (
+                    <CheckCircle className="size-5 text-green-600"/>
+                ) : undefined,
+                style: {direction: "rtl"},
+            }
+        );
 
-        onClose();
+        onOpenChange(false);
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
-            <div
-                className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-                dir="rtl"
-            >
-                {/* Header */}
-                <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
-                    <h2 className="text-xl text-[#142738]">ثبت آگهی جدید</h2>
-                    <button
-                        onClick={onClose}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                        <X className="size-5 text-gray-500" />
-                    </button>
-                </div>
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="max-h-[90vh] overflow-y-auto scroll-hidden" dir="rtl">
+                <DialogHeader>
+                    <DialogTitle className="text-xl text-center text-Primary-950 flex justify-between items-center pt-8">
+                        ثبت آگهی جدید
+                    </DialogTitle>
+                </DialogHeader>
 
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6 pt-6">
                     {/* Title */}
                     <div>
-                        <label className="block text-sm text-[#142738] mb-2">عنوان آگهی</label>
+                        <label className="block text-sm text-Primary-950 mb-2 ">عنوان آگهی</label>
                         <input
                             type="text"
                             value={formData.title}
-                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
-                            placeholder="مثلاً: ارسال دارو از تهران به اصفهان"
+                            onChange={(e) => setFormData({...formData, title: e.target.value})}
+                            className="w-full px-4 py-3 border border-Gray-300 rounded-lg text-sm"
+                            placeholder="مثلاً ارسال دارو..."
                             required
                         />
                     </div>
@@ -72,97 +89,105 @@ export const PostAdForm = ({ onClose }) => {
                     {/* Route */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className=" text-sm text-[#142738] mb-2 flex items-center gap-2">
-                                <MapPin className="size-4 text-[#4299c1]" />
+                            <label className="text-sm text-Primary-950 mb-2 flex items-center gap-2">
+                                <MapPin className="size-4 text-[#4299c1]"/>
                                 مبدا
                             </label>
                             <input
                                 type="text"
                                 value={formData.from}
-                                onChange={(e) => setFormData({ ...formData, from: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
+                                onChange={(e) => setFormData({...formData, from: e.target.value})}
+                                className="w-full px-4 py-3 border rounded-lg"
                                 placeholder="تهران"
                                 required
                             />
                         </div>
+
                         <div>
-                            <label className=" text-sm text-[#142738] mb-2 flex items-center gap-2">
-                                <MapPin className="size-4 text-[#4299c1]" />
+                            <label className="text-sm text-Primary-950 mb-2 flex items-center gap-2">
+                                <MapPin className="size-4 text-[#4299c1]"/>
                                 مقصد
                             </label>
                             <input
                                 type="text"
                                 value={formData.to}
-                                onChange={(e) => setFormData({ ...formData, to: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
+                                onChange={(e) => setFormData({...formData, to: e.target.value})}
+                                className="w-full px-4 py-3 border rounded-lg"
                                 placeholder="اصفهان"
                                 required
                             />
                         </div>
                     </div>
 
-                    {/* Date and Package Type */}
+                    {/* Date + Type */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className=" text-sm text-[#142738] mb-2 flex items-center gap-2">
-                                <Calendar className="size-4 text-[#4299c1]" />
+                            <label className="flex items-center gap-2 text-sm mb-2">
+                                <Calendar className="size-4 text-[#4299c1]"/>
                                 تاریخ مورد نظر
                             </label>
                             <input
                                 type="text"
                                 value={formData.date}
-                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
+                                onChange={(e) => setFormData({...formData, date: e.target.value})}
+                                className="w-full px-4 py-3 border rounded-lg"
                                 placeholder="۱۴۰۳/۰۹/۱۵"
                                 required
                             />
                         </div>
                         <div>
-                            <label className=" text-sm text-[#142738] mb-2 flex items-center gap-2">
-                                <Package className="size-4 text-[#4299c1]" />
+                            <label className="flex items-center gap-2 text-sm mb-2">
+                                <Package className="size-4 text-[#4299c1]"/>
                                 نوع بسته
                             </label>
-                            <select
-                                value={formData.packageType}
-                                onChange={(e) => setFormData({ ...formData, packageType: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
+                            <Select
+                                // value={formData.packageType}
+                                // onChange={(e) => setFormData({...formData, packageType: e.target.value})}
+                                className="w-full"
                                 required
                             >
-                                <option value="">انتخاب کنید</option>
-                                <option value="دارو">دارو</option>
-                                <option value="مدارک">مدارک</option>
-                                <option value="کتاب">کتاب</option>
-                                <option value="هدیه">هدیه</option>
-                                <option value="مواد غذایی">مواد غذایی</option>
-                                <option value="پوشاک">پوشاک</option>
-                                <option value="سایر">سایر</option>
-                            </select>
+                                <SelectTrigger className="w-full border rounded-lg px-4 py-6">
+                                    <SelectValue placeholder="نوع بسته"/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>انتخاب کنید</SelectLabel>
+                                        <SelectItem value="apple">دارو</SelectItem>
+                                        <SelectItem value="banana">مدارک</SelectItem>
+                                        <SelectItem value="blueberry">کتاب</SelectItem>
+                                        <SelectItem value="grapes">هدیه</SelectItem>
+                                        <SelectItem value="pineapple">مواد غذایی</SelectItem>
+                                        <SelectItem value="grapes1">پوشاک</SelectItem>
+                                        <SelectItem value="grapes2">سایر</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </div>
                     </div>
 
-                    {/* Weight and Price */}
+                    {/* Weight + Price */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm text-[#142738] mb-2">وزن تقریبی</label>
+                            <label className="text-sm mb-2 block">وزن تقریبی</label>
                             <input
                                 type="text"
                                 value={formData.weight}
-                                onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
-                                placeholder="مثلاً: ۵۰۰ گرم یا ۲ کیلو"
+                                onChange={(e) => setFormData({...formData, weight: e.target.value})}
+                                className="w-full px-4 py-3 border rounded-lg"
+                                placeholder="مثلاً ۵۰۰ گرم"
                                 required
                             />
                         </div>
                         <div>
-                            <label className=" text-sm text-[#142738] mb-2 flex items-center gap-2">
-                                <DollarSign className="size-4 text-[#4299c1]" />
-                                پیشنهاد قیمت (تومان)
+                            <label className="text-sm mb-2 flex items-center gap-2">
+                                <DollarSign className="size-4 text-[#4299c1]"/>
+                                قیمت پیشنهادی
                             </label>
                             <input
                                 type="text"
                                 value={formData.price}
-                                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm"
+                                onChange={(e) => setFormData({...formData, price: e.target.value})}
+                                className="w-full px-4 py-3 border rounded-lg"
                                 placeholder="۱۵۰,۰۰۰"
                                 required
                             />
@@ -171,62 +196,73 @@ export const PostAdForm = ({ onClose }) => {
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm text-[#142738] mb-2">توضیحات</label>
+                        <label className="text-sm mb-2 block">توضیحات</label>
                         <textarea
-                            value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4299c1] text-sm resize-none"
                             rows={4}
-                            placeholder="توضیحات تکمیلی درباره بسته..."
+                            value={formData.description}
+                            onChange={(e) =>
+                                setFormData({...formData, description: e.target.value})
+                            }
+                            className="w-full px-4 py-3 border rounded-lg resize-none"
+                            placeholder="توضیحات درباره بسته..."
                             required
                         />
                     </div>
 
-                    {/* Urgent Checkbox */}
-                    <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl p-4">
+                    {/* Urgent */}
+                    <div className="bg-surface border rounded-xl p-4">
                         <label className="flex items-start gap-3 cursor-pointer">
                             <input
                                 type="checkbox"
                                 checked={formData.isUrgent}
-                                onChange={(e) => setFormData({ ...formData, isUrgent: e.target.checked })}
-                                className="mt-1 size-5 text-red-500 rounded focus:ring-red-500"
+                                onChange={(e) =>
+                                    setFormData({...formData, isUrgent: e.target.checked})
+                                }
+                                className="size-5 mt-1"
                             />
-                            <div className="flex-1">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="text-sm text-[#142738]">ارسال فوری</span>
-                                    <span className="px-2 py-0.5 bg-red-500 text-white text-xs rounded">جدید</span>
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <span className="text-sm">ارسال فوری</span>
+                                    <span className="text-xs bg-red-500 text-white px-2 rounded">
+                                        جدید
+                                    </span>
                                 </div>
-                                <p className="text-xs text-gray-600 leading-relaxed">
-                                    با انتخاب این گزینه، آگهی شما به صورت خودکار به تمام مسافرانی که در چند ساعت آینده در مسیر {formData.from || 'مبدا'} به {formData.to || 'مقصد'} سفر دارند، اطلاع‌رسانی می‌شود.
+
+                                <p className="text-xs text-Gray-600">
+                                    ارسال فوری به مسافران مسیر {formData.from || "مبدا"} →{" "}
+                                    {formData.to || "مقصد"}
                                 </p>
+
                                 {formData.isUrgent && (
-                                    <div className="mt-2 flex items-center gap-2 text-xs text-orange-700">
-                                        <AlertCircle className="size-4" />
-                                        <span>هزینه اضافی برای ارسال فوری: ۵۰,۰۰۰ تومان</span>
+                                    <div className="flex items-center gap-2 text-orange-700 text-xs mt-2">
+                                        <AlertCircle className="size-4"/>
+                                        هزینه اضافی: ۵۰,۰۰۰ تومان
                                     </div>
                                 )}
                             </div>
                         </label>
                     </div>
 
-                    {/* Buttons */}
-                    <div className="flex gap-3 pt-4">
-                        <button
+                    {/* Footer Buttons */}
+                    <DialogFooter className="pt-2 grid grid-cols-6 gap-4 ">
+                        <Button
                             type="submit"
-                            className="flex-1 px-6 py-3 bg-[#4299c1] text-white rounded-xl hover:bg-[#3a89b0] transition-colors"
+                            className=" py-6 bg-[#4299c1] text-white col-span-4 rounded-xl hover:bg-[#3a89b0] w-full"
                         >
                             ثبت آگهی
-                        </button>
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
-                        >
-                            انصراف
-                        </button>
-                    </div>
+                        </Button>
+
+                        <DialogClose asChild>
+                            <Button
+                                type="button"
+                                className="py-6 px-6 col-span-2 rounded-xl bg-Gray-400 w-full"
+                            >
+                                انصراف
+                            </Button>
+                        </DialogClose>
+                    </DialogFooter>
                 </form>
-            </div>
-        </div>
+            </DialogContent>
+        </Dialog>
     );
-};
+}

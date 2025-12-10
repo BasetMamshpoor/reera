@@ -72,7 +72,7 @@ const DashboardSidebar = () => {
                     height={100}
                     className="w-screen"
                 />
-                <div className="w-full absolute bottom-0">
+                <div className="w-full absolute -bottom-1">
                     <ImageOverlay className="!w-full !h-full fill-[#F9FAFB] dark:fill-[#14181D]"/>
                 </div>
                 <div className="w-full px-5 absolute z-30 bottom-0">

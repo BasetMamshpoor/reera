@@ -47,13 +47,11 @@ const Page = () => {
                     {/*    <Flag className="fill-gray-700 dark:fill-gray-300 "/>*/}
                     {/*</button>*/}
                     <Share/>
-                    {data?.data?.is_like !== undefined && (
-                        <Like
-                            id={data?.data?.id}
-                            url={"/ads"}
-                            isLike={data?.data?.is_like}
-                        />
-                    )}
+                    <Like
+                        id={data?.data?.id}
+                        url={"/ads"}
+                        isLike={data?.data?.is_like}
+                    />
                 </div>
 
                 <div className="flex flex-col gap-16 lg:col-span-2">

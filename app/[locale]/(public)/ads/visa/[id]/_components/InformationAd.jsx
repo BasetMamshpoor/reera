@@ -175,7 +175,7 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                                     </p>
                                     <div className="flex items-center gap-4">
                                         <Share/>
-                                        <Like id={data?.id} url={"/ads"}/>
+                                        <Like isLike={data?.data?.is_like} id={data?.id} url={"/ads"}/>
                                     </div>
                                 </div>
                                 <div
