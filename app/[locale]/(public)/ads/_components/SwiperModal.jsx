@@ -57,9 +57,9 @@ const SwiperModal = ({data}) => {
                                     className="w-full h-full"
                                 />
                                 <div
-                                    className="absolute top-3 right-3 flex items-center gap-1 bg-Gray-200 text-Gray-700 text-sm px-3 rounded-lg">
-                                    <Clock className="fill-natural-main !w-5 !h-5"/>
-                                    <span className="text-sm text-natural-main pt-1">
+                                    className="absolute top-3 right-3 flex items-center gap-2 bg-Gray-200 text-Gray-700 text-sm px-3 py-1 rounded-lg">
+                                    <Clock className="fill-Gray-700 !w-5 !h-5"/>
+                                    <span className="text-sm pt-1">
                                       {data?.time}
                                     </span>
                                 </div>
@@ -166,11 +166,11 @@ const SwiperModal = ({data}) => {
                                         className="w-full h-full"
                                     />
                                     <div
-                                        className="absolute top-3 right-3 flex items-center gap-1 bg-Gray-200 text-Gray-700 text-sm px-3 rounded-lg">
-                                        <Clock className="fill-natural-main !w-5 !h-5"/>
-                                        <span className="text-sm text-natural-main pt-1">
-                      {data?.time}
-                    </span>
+                                        className="absolute top-3 right-3 flex items-center gap-2 bg-Gray-200 text-Gray-700 text-sm px-3 py-1 rounded-lg">
+                                        <Clock className="fill-Gray-700 !w-5 !h-5"/>
+                                        <span className="text-sm pt-1">
+                                           {data?.time}
+                                         </span>
                                     </div>
                                 </SwiperSlide>
                             ))

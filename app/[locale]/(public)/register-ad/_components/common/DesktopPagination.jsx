@@ -90,7 +90,7 @@ export default function DesktopPagination({ currentStep, setCurrentStep }) {
               <span
                 className={cn(
                   "text-sm transition-colors whitespace-nowrap",
-                  isCurrent || isCompleted ? "text-white" : "text-gray-400"
+                  isCurrent || isCompleted ? "text-white" : "text-Gray-400"
                 )}
               >
                 {label}

@@ -17,6 +17,7 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import AdvPagination from "@/components/AdvPagination";
+import JobSearch from "./JobSearch";
 
 const Information = ({
                          data,
@@ -29,6 +30,7 @@ const Information = ({
                      }) => {
     const dic = useTranslation();
     const a = dic.public.profile.my_ads;
+    const d = dic.public.profile.dashboard;
     const {locale} = useParams();
     const [totalPages, setTotalPages] = useState(1);
 
@@ -68,7 +70,7 @@ const Information = ({
     const isEmpty = !data?.data || data.data.length === 0;
 
     return (
-        <div className="flex flex-col dark:bg-[#252C36] w-full border border-gray-200 dark:border-[#374151] rounded-xl">
+        <div className="flex flex-col bg-surface w-full border border-Gray-200 rounded-xl">
             <div className="hidden lg:flex items-center gap-2 p-5 border-b dark:border-[#374151] border-gray-200">
                 <Layer className="fill-gray-800 dark:fill-gray-200"/>
                 <p className="text-xl dark:text-[#E0E2E5] text-black font-bold pt-1">
@@ -127,7 +129,10 @@ const Information = ({
             </div>
             {!isEmpty ? (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-                    <Home data={data} isLoading={isLoading} refetch={refetch}/>
+                    {data?.data?.map((item) => (item.custom_info.type === "recruitment" ?
+                            <JobSearch item={item} isLoading={isLoading} refetch={refetch} d={d}/> :
+                            <Home item={item} isLoading={isLoading} refetch={refetch}/>
+                    ))}
                 </div>
             ) : (
                 <div className="flex items-center justify-center w-full">

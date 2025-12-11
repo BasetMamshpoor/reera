@@ -44,7 +44,7 @@ const Page = async ({searchParams, params}) => {
             <div className="flex items-center flex-col gap-16">
                 <div className="flex flex-col items-center gap-6">
                     <div className="flex flex-col items-center gap-2">
-                        <p className="font-bold text-xl text-[#142738]">آگهی‌های</p>
+                        <p className="font-bold text-xl text-Primary-950">آگهی‌های</p>
                         <p className="text-4xl text-Primary-400 font-bold">املاک</p>
                     </div>
                     {/*<div className="flex items-center gap-6">*/}

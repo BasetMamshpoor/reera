@@ -38,7 +38,7 @@ const Page = async ({searchParams, params}) => {
             <div className="w-full flex flex-col gap-16">
                 <div className="flex items-center flex-col gap-1 ">
                     <p className="text-xl font-bold text-Primary-950 ">آگهی‌های</p>
-                    <p className="text-4xl text-Primary-400 font-bold">وسایل نقلیه</p>
+                    <p className="text-4xl text-Primary-400 font-bold">ویزا</p>
                 </div>
                 <div className="flex gap-6 lg:flex-row flex-col">
                     <Providers dehydratedState={dehydrate(queryClient)}>

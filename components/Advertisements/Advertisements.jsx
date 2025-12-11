@@ -12,6 +12,7 @@ import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Card from "@/app/[locale]/(public)/ads/_components/Card";
 import JobSearch from "./JobSearch";
+import Spinner from "@/components/Spinner";
 
 const Advertisements = ({isOnProfile = false}) => {
     const dic = useTranslation();
@@ -57,7 +58,7 @@ const Advertisements = ({isOnProfile = false}) => {
         initialPageParam: 1,
         staleTime: 5 * 60 * 1000,
     });
-
+    console.log(data)
     // helper values
     const loadedPagesCount = data?.pages?.length ?? 0;
     const totalPages = data?.pages?.[0]?.last_page ?? 1;
@@ -129,7 +130,6 @@ const Advertisements = ({isOnProfile = false}) => {
             if (currentLoader) observer.unobserve(currentLoader);
         };
     }, [handleObserver, showPagination]);
-
     // ---------- Utility: fetch a specific page and insert into infinite query data ----------
     const fetchAndInsertPage = async (pageNumber) => {
         // if already loaded, nothing to do
@@ -274,13 +274,7 @@ const Advertisements = ({isOnProfile = false}) => {
                 <div ref={loaderRef} className="py-8">
                     {isFetchingNextPage && (
                         <div className="flex justify-center items-center">
-                            <div className="flex flex-col items-center gap-4">
-                                <div
-                                    className="w-8 h-8 border-4 border-Primary-400 border-t-transparent rounded-full animate-spin"></div>
-                                <p className="text-gray-600 dark:text-gray-400">
-                                    در حال بارگذاری آگهی‌های بیشتر...
-                                </p>
-                            </div>
+                            <Spinner/>
                         </div>
                     )}
                 </div>
@@ -344,23 +338,10 @@ const Advertisements = ({isOnProfile = false}) => {
                 </>
             )}
 
-            {/* Show "No more ads" message when infinite scroll ends */}
-            {!showPagination && !hasNextPage && allLoadedAds.length > 0 && (
-                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                    تمام آگهی‌ها نمایش داده شدند
-                </div>
-            )}
-
             {/* Loading state for initial load */}
             {isLoading && (
                 <div className="flex justify-center items-center py-12">
-                    <div className="flex flex-col items-center gap-4">
-                        <div
-                            className="w-12 h-12 border-4 border-Primary-400 border-t-transparent rounded-full animate-spin"></div>
-                        <p className="text-gray-600 dark:text-gray-400">
-                            در حال بارگذاری آگهی‌ها...
-                        </p>
-                    </div>
+                    <Spinner/>
                 </div>
             )}
         </>

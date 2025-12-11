@@ -11,7 +11,7 @@ import { useTranslation } from "@/app/[locale]/TranslationContext";
 import Facilities from "./Facilities";
 import Rules from "./Rules";
 import { useParams, usePathname } from "next/navigation";
-import InformationAd from "./InformationAd";
+import InformationAd from "../../../_components/InformationAd";
 import { useQuery } from "@tanstack/react-query";
 import { request } from "@/lib/api";
 import Spinner from "@/components/Spinner";
@@ -66,12 +66,12 @@ const Page = () => {
                 >
                   {a.property_info}
                 </TabsTrigger>
-                <TabsTrigger
-                  className="data-[state=active]:border-b-Primary-400 data-[state=active]:border-b-2 pb-2  font-bold text-sm"
-                  value="password"
-                >
-                  {a.roommate_personal_traits}
-                </TabsTrigger>
+                {/*<TabsTrigger*/}
+                {/*  className="data-[state=active]:border-b-Primary-400 data-[state=active]:border-b-2 pb-2  font-bold text-sm"*/}
+                {/*  value="password"*/}
+                {/*>*/}
+                {/*  {a.roommate_personal_traits}*/}
+                {/*</TabsTrigger>*/}
                 <TabsTrigger
                   className="data-[state=active]:border-b-Primary-400 data-[state=active]:border-b-2 pb-2  font-bold text-sm"
                   value="password1"
@@ -100,13 +100,13 @@ const Page = () => {
               <TabsContent value="account">
                 <Information data={data?.data} isLoading={isLoading} a={a} />
               </TabsContent>
-              <TabsContent value="password">
-                <RoommatePersonalTraits
-                  data={data?.data}
-                  isLoading={isLoading}
-                  a={a}
-                />
-              </TabsContent>
+              {/*<TabsContent value="password">*/}
+              {/*  <RoommatePersonalTraits*/}
+              {/*    data={data?.data}*/}
+              {/*    isLoading={isLoading}*/}
+              {/*    a={a}*/}
+              {/*  />*/}
+              {/*</TabsContent>*/}
               <TabsContent value="password1">
                 <LocationAccess data={data?.data} isLoading={isLoading} />
               </TabsContent>
