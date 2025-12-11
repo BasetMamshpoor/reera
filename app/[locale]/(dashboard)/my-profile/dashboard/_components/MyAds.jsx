@@ -9,7 +9,8 @@ import {useParams} from "next/navigation";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 
-const MyAds = ({data, isLoading, selected, setSelected, d, refetch , tab}) => {
+const MyAds = ({data, isLoading, selected, setSelected, d, refetch, tab}) => {
+    console.log(data)
     const {locale} = useParams()
     const toggleCategory = (id) => {
         if (selected.includes(id)) {
@@ -83,8 +84,10 @@ const MyAds = ({data, isLoading, selected, setSelected, d, refetch , tab}) => {
                 </Select>
                 {!isEmpty ? (
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <JobSearch tab={tab} data={ data} isLoading={isLoading} refetch={refetch} d={d}/>
-                        <Home tab={tab} data={data} isLoading={isLoading} refetch={refetch}/>
+                        {data?.data?.map((item) => (item.custom_info.type === "recruitment" ?
+                                <JobSearch item={item} tab={tab} isLoading={isLoading} refetch={refetch} d={d}/> :
+                                <Home item={item} tab={tab} isLoading={isLoading} refetch={refetch}/>
+                        ))}
                     </div>
                 ) : (
                     <div className="flex items-center justify-center w-full">

@@ -21,7 +21,7 @@ import RowsAds from "./RowsAds";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useCountry} from "@/app/[locale]/CountryProvider";
 import JobSearch from "@/components/Advertisements/JobSearch";
-
+import Card from "@/app/[locale]/(public)/ads/_components/Card";
 const AdvsRes = ({page, link, category_slug, category_id}) => {
     const router = useRouter();
     const [isRow, setIsRow] = useState(false);
@@ -45,7 +45,6 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
                 },
             }),
     });
-    console.log(data)
     const goToPage = (newPage) => {
         router.push(`?page=${newPage}`);
     };
@@ -70,11 +69,11 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
                                 <SelectValue placeholder={a.newest}/>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectGroup className="bg-white">
-                                    <SelectItem className="bg-white font-bold" value="newest">
+                                <SelectGroup className="bg-surface">
+                                    <SelectItem className="bg-surface font-bold" value="newest">
                                         {a.newest}
                                     </SelectItem>
-                                    <SelectItem className="bg-white font-bold" value="most-viewed">
+                                    <SelectItem className="bg-surface font-bold" value="most-viewed">
                                         {a.most_viewed}
                                     </SelectItem>
                                 </SelectGroup>
@@ -95,10 +94,12 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
                     </div>
                 </div>
             </div>
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full`}>
-                {data?.data?.map((item) => (
-                    <JobSearch key={item.id} link={link} isRow={isRow} item={item} d={d}/>
-                ))}
+            <div
+                className={`grid ${isRow ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}  gap-4 w-full`}>
+                {isLoading ? <Spinner/> :
+                    data?.data?.map((i) => (
+                        <Card key={i.id} link={link} isRow={isRow} i={i} d={d}/>
+                    ))}
             </div>
             <AdvPagination
                 setPage={goToPage}

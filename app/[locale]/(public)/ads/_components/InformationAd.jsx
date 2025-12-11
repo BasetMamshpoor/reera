@@ -20,6 +20,7 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import ComponentsForJobSearch from "./ComponentsForJobSearch";
 
 const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) => {
+    console.log(!!data?.donation)
     const dic = useTranslation()
     const a = dic.public.ads.business
     const [changePrice, setChangePrice] = useState(data?.price || 0);
@@ -76,10 +77,12 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                 {data?.title}
                             </p>
                             <div className="flex justify-between w-full">
-                                <div
-                                    className="lex items-center justify-center px-3 py-1 bg-badge-background rounded-lg text-sm text-badge-text w-fit">
-                                    {data?.seller.is_iran ? a.iranian_roommate : a.non_iranian_roommate}
-                                </div>
+                                {!!data?.category_parent === "roommate" &&
+                                    <div
+                                        className="lex items-center justify-center px-3 py-1 bg-badge-background rounded-lg text-sm text-badge-text w-fit">
+                                        {data?.seller.is_iran ? a.iranian_roommate : a.non_iranian_roommate}
+                                    </div>
+                                }
                                 <Modal id={id} locale={locale}/>
                             </div>
                         </div>
@@ -154,28 +157,30 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                 </Select>
                             </div>
                         </div>
-                        {data?.donation && <div className="flex items-center justify-between">
-                            <p className="text-sm text-Gray-700">{a.deposit_amount}</p>
-                            <div className="flex items-center gap-1">
-                                <p className="text-Primary-950 font-bold text-xl">
-                                    {mutation.isPending ?
-                                        <Spinner size="30px"/> : Number(currencySelect).toLocaleString()}
-                                </p>
-                                <Select onValueChange={(val) => handleCurrencyChange(val, "donation")}>
-                                    <SelectTrigger
-                                        className="border-none shadow-none text-Primary-400 dark:text-[#D9EDF4]">
-                                        <SelectValue placeholder={changeDonation || a.select_currency_type}/>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectItem value="IRT">{a.toman}</SelectItem>
-                                            <SelectItem value="USD">{a.dollar}</SelectItem>
-                                            <SelectItem value="EUR">{a.euro}</SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
+                        {data?.donation != null && data?.donation !== "" && data?.donation !== "0" && (
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm text-Gray-700">{a.deposit_amount}</p>
+                                <div className="flex items-center gap-1">
+                                    <p className="text-Primary-950 font-bold text-xl">
+                                        {mutation.isPending ?
+                                            <Spinner size="30px"/> : Number(changeDonation).toLocaleString()}
+                                    </p>
+                                    <Select onValueChange={(val) => handleCurrencyChange(val, "donation")}>
+                                        <SelectTrigger
+                                            className="border-none shadow-none text-Primary-400 dark:text-[#D9EDF4]">
+                                            <SelectValue placeholder={currencySelect || a.select_currency_type}/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="IRT">{a.toman}</SelectItem>
+                                                <SelectItem value="USD">{a.dollar}</SelectItem>
+                                                <SelectItem value="EUR">{a.euro}</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </div>
-                        </div>}
+                        )}
                     </div>
                     {jobSearch && <ComponentsForJobSearch locale={locale} data={data} a={a}/>}
                     <div
@@ -233,28 +238,30 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                     </Select>
                                 </div>
                             </div>
-                            {data?.donation && <div className="flex items-center justify-between">
-                                <p className="text-sm text-Gray-700">{a.deposit_amount}</p>
-                                <div className="flex items-center gap-1">
-                                    <p className="text-Primary-950 font-bold text-xl">
-                                        {mutation.isPending ?
-                                            <Spinner size="30px"/> : Number(changeDonation).toLocaleString()}
-                                    </p>
-                                    <Select onValueChange={(val) => handleCurrencyChange(val, "donation")}>
-                                        <SelectTrigger
-                                            className="border-none shadow-none text-Primary-400 dark:text-[#D9EDF4]">
-                                            <SelectValue placeholder={currencySelect || a.select_currency_type}/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectItem value="IRT">{a.toman}</SelectItem>
-                                                <SelectItem value="USD">{a.dollar}</SelectItem>
-                                                <SelectItem value="EUR">{a.euro}</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
+                            {data?.donation != null && data?.donation !== "" && data?.donation !== "0" && (
+                                <div className="flex items-center justify-between">
+                                    <p className="text-sm text-Gray-700">{a.deposit_amount}</p>
+                                    <div className="flex items-center gap-1">
+                                        <p className="text-Primary-950 font-bold text-xl">
+                                            {mutation.isPending ?
+                                                <Spinner size="30px"/> : Number(changeDonation).toLocaleString()}
+                                        </p>
+                                        <Select onValueChange={(val) => handleCurrencyChange(val, "donation")}>
+                                            <SelectTrigger
+                                                className="border-none shadow-none text-Primary-400 dark:text-[#D9EDF4]">
+                                                <SelectValue placeholder={currencySelect || a.select_currency_type}/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="IRT">{a.toman}</SelectItem>
+                                                    <SelectItem value="USD">{a.dollar}</SelectItem>
+                                                    <SelectItem value="EUR">{a.euro}</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
-                            </div>}
+                            )}
                         </div>
                         {jobSearch && <ComponentsForJobSearch locale={locale} data={data} a={a}/>}
                         <div

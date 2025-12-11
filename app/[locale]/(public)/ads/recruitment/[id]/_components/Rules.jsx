@@ -7,7 +7,7 @@ const Rules = ({data, isLoading ,a}) => {
     const {locale} = useParams()
     return (
         <div dir={locale === "fa" ? "rtl" : "ltr"} className="flex flex-col gap-4 w-full p-6 bg-surface border border-default-divider rounded-2xl">
-            <p className="lg:hidden text-base text-[#3B3E46]">
+            <p className="lg:hidden text-base text-Gray-800">
                 {a.rules}
             </p>
             <div

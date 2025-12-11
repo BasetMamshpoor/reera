@@ -22,7 +22,7 @@ const Information = ({data}) => {
                 className="flex flex-col gap-6 p-6 bg-surface border border-default-divider rounded-2xl">
                 <div className="flex flex-col gap-2 w-full">
                     <div className="grid grid-cols-1 w-full lg:grid-cols-3 gap-4">
-                        <p className="lg:hidden text-base text-[#3B3E46]">
+                        <p className="lg:hidden text-base text-Gray-800">
                             {a.general_info}
                         </p>
                         <div className="flex flex-col lg:flex-row gap-2">
@@ -62,7 +62,7 @@ const Information = ({data}) => {
                         </div>
                         <div className="flex flex-col lg:flex-row gap-2">
                             <p className="text-sm text-Gray-700 whitespace-nowrap">{a.language}</p>
-                            <p className="text-sm text-secondary font-medium">{data?.general?.language}</p>
+                            <p className="text-sm text-secondary font-medium">{data?.language}</p>
                         </div>
                         <div className="flex flex-col lg:flex-row gap-2">
                             <p className="text-sm text-Gray-700 whitespace-nowrap">{a.degree}</p>
@@ -122,12 +122,12 @@ const Information = ({data}) => {
                         {data?.address?.full_address}
                     </p>
                 </div>
-                <div className="flex gap-2 flex-col lg:flex-row">
-                    <p className="text-sm lg:text-base text-Gray-700">
-                        {a.description}
-                    </p>
-                    <p className="text-sm lg:text-lg text-secondary font-medium whitespace-pre-line">{data?.text}</p>
-                </div>
+                {/*<div className="flex gap-2 flex-col lg:flex-row">*/}
+                {/*    <p className="text-sm lg:text-base text-Gray-700">*/}
+                {/*        {a.description}*/}
+                {/*    </p>*/}
+                {/*    <p className="text-sm lg:text-lg text-secondary font-medium whitespace-pre-line">{data?.text}</p>*/}
+                {/*</div>*/}
             </div>
         </>
     );

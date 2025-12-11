@@ -13,7 +13,7 @@ const SellerComments = () => {
         className={`flex flex-row rtl:flex-row-reverse items-center justify-between px-8 mt-4 py-4 border-b-[1px] border-b-gray-500 dark:border-b-[#374151] bg-white dark:bg-[#252C36] md:rounded-tr-2xl md:rounded-tl-2xl`}
       >
         <div
-          className={`flex flex-row rtl:flex-row-reverse gap-2 items-center text-gray-800 font-[700] `}
+          className={`flex flex-row rtl:flex-row-reverse gap-2 items-center text-Gray-800 font-[700] `}
         >
           <Message className={`dark:fill-white`} />
           <span className={`dark:text-white`}>دیدگاه</span>

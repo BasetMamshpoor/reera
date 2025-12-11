@@ -24,42 +24,52 @@ import Trash from "@/assets/icons/Trash.svg";
 import {Button} from "@/components/ui/button";
 import {useMutation} from "@tanstack/react-query";
 import {request} from "@/lib/api";
+import {useParams} from "next/navigation";
+import Link from "next/link";
 
-const JobSearch = ({item, d, tab, refetch, favorite}) => {
 
+import Edit from "@/assets/icons/Edit2.svg";
+import Refresh from "@/assets/icons/Refresh.svg";
+
+const JobSearch = ({item, d, refetch}) => {
+    const {locale} = useParams();
+    const dic = useTranslation();
+    const a = dic.public.profile.my_ads;
     const mutation = useMutation({
         mutationFn: async (id) => {
             await request({
                 method: "delete",
-                url: `/ad/delete/${id}`,
+                url: `/ads/delete/${id}`,
             });
         },
         onSuccess: () => {
-            refetch()
+            refetch();
         },
     });
     const mutation1 = useMutation({
         mutationFn: async (id) => {
             await request({
                 method: "post",
-                url: `/ad/sold/${id}`,
+                url: `/ad/extension/${id}`,
             });
         },
         onSuccess: () => {
-            refetch()
+            refetch();
         },
     });
 
     return (
         <>
-            <div
+            <div key={item.id}
                 className="flex flex-col pb-4 bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
                 <div className="relative max-h-[194px] h-full w-full ">
                     <Image src={item.image} alt="image" width={100} height={100} className="w-full h-full"/>
-                    <div className="w-full absolute bottom-0 right-0 left-0 ">
+                    <div className="w-full absolute -bottom-7 right-0 left-0 ">
                         <Cut className="!w-full !h-full fill-white dark:fill-surface border-0"/>
                     </div>
-                    <div className="absolute left-0 right-0 -bottom-5 flex gap-4 px-4">
+                </div>
+                <div className=" relative z-10 flex flex-col px-4 justify-between gap-6 w-full h-full">
+                    <div className="flex gap-4 px-4">
                         <div className="max-w-[72px] w-full">
                             <Image
                                 src={item.custom_info?.icon}
@@ -74,8 +84,6 @@ const JobSearch = ({item, d, tab, refetch, favorite}) => {
                             {/*<p className="text-xs text-Gray-700 font-bold">اسنپ</p>*/}
                         </div>
                     </div>
-                </div>
-                <div className="flex flex-col px-4 justify-between gap-6 w-full h-full pt-8">
                     <div className="flex flex-col gap-4 w-full">
                         <div className="flex items-center gap-2 w-full">
                             <div
@@ -99,86 +107,83 @@ const JobSearch = ({item, d, tab, refetch, favorite}) => {
                             <p className="text-sm text-Gray-700 ">{item.time}</p>
                         </div>
                     </div>
-                    {favorite === 1 ? <div></div> :
-                        (<div className="flex items-center justify-center w-full gap-4">
+                    {item.status === "pending" || item.status === "approved" ? (
+                        <div className="grid grid-cols-4 items-center justify-center w-full gap-4">
+                            <Link
+                                onClick={() => {
+                                    localStorage.setItem("slug", JSON.stringify(item.slug));
+                                }}
+                                href={`/${locale}/my-profile/my-ads/edit-ad/${item.id}`}
+                                className="flex items-center col-span-3 gap-2 justify-center py-2 bg-Primary-400 border rounded-xl w-full  text-alphaw-100 text-sm lg:text-base font-bold"
+                            >
+                                <Edit className="fill-alphaw-100 !w-5 !h-5"/>
+                                <p className="pt-1">{a.edit}</p>
+                            </Link>
                             <Dialog className="w-full h-fit">
                                 <DialogTrigger asChild>
                                     <button
                                         disabled={mutation.isLoading}
-                                        className="flex items-center justify-center py-2 border rounded-xl w-full border-error-main text-error-main text-sm lg:text-base font-bold"
+                                        className="flex items-center cursor-pointer justify-center py-2 border rounded-xl w-full border-error-main text-error-main text-sm lg:text-base font-bold"
                                     >
-                                        {mutation.isLoading ? <Spinner/> :
-                                            <p className="pt-1">{tab === "request" ? d.i_cancelled : d.rejected_ad}</p>
-                                        }
+                                        {mutation.isLoading ? (
+                                            <Spinner/>
+                                        ) : (
+                                            <Trash className="fill-error-main "/>
+                                        )}
                                     </button>
                                 </DialogTrigger>
-                                <DialogContent
-                                    className="h-fit w-full">
+                                <DialogContent className="h-fit w-full">
                                     <DialogHeader>
                                         <DialogTitle></DialogTitle>
                                         <DialogDescription>
                                             <div className="flex flex-col gap-3  rtl:text-right pt-6">
-                                                <p className="text-sm lg:text-sm text-Gray-950 font-medium">{tab === "ad" ? d.confirm_reject_ad : d.confirm_cancel_ad}</p>
+                                                <p className="lg:text-lg text-Gray-950 font-bold">
+                                                    {a.confirm_delete_ad_title}
+                                                </p>
+                                                <p className="text-sm lg:text-sm text-Gray-950 font-medium">
+                                                    {a.confirm_delete_ad_message}
+                                                </p>
                                             </div>
                                         </DialogDescription>
                                     </DialogHeader>
                                     <DialogFooter className="grid grid-cols-2 gap-5 pt-6">
                                         <DialogClose asChild>
-                                            <Button variant="outline">{d.close}</Button>
+                                            <Button variant="outline">{a.cancel}</Button>
                                         </DialogClose>
-                                        <DialogClose asChild>
-                                            <Button
-                                                variant="outline"
-                                                className="bg-error-main text-white hover:bg-error-main hover:text-white"
-                                                onClick={() => {
-                                                    mutation.mutate(item.id);
-                                                }}
-                                            >
-                                                {tab === "ad" ? d.rejected_ad : d.i_cancelled}
-                                            </Button>
-                                        </DialogClose>
+                                        <Button
+                                            variant="destructive"
+                                            onClick={() => {
+                                                mutation.mutate(item.id);
+                                            }}
+                                        >
+                                            {a.delete}
+                                        </Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
-                            <Dialog className="w-full h-fit">
-                                <DialogTrigger asChild>
-                                    <button
-                                        disabled={mutation1.isLoading}
-                                        className="flex items-center justify-center py-2 bg-Primary-400 border rounded-xl w-full  text-white text-sm lg:text-base font-bold">
-                                        {mutation1.isLoading ? <Spinner/> :
-                                            <p className="pt-1">{tab === "request" ? d.hired_status : d.hired}</p>
-                                        }
-                                    </button>
-                                </DialogTrigger>
-                                <DialogContent
-                                    className="h-fit w-full">
-                                    <DialogHeader>
-                                        <DialogTitle></DialogTitle>
-                                        <DialogDescription>
-                                            <div className="flex flex-col gap-3  rtl:text-right pt-6">
-                                                <p className="text-sm lg:text-sm text-Gray-950 font-medium">{tab === "ad" ? d.confirm_hired_someone : d.confirm_got_hired}</p>
-                                            </div>
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <DialogFooter className="grid grid-cols-2 gap-5 pt-6">
-                                        <DialogClose asChild>
-                                            <Button variant="outline">{d.close}</Button>
-                                        </DialogClose>
-                                        <DialogClose asChild>
-                                            <Button
-                                                variant="outline"
-                                                className="bg-Primary-400 hover:bg-Primary-300 text-white hover:text-white"
-                                                onClick={() => {
-                                                    mutation1.mutate(item.id);
-                                                }}
-                                            >
-                                                {tab === "request" ? d.hired_status : d.hired}
-                                            </Button>
-                                        </DialogClose>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
-                        </div>)}
+                        </div>
+                    ) : item.status === "rejected" ? (
+                        <div
+                            className="flex items-center col-span-3 gap-2 justify-center py-2 bg-Gray-400 border rounded-xl w-full  text-alphaw-40 text-sm lg:text-base font-bold">
+                            <p className="pt-1">{a.rejected}</p>
+                        </div>
+                    ) : item.status === "expired" ? (
+                        <button
+                            type={"button"}
+                            onClick={() => {
+                                mutation1.mutate(item.id);
+                            }}
+                            className="flex items-center cursor-pointer gap-2 justify-center py-2 border border-Primary-400 rounded-xl w-full text-Primary-400 text-base font-bold"
+                        >
+                            <Refresh className="fill-Primary-400 !w-5 !h-5"/>
+                            <p className="pt-1">{a.renew_ad}</p>
+                        </button>
+                    ) : (
+                        <div
+                            className="flex items-center col-span-3 gap-2 justify-center py-2 bg-Gray-400 border rounded-xl w-full  text-alphaw-40 text-sm lg:text-base font-bold">
+                            <p className="pt-1">{a.sold}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

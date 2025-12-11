@@ -23,7 +23,7 @@ const LocationAccess = ({data, isLoading ,a}) => {
                     <Spinner/>
                 </div> :
                 <div className="flex flex-col w-full gap-4 lg:gap-6 p-6 bg-surface border border-default-divider rounded-2xl">
-                    <p className="lg:hidden text-base text-[#3B3E46]">
+                    <p className="lg:hidden text-base text-Gray-800">
                         {a.location_access}
                     </p>
                     <ShowMap latitude={data?.address.latitude} longitude={data?.address.longitude}/>

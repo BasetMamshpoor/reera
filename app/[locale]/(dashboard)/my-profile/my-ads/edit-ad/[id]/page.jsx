@@ -60,8 +60,10 @@ export default function EditAdPage() {
   return (
     <FormContext.Provider
       value={{
-        setCurrentStep,
-        setApiResponseData: setAdData,
+          currentStep,
+          setCurrentStep,
+          apiResponseData: adData,      // ← مقدار داده
+          setApiResponseData: setAdData // ← ست کننده
       }}
     >
       <div className="max-w-[1024px] mx-auto h-180 mt-10">

@@ -22,7 +22,7 @@ const ProductAccordion = ({d}) => {
     return (
         <>
             <div className="flex flex-col gap-4 w-full">
-                <p className="lg:hidden text-base text-[#3B3E46]">
+                <p className="lg:hidden text-base text-Gray-800">
                     {d.contract_terms}
                 </p>
                 <Accordion
