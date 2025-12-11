@@ -15,7 +15,7 @@ const Card = ({isRow, i, link}) => {
         <>
             {isRow ? (
                     <Link href={`${link}/${i?.root_category_slug}/${i?.id}`}
-                          className="grid grid-cols-3 md:p-4 p-2 gap-1 md:gap-6 bg-surface border border-Gray-200 rounded-xl shadow w-full">
+                          className="grid grid-cols-3 md:p-4 p-2 gap-1 md:gap-6 bg-surface shadow-xl border border-Gray-200 rounded-xl w-full">
                         <Image
                             unoptimized
                             src={i?.image || "/images/logo.png"}
@@ -97,7 +97,7 @@ const Card = ({isRow, i, link}) => {
                     </Link>
                 ) :
                 (<Link href={`${link}/${i?.root_category_slug}/${i?.id}`}
-                       className="flex flex-col bg-surface rounded-xl overflow-hidden border border-Gray-200 shadow w-full h-full">
+                       className="flex flex-col bg-surface rounded-xl overflow-hidden border shadow-xl border-Gray-200 w-full h-full">
                     <div className="relative w-full">
                         <Image
                             unoptimized

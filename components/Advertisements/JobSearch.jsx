@@ -63,7 +63,7 @@ const JobSearch = ({item, d, link, isRow}) => {
                 </Link>
                 :
                 <Link href={`${link}/${item.root_category_slug}/${item.id}`}
-                      className="flex flex-col bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
+                      className="flex flex-col bg-surface rounded-xl overflow-hidden shadow-xl w-full border border-Gray-200 h-full">
                     <div className="relative h-64 w-full ">
                         <Image unoptimized src={item.image} alt="image" width={100} height={100} className="w-full h-full"/>
                         <div className="w-full absolute -bottom-7 right-0 left-0 ">
