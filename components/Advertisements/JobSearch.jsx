@@ -31,11 +31,7 @@ const JobSearch = ({item, d, link, isRow}) => {
                                         alt="snapp"
                                         width={42}
                                         height={42}
-                                        className=""3
-
-
-
-
+                                        className=""
                                     />
                                     <p className="text-sm text-alpha-100 font-bold">{item.title}</p>
                                 </div>
