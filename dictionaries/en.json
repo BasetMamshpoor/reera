@@ -177,7 +177,12 @@
       "cleaning": "Cleaning",
       "new": "New",
       "almost_new": "Almost New",
-      "second_hand": "Second Handed"
+      "second_hand": "Second Handed",
+      "oldest": "oldest",
+      "popular": "popular",
+      "expensive": "expensive",
+      "cheap": "cheap",
+      "not_found": "No items found"
     }
   },
   "consultor": {

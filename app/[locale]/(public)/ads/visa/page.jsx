@@ -3,7 +3,7 @@ import React from "react";
 import {QueryClient, dehydrate} from "@tanstack/react-query";
 import Providers from "../../../Providers";
 import {request} from "@/lib/api";
-import VehicesSidebar from "@/app/[locale]/(public)/ads/vehicles/_components/VehiclesSidebar";
+import VisaSidebar from "./_components/VisaSidebar";
 import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
 export const metadata = {
     title: `Reera | Visa Ads`,
@@ -42,7 +42,7 @@ const Page = async ({searchParams, params}) => {
                 </div>
                 <div className="flex gap-6 lg:flex-row flex-col">
                     <Providers dehydratedState={dehydrate(queryClient)}>
-                        <VehicesSidebar/>
+                        <VisaSidebar/>
                         <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"visa"}
                                  page={page}/>
                     </Providers>
