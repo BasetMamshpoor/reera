@@ -109,7 +109,7 @@ const DigitalSidebar = () => {
     return (
         <>
             {/* Desktop */}
-            <div className="hidden lg:block border-2 rounded-xl p-6">
+            <div className="hidden lg:block border-2 rounded-xl p-6 h-fit">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex gap-2 items-center">
                         <Filter />

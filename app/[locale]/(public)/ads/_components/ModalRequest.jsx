@@ -62,42 +62,43 @@ const ModalRequest = ({locale, id, session}) => {
                     </Button>
                 </DialogTrigger>
 
-                {session?.accessToken ? <DialogContent className="flex flex-col gap-10 p-10 h-fit w-full">
-                    <form className="flex flex-col gap-10 w-full" onSubmit={handleSubmit}>
-                        <VisuallyHidden>
-                            <DialogTitle></DialogTitle>
-                        </VisuallyHidden>
-                        <div className="flex flex-col gap-10 pt-4 w-full">
-                            <p className="lg:text-lg text-Primary-950 font-semibold pt-1">{a.request_form}</p>
-                            <div className="flex flex-col w-full gap-4">
-                                <p className="text-sm text-secondary">{a.request_info}</p>
-                                <Textarea
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
-                                    placeholder={a.request_text_placeholder}
-                                    className="w-full h-24 align-top"
-                                />
-                            </div>
-                        </div>
-
-                        <DialogFooter className="grid grid-cols-2 gap-4 w-full">
-                            <DialogClose asChild>
-                                <div
-                                    className="flex items-center justify-center gap-2 w-full border border-warning-main rounded-xl py-2 cursor-pointer">
-                                    <p className="text-base text-warning-main whitespace-nowrap">{a.cancel}</p>
+                {!!session?.accessToken ?
+                    <DialogContent className="flex flex-col gap-10 p-10 h-fit w-full">
+                        <form className="flex flex-col gap-10 w-full" onSubmit={handleSubmit}>
+                            <VisuallyHidden>
+                                <DialogTitle></DialogTitle>
+                            </VisuallyHidden>
+                            <div className="flex flex-col gap-10 pt-4 w-full">
+                                <p className="lg:text-lg text-Primary-950 font-semibold pt-1">{a.request_form}</p>
+                                <div className="flex flex-col w-full gap-4">
+                                    <p className="text-sm text-secondary">{a.request_info}</p>
+                                    <Textarea
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                        placeholder={a.request_text_placeholder}
+                                        className="w-full h-24 align-top"
+                                    />
                                 </div>
-                            </DialogClose>
+                            </div>
 
-                            <Button
-                                type="submit"
-                                disabled={mutation.isPending}
-                                className="bg-Primary-400 font-bold w-full py-6 rounded-xl hover:bg-Primary-400 cursor-pointer"
-                            >
-                                {mutation.isPending ? <Spinner size="30px"/> : a.send_request}
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </DialogContent> :
+                            <DialogFooter className="grid grid-cols-2 gap-4 w-full">
+                                <DialogClose asChild>
+                                    <div
+                                        className="flex items-center justify-center gap-2 w-full border border-warning-main rounded-xl py-2 cursor-pointer">
+                                        <p className="text-base text-warning-main whitespace-nowrap">{a.cancel}</p>
+                                    </div>
+                                </DialogClose>
+
+                                <Button
+                                    type="submit"
+                                    disabled={mutation.isPending}
+                                    className="bg-Primary-400 font-bold w-full py-6 rounded-xl hover:bg-Primary-400 cursor-pointer"
+                                >
+                                    {mutation.isPending ? <Spinner size="30px"/> : a.send_request}
+                                </Button>
+                            </DialogFooter>
+                        </form>
+                    </DialogContent> :
                     <DialogContent className="flex flex-col gap-10 p-10 h-fit w-full">
                         <form className="flex flex-col gap-10 w-full" onSubmit={handleSubmit}>
                             <VisuallyHidden>
@@ -115,7 +116,7 @@ const ModalRequest = ({locale, id, session}) => {
                                 </DialogClose>
 
                                 <Link href={`/${locale}/login`}
-                                    className="text-center pt-2 bg-Primary-400 font-bold w-full py-2 rounded-xl hover:bg-Primary-400 cursor-pointer text-white"
+                                      className="text-center pt-2 bg-Primary-400 font-bold w-full py-2 rounded-xl hover:bg-Primary-400 cursor-pointer text-white"
                                 >
                                     {a.login_or_signup}
                                 </Link>

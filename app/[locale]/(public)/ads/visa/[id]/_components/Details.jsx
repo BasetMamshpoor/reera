@@ -1,13 +1,8 @@
 "use client";
-import React, {useState} from "react";
+import React from "react";
 import Share from "@/components/Share";
-import Heart from "@/assets/icons/heart.svg";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import ProductAccordion from "./ProductAccordion";
-import Flag from "@/assets/icons/Flag.svg";
-import SellerComments from "../../../../register-ad/seller/_components/SellerComments";
 import SwiperModal from "@/app/[locale]/(public)/ads/_components/SwiperModal";
-
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useParams} from "next/navigation";
 import InformationAd from "./InformationAd";
@@ -16,12 +11,11 @@ import {request} from "@/lib/api";
 import Spinner from "@/components/Spinner";
 import Like from "@/components/Like";
 import {useSession} from "next-auth/react";
-
-// New components for Visa details
 import VisaBasicInfo from "./VisaBasicInfo";
 import VisaDocuments from "./VisaDocuments";
 import VisaConditions from "./VisaConditions";
 import VisaTypes from "./VisaTypes";
+import Comments from "@/components/Comments";
 
 const VisaDetailsPage = () => {
     const dic = useTranslation();
@@ -112,7 +106,7 @@ const VisaDetailsPage = () => {
                                 <VisaConditions data={visaData} a={a}/>
                             </TabsContent>
                             <TabsContent value="reviews">
-                                <SellerComments/>
+                                <Comments id={id}/>
                             </TabsContent>
                         </Tabs>
 
@@ -135,7 +129,7 @@ const VisaDetailsPage = () => {
                             <VisaConditions data={visaData} a={a}/>
 
                             <div className="flex flex-col gap-6 py-6 px-4 bg-surface border border-default-divider">
-                                <SellerComments/>
+                                <Comments id={id}/>
                             </div>
                         </div>
                     </div>

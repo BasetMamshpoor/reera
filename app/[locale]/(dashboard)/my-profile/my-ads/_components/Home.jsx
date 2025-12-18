@@ -62,9 +62,9 @@ const Home = ({item, refetch}) => {
         <>
             <div
                 key={item.id}
-                className="flex flex-col pb-4 bg-surface rounded-xl overflow-hidden w-full shadow-lg border border-Gray-200"
+                className="grid grid-rows-4 pb-4 bg-surface rounded-xl overflow-hidden w-full shadow-lg border border-Gray-200"
             >
-                <div className="relative max-h-[194px] h-full w-full ">
+                <div className="row-span-2 relative h-full w-full ">
                     <Link href={`/${locale}/ads/${item.slug}`}
                           className="relative">
                         <Image
@@ -126,49 +126,51 @@ const Home = ({item, refetch}) => {
                         </Badge>
                     )}
                 </div>
-                <div className="relative z-10 flex flex-col px-4 justify-between h-full gap-4 w-full pt-2">
-                    <div className="flex flex-col gap-3 w-full">
-                        <div className="flex items-center justify-between w-full ">
-                            <Badge className="bg-badge-background text-badge-text text-xs px-3">
-                                {item.category}
-                            </Badge>
-                            <p className="text-sm text-Gray-500 ">{item.time}</p>
-                        </div>
-                        <p className=" lg:text-lg font-bold text-Gray-950 ">
-                            {item.title}
-                        </p>
+                <div className="row-span-2 relative z-10 flex flex-col px-4 justify-between h-full gap-4 w-full pt-2">
+                    <div className="flex flex-col gap-4 w-full">
+                        <div className="flex flex-col gap-3 w-full">
+                            <div className="flex items-center justify-between w-full ">
+                                <Badge className="bg-badge-background text-badge-text text-xs px-3">
+                                    {item.category}
+                                </Badge>
+                                <p className="text-sm text-Gray-500 ">{item.time}</p>
+                            </div>
+                            <p className=" lg:text-lg font-bold text-Gray-950 ">
+                                {item.title}
+                            </p>
 
-                        <div className="flex flex-col gap-2">
-                            {(item.custom_info?.area || item.custom_info?.bedrooms) && (
-                                <div className="flex items-center gap-2">
-                                    <Hashtag className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
-                                    <div className="flex items-center gap-1">
-                                        <p className="text-sm lg:text-base text-secondary pt-1">
-                                            {item.custom_info?.area} {a.meter}
-                                        </p>
-                                        <p className="text-sm lg:text-base text-secondary pt-1">
-                                            {item.custom_info?.bedrooms} {a.bedroom}
-                                        </p>
+                            <div className="flex flex-col gap-2">
+                                {(item.custom_info?.area || item.custom_info?.bedrooms) && (
+                                    <div className="flex items-center gap-2">
+                                        <Hashtag className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
+                                        <div className="flex items-center gap-1">
+                                            <p className="text-sm lg:text-base text-secondary pt-1">
+                                                {item.custom_info?.area} {a.meter}
+                                            </p>
+                                            <p className="text-sm lg:text-base text-secondary pt-1">
+                                                {item.custom_info?.bedrooms} {a.bedroom}
+                                            </p>
+                                        </div>
                                     </div>
+                                )}
+                                <div className="flex items-center gap-2">
+                                    <Location className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
+                                    <p className="text-sm lg:text-base text-secondary pt-1">
+                                        {item.location}
+                                    </p>
                                 </div>
-                            )}
-                            <div className="flex items-center gap-2">
-                                <Location className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
-                                <p className="text-sm lg:text-base text-secondary pt-1">
-                                    {item.location}
-                                </p>
                             </div>
                         </div>
-                    </div>
-                    <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center justify-center gap-2">
-                            <Eye className="fill-Gray-700 !w-5 !h-5"/>
-                            <p className="text-Gray-700 pt-1">{item.view}</p>
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center justify-center gap-2">
+                                <Eye className="fill-Gray-700 !w-5 !h-5"/>
+                                <p className="text-Gray-700 pt-1">{item.view}</p>
+                            </div>
+                            <p className="lg:text-lg text-alpha-100 font-bold">
+                                {Number(item.price).toLocaleString()}{" "}
+                                {locale === "fa" ? "تومان" : "Toman"}
+                            </p>
                         </div>
-                        <p className="lg:text-lg text-alpha-100 font-bold">
-                            {Number(item.price).toLocaleString()}{" "}
-                            {locale === "fa" ? "تومان" : "Toman"}
-                        </p>
                     </div>
                     {item.status === "pending" || item.status === "approved" ? (
                         <div className="grid grid-cols-4 items-center justify-center w-full gap-4">
