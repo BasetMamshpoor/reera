@@ -1,275 +1,198 @@
 "use client";
 import React from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import {Checkbox} from "@/components/ui/checkbox";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent, SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
-import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import {CheckIcon, ChevronsUpDownIcon} from "lucide-react";
+import {cn} from "@/lib/utils";
+import {Button} from "@/components/ui/button";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
 } from "@/components/ui/command";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from "@/components/ui/popover";
 import SearchIcon from "@/assets/icons/search.svg";
 import MultiRangeSlider from "@/components/ui/multirangeslider";
-import { Switch } from "@/components/ui/switch";
-import { useTranslation } from "@/app/[locale]/TranslationContext";
-import { useParams } from "next/navigation";
+import {Switch} from "@/components/ui/switch";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
+import {useParams} from "next/navigation";
+import TreeCategory from "@/components/ui/TreeCategory";
+import {Slider} from "@/components/ui/slider";
 
 // Memoize to prevent unnecessary re-renders
-const RecruitmentFilterContent = React.memo(
-  ({
-    categories,
-    open,
-    setOpen,
-    search,
-    setSearch,
-    countryOptions,
-    filteredCountries,
-    loadingCountries,
-    selectedCountryId,
-    cityOpen,
-    setCityOpen,
-    citySearch,
-    setCitySearch,
-    cityOptions,
-    filteredCities,
-    loadingCities,
-    priceRange,
-    setPriceRange,
-    watch,
-    setValue,
-    workTypeOptions,
-  }) => {
+const RecruitmentFilterContent = ({
+                                      categoryTree,
+                                      filters,
+                                      handleChange,
+                                      priceRangeFromAPI,
+                                      allData,
+                                      languages,
+                                      workType,
+                                      degrees
+                                  }) => {
+    console.log(languages);
     const dic = useTranslation();
     const s = dic.all_ads.sidebar;
-    const l = dic.public.register_ad.location_form;
-    const r = dic.register_ad;
-    const { locale } = useParams();
-    const handleInputChange = (type, value) => {
-      const numValue = Number(value);
-      if (!isNaN(numValue)) {
-        setPriceRange((prev) =>
-          type === "min" ? [numValue, prev[1]] : [prev[0], numValue]
-        );
-      }
-    };
+    const d = dic.public.register_ad.trip;
+    const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
-      <div className="flex flex-col gap-4 p-6 lg:p-0">
-        {" "}
-        {/* Adjust padding for mobile/desktop */}
-        <div className="w-full relative group focus-within:ring-0">
-          <SearchIcon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4 pointer-events-none transition-opacity duration-200 fill-Gray-700" />
-          <Input
-            className="rtl:placeholder:text-right px-12 py-5 border-Gray-500 focus:placeholder-transparent focus:outline-none focus:ring-0 placeholder:text-Gray-500 rounded-xl"
-            placeholder={s.search}
-          />
-        </div>
-        <p className="rtl:text-right text-Gray-700">{s.categories_of}</p>
-        <div className="grid grid-cols-1 gap-y-4 gap-4 w-full text-Gray-800">
-          {" "}
-          {/* Adjust cols for mobile */}
-          {categories.map((label) => (
-            <div key={label} className="flex flex-row items-center gap-2">
-              <Checkbox className="cursor-pointer" />
-              <Label className="text-Gray-800">{label}</Label>
+        <div className="flex flex-col gap-4 p-6 lg:p-0">
+            {/* Categories */}
+            <div className="flex flex-col gap-3">
+                <p className="rtl:text-right text-Gray-700 font-medium">{s.categories_of}</p>
+                <div className="border border-Gray-200 rounded-lg p-3 bg-gray-50/50 max-h-80 overflow-y-auto">
+                    {categoryTree?.map((cat) => (
+                        <TreeCategory
+                            key={cat.id}
+                            category={cat}
+                            selectedCategory={filters.category_id}
+                            onCategorySelect={(id) => handleChange("recruitment_categories_id", id)}
+                        />
+                    ))}
+                </div>
             </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-2 w-full">
-          <label htmlFor="">{s.work_type}</label>
-          {/* Work Type Select */}
-          <div className="w-full">
-            <Select onValueChange={(val) => setValue("work_type", val)}>
-              <SelectTrigger className="w-full py-4 rounded-md border border-default-divider cursor-pointer">
-                <SelectValue placeholder={r.cooperation_type} />
-              </SelectTrigger>
-              <SelectContent>
-                {workTypeOptions.map((option) => (
-                  <SelectItem key={option.id} value={option.id}>
-                    {locale === "en" ? option.title : option.title_en}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p>{s.location}</p>
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-full justify-between"
-              >
-                {selectedCountryId
-                  ? countryOptions.find((c) => c.value === selectedCountryId)
-                      ?.label
-                  : l.location_country}
-                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-90 p-0">
-              <Command>
-                <CommandInput
-                  placeholder={l.search_country}
-                  value={search}
-                  onValueChange={setSearch}
-                />
-                <CommandList>
-                  <CommandEmpty>{l.no_country_found}</CommandEmpty>
-                  <CommandGroup>
-                    {loadingCountries ? (
-                      <CommandItem disabled>{l.loading}</CommandItem>
-                    ) : (
-                      filteredCountries.map((country) => (
-                        <CommandItem
-                          key={country.value}
-                          value={country.label}
-                          onSelect={() => {
-                            setValue("country_id", country.value, {
-                              shouldValidate: true,
-                            });
-                            setValue("city_id", "");
-                            setOpen(false);
-                            setSearch("");
-                          }}
-                        >
-                          <CheckIcon
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              selectedCountryId === country.value
-                                ? "opacity-100"
-                                : "opacity-0"
+
+            <div className="flex flex-col gap-2 w-full">
+                <Label>{s.workType|| "نوع همکاری"}</Label>
+                <Select
+                    value={filters.cooperation}
+                    onValueChange={(val) => handleChange("cooperation", val)}
+                >
+                    <SelectTrigger className="w-full border border-default-divider rounded-lg">
+                        <SelectValue placeholder={s.select_workType || "انتخاب نوع همکاری"}/>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {workType?.map((b) => (
+                            <SelectItem key={b.id} value={b.id}>
+                                {b.title}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="flex flex-col gap-2 w-full">
+                <Label>{s.degree || "مدرک"}</Label>
+                <Select
+                    value={filters.degree}
+                    onValueChange={(val) => handleChange("degree", val)}
+                >
+                    <SelectTrigger className="w-full border border-default-divider rounded-lg">
+                        <SelectValue placeholder={s.select_degree || "انتخاب مدرک"}/>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {degrees?.map((m) => (
+                            <SelectItem key={m.id} value={m.id}>
+                                {m.label}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="flex flex-col gap-2 w-full">
+                <Label>{s.languages || "زبان"}</Label>
+                <Select
+                    value={filters.languages_id}
+                    onValueChange={(val) => handleChange("languages_id", val)}
+                >
+                    <SelectTrigger className="w-full border border-default-divider rounded-lg">
+                        <SelectValue placeholder={s.select_languages || "انتخاب زبان"}/>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            {languages?.map((item) =>
+                                <SelectItem key={item.id} value={item.id}>{item.title}</SelectItem>
                             )}
-                          />
-                          {country.label}
-                        </CommandItem>
-                      ))
-                    )}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <div className="flex flex-col gap-2 w-full">
-          <Popover open={cityOpen} onOpenChange={setCityOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={cityOpen}
-                className="w-full justify-between"
-                disabled={!selectedCountryId || loadingCities}
-              >
-                {watch("city_id")
-                  ? cityOptions.find((c) => c.value === watch("city_id"))?.label
-                  : l.location_city}
-                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="lg:w-[400px] w-90 p-0">
-              <Command>
-                <CommandInput
-                  placeholder={l.search_city}
-                  value={citySearch}
-                  onValueChange={setCitySearch}
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="flex flex-col gap-2 w-full">
+                <Label>{s.currency || "ارز"}</Label>
+                <Select
+                    value={filters.currency_id}
+                    onValueChange={(val) => handleChange("currency_id", val)}
+                >
+                    <SelectTrigger className="w-full border border-default-divider rounded-lg">
+                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"}/>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {allData?.currency?.map((c) => (
+                            <SelectItem key={c.id} value={c.id.toString}>
+                                {c.title} ({c.code})
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="flex flex-col gap-2">
+                <Label>{s.price_range || "Price Range"}</Label>
+                <Slider
+                    disabled={!filters.currency_id}
+                    value={[filters.min_price, filters.max_price]}
+                    min={priceRangeFromAPI?.min}
+                    max={priceRangeFromAPI?.max}
+                    step={1000}
+                    onValueChange={([min, max]) => {
+                        handleChange("min_price", min);
+                        handleChange("max_price", max);
+                    }}
                 />
-                <CommandList>
-                  <CommandEmpty>{l.no_city_found}</CommandEmpty>
-                  <CommandGroup>
-                    {loadingCities ? (
-                      <CommandItem disabled>{l.no_city_found}</CommandItem>
-                    ) : filteredCities.length > 0 ? (
-                      filteredCities.map((city) => (
-                        <CommandItem
-                          key={city.value}
-                          value={city.label}
-                          onSelect={() => {
-                            setValue("city_id", city.value, {
-                              shouldValidate: true,
-                            });
-                            setCityOpen(false);
-                            setCitySearch("");
-                          }}
-                        >
-                          <CheckIcon
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              watch("city_id") === city.value
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {city.label}
-                        </CommandItem>
-                      ))
-                    ) : (
-                      <CommandItem disabled>
-                        {selectedCountryId
-                          ? l.no_city_found
-                          : l.select_country_first}
-                      </CommandItem>
-                    )}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+                <div className="flex gap-2">
+                    <Input
+                        disabled={!filters.currency_id}
+                        value={formatPrice(filters.min_price)}
+                        onChange={(e) =>
+                            handleChange(
+                                "min_price",
+                                Number(e.target.value.replace(/,/g, ""))
+                            )
+                        }
+                        placeholder="Min price"
+                    />
+                    <Input
+                        disabled={!filters.currency_id}
+                        value={formatPrice(filters.max_price)}
+                        onChange={(e) =>
+                            handleChange(
+                                "max_price",
+                                Number(e.target.value.replace(/,/g, ""))
+                            )
+                        }
+                        placeholder="Max price"
+                    />
+                </div>
+            </div>
+
+            {/* Verified */}
+            <div className="flex items-center justify-between mt-2">
+                <p className="text-lg font-[500] text-Gray-800">{s.verified_ads}</p>
+                <Switch
+                    checked={filters.verified}
+                    onCheckedChange={(val) => handleChange("verified", val)}
+                />
+            </div>
         </div>
-        <Select>
-          <SelectTrigger className="w-full border-2 border-default-divider py-4 rounded-md [&_[data-slot=chev-down]]:fill-Gray-500">
-            <SelectValue placeholder={s.currency_type} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem className="text-right" value="light">
-              dollar
-            </SelectItem>
-            <SelectItem value="dark">Rial</SelectItem>
-            <SelectItem value="system">euro</SelectItem>
-          </SelectContent>
-        </Select>
-        <MultiRangeSlider value={priceRange} onValueChange={setPriceRange} />
-        <div className="flex flex-row items-center gap-2 w-full">
-          <Input
-            value={priceRange[0]}
-            onChange={(e) => handleInputChange("min", e.target.value)}
-            type="number"
-          />
-          <Input
-            value={priceRange[1]}
-            onChange={(e) => handleInputChange("max", e.target.value)}
-            type="number"
-          />
-        </div>
-        <div className="flex flex-row items-center justify-between mt-6">
-          <p className="text-lg font-[500] text-Gray-800">{s.verified_ads}</p>
-          <Switch className="cursor-pointer" />
-        </div>
-        {/* Add same_language_owner if needed, or remove from mobile */}
-      </div>
     );
-  }
-);
+}
 
 export default RecruitmentFilterContent;

@@ -80,7 +80,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                 {!!data?.category_parent === "roommate" &&
                                     <div
                                         className="lex items-center justify-center px-3 py-1 bg-badge-background rounded-lg text-sm text-badge-text w-fit">
-                                        {data?.seller.is_iran ? a.iranian_roommate : a.non_iranian_roommate}
+                                        {data?.seller?.is_iran ? a.iranian_roommate : a.non_iranian_roommate}
                                     </div>
                                 }
                                 <Modal id={id} locale={locale}/>
@@ -91,10 +91,10 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <div
-                                        className="w-8 h-8 border-2 border-default-divider rounded-full flex items-center justify-center ">
-                                        {data?.seller.profile ?
+                                        className="w-8 h-8 border-2 border-default-divider rounded-full flex items-center overflow-hidden justify-center ">
+                                        {data?.seller?.profile ?
                                             <Image
-                                                src={data?.seller.profile}
+                                                src={data?.seller?.profile}
                                                 alt=""
                                                 width={100}
                                                 height={100}
@@ -103,17 +103,17 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                             <User className="fill-Gray-800"/>
                                         }
                                     </div>
-                                    <p className="text-sm text-secondary font-bold">{data?.seller.name?.trim() ? data?.seller.name : a.anonymous}</p>
+                                    <p className="text-sm text-secondary font-bold">{data?.seller?.name?.trim() ? data?.seller?.name : a.anonymous}</p>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <Star className="!w-4 !h-4 fill-warning-main"/>
-                                    <p className="text-sm text-gray-800 dark:text-gray-200 pt-2">{data?.seller.ratings}</p>
+                                    <p className="text-sm text-gray-800 dark:text-gray-200 pt-2">{data?.seller?.ratings}</p>
                                 </div>
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <p className="text-xs text-Gray-700">{a.membership_duration}</p>
-                                    <p className="text-sm text-gray-950 dark:text-gray-50">{data?.seller.duration}</p>
+                                    <p className="text-sm text-gray-950 dark:text-gray-50">{data?.seller?.duration}</p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Location className="w-4 h-4 fill-Gray-700"/>
@@ -213,7 +213,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                 </div>
                                 {/*<div*/}
                                 {/*    className="lex items-center justify-center px-3 py-1 bg-badge-background rounded-lg text-sm text-badge-text w-fit">*/}
-                                {/*    {data?.seller.is_iran ? a.iranian_roommate : a.non_iranian_roommate}*/}
+                                {/*    {data?.seller?.is_iran ? a.iranian_roommate : a.non_iranian_roommate}*/}
                                 {/*</div>*/}
                             </div>
                             <div className="flex items-center justify-between">
@@ -282,10 +282,10 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div
-                                    className="w-10 h-10 flex items-center justify-center border-3 border-default-divider rounded-full ">
-                                    {data?.seller.profile ?
+                                    className="w-10 h-10 flex items-center justify-center border-3 border-default-divider overflow-hidden rounded-full ">
+                                    {data?.seller?.profile ?
                                         <Image
-                                            src={data?.seller.profile}
+                                            src={data?.seller?.profile}
                                             alt=""
                                             width={100}
                                             height={100}
@@ -294,17 +294,17 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                         <User className="fill-Gray-800"/>
                                     }
                                 </div>
-                                <p className="text-lg text-secondary font-bold pt-1">{data?.seller.name?.trim() ? data?.seller.name : a.anonymous}</p>
+                                <p className="text-lg text-secondary font-bold pt-1">{data?.seller?.name?.trim() ? data?.seller?.name : a.anonymous}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Star className="fill-warning-main !w-4 !h-4"/>
-                                <p className="text-base text-Gray-800 pt-2">{data?.seller.ratings}</p>
+                                <p className="text-base text-Gray-800 pt-2">{data?.seller?.ratings}</p>
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <p className="text-sm text-Gray-700">{a.membership_duration}</p>
-                                <p className="text-base text-gray-950 dark:text-gray-50">{data?.seller.duration}</p>
+                                <p className="text-base text-gray-950 dark:text-gray-50">{data?.seller?.duration}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Location className="!w-5 !h-5 fill-Gray-700"/>
@@ -313,14 +313,16 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                         </div>
                     </Link>
                     <Modal locale={locale} id={id}/>
-                    {payment && <div
-                        className="flex flex-col gap-2 p-4 border border-default-divider dark:bg-[#DCFCE8] bg-[#DCFCE8] rounded-xl">
-                        <div className="flex items-center gap-2">
-                            <Tick className="w-10 h-10 fill-[#16A34A]"/>
-                            <p className="text-lg font-bold text-black pt-1">{a.secure_payment}</p>
+                    {payment &&
+                        <div
+                            className="flex flex-col gap-2 p-4 border border-default-divider dark:bg-[#DCFCE8] bg-[#DCFCE8] rounded-xl">
+                            <div className="flex items-center gap-2">
+                                <Tick className="w-10 h-10 fill-[#16A34A]"/>
+                                <p className="text-lg font-bold text-black pt-1">{a.secure_payment}</p>
+                            </div>
+                            <p className="text-sm text-black">{a.secure_payment_info}</p>
                         </div>
-                        <p className="text-sm text-black">{a.secure_payment_info}</p>
-                    </div>}
+                    }
                 </div>
             </div>
         </>

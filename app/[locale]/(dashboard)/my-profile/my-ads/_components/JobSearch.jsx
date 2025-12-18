@@ -61,50 +61,52 @@ const JobSearch = ({item, d, refetch}) => {
     return (
         <>
             <div key={item.id}
-                className="flex flex-col pb-4 bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
-                <div className="relative max-h-[194px] h-full w-full ">
+                 className="grid grid-rows-4 pb-4 bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
+                <div className="row-span-2 relative h-full w-full ">
                     <Image src={item.image} alt="image" width={100} height={100} className="w-full h-full"/>
-                    <div className="w-full absolute -bottom-7 right-0 left-0 ">
+                    <div className="w-full absolute -bottom-9 right-0 left-0 ">
                         <Cut className="!w-full !h-full fill-white dark:fill-surface border-0"/>
                     </div>
                 </div>
-                <div className=" relative z-10 flex flex-col px-4 justify-between gap-6 w-full h-full">
-                    <div className="flex gap-4 px-4">
-                        <div className="max-w-[72px] w-full">
-                            <Image
-                                src={item.custom_info?.icon}
-                                alt="logo"
-                                width={72}
-                                height={72}
-                                className={`w-full`}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2 pt-2">
-                            <p className="text-sm text-alpha-100 font-bold">{item.title}</p>
-                            {/*<p className="text-xs text-Gray-700 font-bold">اسنپ</p>*/}
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 w-full">
-                        <div className="flex items-center gap-2 w-full">
-                            <div
-                                className="flex flex-col items-center gap-2 p-2 border border-default rounded-lg w-full">
-                                <p className="text-xs text-Gray-700 font-bold">{d.salary}</p>
-                                <p className="text-sm text-Primary-800 font-bold">
-                                    {item.custom_info?.price} {item.custom_info?.currency}
-                                </p>
+                <div className="row-span-2 relative z-10 flex flex-col px-4 justify-between gap-6 w-full h-full">
+                    <div class="flex flex-col gap-4 w-full">
+                        <div className="flex gap-4 px-4">
+                            <div className="max-w-[72px] w-full">
+                                <Image
+                                    src={item.custom_info?.icon}
+                                    alt="logo"
+                                    width={72}
+                                    height={72}
+                                    className={`w-full`}
+                                />
                             </div>
-                            <div
-                                className="flex flex-col items-center gap-2 p-2 border border-default rounded-lg w-full">
-                                <p className="text-xs text-Gray-700 font-bold">{d.employment_type}</p>
-                                <p className="text-sm text-Primary-800 font-bold">{item.custom_info?.type}</p>
+                            <div className="flex flex-col gap-2 pt-2">
+                                <p className="text-sm text-alpha-100 font-bold">{item.title}</p>
+                                {/*<p className="text-xs text-Gray-700 font-bold">اسنپ</p>*/}
                             </div>
                         </div>
-                        <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center gap-2">
-                                <Location className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
-                                <p className="text-sm text-Gray-700 pt-1">{item.location}</p>
+                        <div className="flex flex-col gap-4 w-full">
+                            <div className="flex items-center gap-2 w-full">
+                                <div
+                                    className="flex flex-col items-center gap-2 p-2 border border-default rounded-lg w-full">
+                                    <p className="text-xs text-Gray-700 font-bold">{d.salary}</p>
+                                    <p className="text-sm text-Primary-800 font-bold">
+                                        {item.custom_info?.price} {item.custom_info?.currency}
+                                    </p>
+                                </div>
+                                <div
+                                    className="flex flex-col items-center gap-2 p-2 border border-default rounded-lg w-full">
+                                    <p className="text-xs text-Gray-700 font-bold">{d.employment_type}</p>
+                                    <p className="text-sm text-Primary-800 font-bold">{item.custom_info?.type}</p>
+                                </div>
                             </div>
-                            <p className="text-sm text-Gray-700 ">{item.time}</p>
+                            <div className="flex items-center justify-between w-full">
+                                <div className="flex items-center gap-2">
+                                    <Location className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
+                                    <p className="text-sm text-Gray-700 pt-1">{item.location}</p>
+                                </div>
+                                <p className="text-sm text-Gray-700 ">{item.time}</p>
+                            </div>
                         </div>
                     </div>
                     {item.status === "pending" || item.status === "approved" ? (

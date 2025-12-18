@@ -11,17 +11,18 @@ import {
 } from "@/components/ui/dialog";
 import {Input} from "@/components/ui/input";
 import Plus from "@/assets/icons/add.svg";
-import Rating from "./Rating";
+import Rating from "@/app/[locale]/(dashboard)/my-profile/_components/Rating";
 import {useMutation} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import {toast} from "sonner";
 import {Textarea} from "@/components/ui/textarea";
 import Spinner from "@/components/Spinner";
 
-const ModalComment = ({a}) => {
+const ModalComment = ({a, id, refetch}) => {
+    const [open, setOpen] = useState(false)
     const [body, setBody] = useState({
-        id: 794,
-        parent_id: 1,
+        id: id,
+        parent_id: "",
         owner_behavior_rating: "" || 0,
         price_clarity_rating: "" || 0,
         info_honesty_rating: "" || 0,
@@ -32,10 +33,15 @@ const ModalComment = ({a}) => {
         mutationFn: async (form) =>
             await request({
                 method: "post",
-                url: "/comments",
+                url: `/comment`,
                 data: form,
             }),
-        onSuccess: (data) => toast.success(data?.message),
+        onSuccess: (data) => {
+            toast.success(data?.message)
+            setOpen(false)
+            refetch()
+            setBody.body = ""
+        },
         onError: (error) => toast.error(error?.message),
     });
 
@@ -45,9 +51,10 @@ const ModalComment = ({a}) => {
     };
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" className="border-0 shadow-none bg-transparent p-0">
+                <Button onclick={() => setOpen(true)} variant="outline"
+                        className="border-0 shadow-none bg-transparent p-0">
                     <div
                         className="flex items-center justify-center border border-[#4299C1] gap-2 px-2 lg:px-3 py-2 rounded-2xl">
                         <span className="text-primary-500 font-bold text-sm pt-1">{a.submit_comment}</span>

@@ -1,19 +1,16 @@
 "use client";
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React from "react";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import Filter from "@/assets/icons/filter.svg";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import useSwipeScroll from "@/hooks/useHorizontalScroll";
-import {useQuery} from "@tanstack/react-query";
-import {request} from "@/lib/api";
-import {useForm} from "react-hook-form";
+
 import RecMobileFilter from "./RecMobileFilter";
-import TicketsFilterContent from "@/components/Filters/TicketsFilterContent";
-import {useRouter, useSearchParams} from "next/navigation";
+import VisaFilterContent from "@/components/Filters/VisaFilterContent";
 import Icon from "@/assets/icons/add.svg";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 
-const TicketsSidebar = () => {
+const VisaSidebar = () => {
     const dic = useTranslation();
     const s = dic.all_ads.sidebar;
 
@@ -22,13 +19,11 @@ const TicketsSidebar = () => {
         handleChange,
         clearAllFilters,
         categoryTree,
-        brands,
         modelsData,
         currencies,
         priceRangeFromAPI,
-        filtersData,
         activeFilters
-    } = useCategoryFilters("ticket");
+    } = useCategoryFilters("visa");
 
     const scrollRef = useSwipeScroll();
 
@@ -38,9 +33,8 @@ const TicketsSidebar = () => {
         handleChange,
         priceRangeFromAPI,
         modelsData,
-        allData: { currency: currencies },
+        allData: {currency: currencies },
     };
-
     return (
         <>
             <div
@@ -59,10 +53,11 @@ const TicketsSidebar = () => {
                             <CloseSquare className="fill-error-main"/>
                         </button>
                     </div>
-                    <TicketsFilterContent {...sharedProps} />
+                    <VisaFilterContent {...sharedProps} />
                 </div>
             </div>
 
+            {/* Mobile */}
             <div
                 ref={scrollRef}
                 className="lg:hidden flex items-center gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-pointer"
@@ -87,7 +82,7 @@ const TicketsSidebar = () => {
                             <span className="text-xs font-medium whitespace-nowrap">
                               {f.label}
                             </span>
-                            <Icon className="rotate-45 fill-error-main cursor-pointer"/>
+                            <Icon className="rotate-45 fill-error-main cursor-pointer" />
                         </button>
                     ))}
                 </div>
@@ -96,4 +91,4 @@ const TicketsSidebar = () => {
     );
 };
 
-export default TicketsSidebar;
+export default VisaSidebar;

@@ -250,7 +250,7 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                                 //     <p className="text-base text-Primary-400 whitespace-nowrap">{a.chat}</p>
                                 // </Link>
                             }
-                            <ModalRequest id={id} data={data} locale={locale} a={a}/>
+                            <ModalRequest session={session} id={id} data={data} locale={locale} a={a}/>
                         </div>
                     </div>
 

@@ -4,7 +4,6 @@ import Share from "@/components/Share";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import ProductAccordion from "./ProductAccordion";
 import Flag from "@/assets/icons/Flag.svg";
-import SellerComments from "../../../../register-ad/seller/_components/SellerComments";
 import SwiperModal from "@/app/[locale]/(public)/ads/_components/SwiperModal";
 import Information from "./Information"
 import {useTranslation} from "@/app/[locale]/TranslationContext";
@@ -16,6 +15,7 @@ import {request} from "@/lib/api";
 import Spinner from "@/components/Spinner";
 import Like from "@/components/Like";
 import {useSession} from "next-auth/react";
+import Comments from "@/components/Comments";
 
 const Page = () => {
     const dic = useTranslation()
@@ -24,7 +24,7 @@ const Page = () => {
     const {id} = useParams()
     const {data: session} = useSession()
 
-    const {data, isLoading} = useQuery({
+    const {data, isLoading, refetch} = useQuery({
         queryKey: ["vehicle", "slug"],
         queryFn: async () => {
             return await request({
@@ -93,7 +93,7 @@ const Page = () => {
                                 </div>
                             </TabsContent>
                             <TabsContent value="password3">
-                                <SellerComments/>
+                                <Comments id={id}/>
                             </TabsContent>
                         </Tabs>
 
@@ -112,7 +112,7 @@ const Page = () => {
                             </div>
                             <div
                                 className="flex flex-col gap-6 py-6 px-4 bg-surface border border-default-divider ">
-                                <SellerComments/>
+                                <Comments id={id}/>
                             </div>
                         </div>
                     </div>

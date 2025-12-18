@@ -51,7 +51,7 @@ const TreeCategory = ({
       >
         {/* Expand/Collapse Button */}
         {hasChildren && (
-          <div className="w-4 h-4 flex items-center justify-center text-gray-500">
+          <div className="w-4 h-4 flex items-center justify-center text-Gray-950">
             {isExpanded ? (
               <ChevronDown className="w-3 h-3" />
             ) : (
@@ -64,7 +64,7 @@ const TreeCategory = ({
         {!hasChildren && <div className="w-4 h-4" />}
 
         {/* Folder Icon */}
-        <div className={cn("text-gray-500", isSelected && "text-Primary-500")}>
+        <div className={cn("text-Gray-950", isSelected && "text-Primary-500")}>
           {hasChildren ? (
             isExpanded ? (
               <FolderOpen className="w-4 h-4" />
@@ -75,7 +75,7 @@ const TreeCategory = ({
             <div
               className={cn(
                 "w-1 h-1 rounded-full",
-                isSelected ? "bg-Primary-500" : "bg-gray-400"
+                isSelected ? "bg-Primary-500" : "text-Gray-950"
               )}
             />
           )}
@@ -85,7 +85,7 @@ const TreeCategory = ({
         <span
           className={cn(
             "flex-1 text-sm font-normal",
-            isSelected ? "text-Primary-700 font-medium" : "text-gray-700"
+            isSelected ? "text-Primary-700 font-medium" : "text-Gray-950v"
           )}
         >
           {category.label}
@@ -93,7 +93,7 @@ const TreeCategory = ({
       </div>
 
       {hasChildren && isExpanded && (
-        <div className="border-l-2 border-gray-200 ml-6">
+        <div className="border-l-2 border-Gray-200 ml-6">
           {category.children.map((child) => (
             <TreeCategory
               key={child.id}

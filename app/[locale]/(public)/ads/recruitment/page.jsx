@@ -37,7 +37,7 @@ const Page = async ({searchParams, params}) => {
     });
     return (
         <>
-            <div className="flex items-center flex-col gap-16">
+            <div className="container flex flex-col gap-16 mx-auto">
                 <div className="flex flex-col items-center gap-6">
                     <div className="flex flex-col items-center gap-2">
                         <p className="font-bold text-xl text-Primary-900">آگهی‌های</p>
@@ -45,20 +45,8 @@ const Page = async ({searchParams, params}) => {
                             استخدام و کاریابی
                         </p>
                     </div>
-                    {/*<div className="flex items-center gap-6">*/}
-                    {/*    <div*/}
-                    {/*        className="flex items-center px-3 py-2 gap-6 border border-gray-100 dark:border-gray-800 rounded-md">*/}
-                    {/*        <p className="text-gray-800 dark:text-gray-200 text-sm">*/}
-                    {/*            معماری و عمرانی*/}
-                    {/*        </p>*/}
-                    {/*        <div*/}
-                    {/*            className="flex items-center justify-center px-2 bg-gray-100 dark:text-gray-900 rounded-3xl text-gray-900 text-xs">*/}
-                    {/*            1000*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </div>
-                <div className="flex gap-6 w-full">
+                <div className="flex gap-6 lg:flex-row flex-col">
                     <Providers dehydratedState={dehydrate(queryClient)}>
                         <RecruitmentSidebar/>
                         <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"recruitment"}

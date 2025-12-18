@@ -69,10 +69,11 @@ const CompleteInformation = ({
             last_name: "",
             mobile: "",
             national_code: "",
-            language_id: undefined,
-            nationality_id: undefined,
+            language_id: "",
+            nationality_id: "",
         },
     });
+
 
     // set initial text/select values when data arrives
     useEffect(() => {
@@ -91,6 +92,9 @@ const CompleteInformation = ({
             // Note: previews are controlled in parent (EditInformation) — parent already set profilePreview/identityPreview from API
         }
     }, [CompleteInformationData, isLoading, setValue]);
+
+    const languageId = watch("language_id");
+    const nationalityId = watch("nationality_id");
 
     // mutation: send FormData (including files if present)
     const mutation = useMutation({
@@ -285,9 +289,10 @@ const CompleteInformation = ({
             <div className="flex lg:flex-row rtl:flex-row-reverse flex-col items-center gap-6 w-full">
                 <div className="w-full">
                     <Select
+                        defaultValue={CompleteInformationData?.data?.language_id?.toString()}
                         onValueChange={(v) => setValue("language_id", Number(v))}>
                         <SelectTrigger
-                            className="border py-5 border-default-divider cursor-pointer w-full rounded-xl px-3 text-gray-500 text-sm lg:text-base">
+                            className="border py-5 border-default-divider cursor-pointer w-full rounded-xl px-3 text-Gray-950 text-sm lg:text-base">
                             <SelectValue placeholder={c.language}/>
                         </SelectTrigger>
                         <SelectContent>
@@ -313,10 +318,11 @@ const CompleteInformation = ({
                 </div>
                 <div className="w-full">
                     <Select
+                        defaultValue={CompleteInformationData?.data?.nationality_id?.toString()}
                         onValueChange={(v) => setValue("nationality_id", Number(v))}
                     >
                         <SelectTrigger
-                            className="w-full border cursor-pointer py-5 border-default-divider rounded-xl px-3 text-gray-500">
+                            className="w-full border cursor-pointer py-5 border-default-divider rounded-xl px-3 text-Gray-950">
                             <SelectValue placeholder={c.nationality}/>
                         </SelectTrigger>
                         <SelectContent>

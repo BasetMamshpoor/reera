@@ -20,7 +20,7 @@ import {toast} from "sonner";
 import Spinner from "@/components/Spinner";
 import {Textarea} from "@/components/ui/textarea";
 
-const Reply = ({id}) => {
+const Reply = ({id, refetch}) => {
     const dic = useTranslation();
     const a = dic.public.profile.user_feedback;
 
@@ -44,6 +44,7 @@ const Reply = ({id}) => {
             setText("");
             toast.success(data?.message);
             setOpen(false)
+            refetch()
         },
         onError: (errors) => {
             toast.error(errors?.message);

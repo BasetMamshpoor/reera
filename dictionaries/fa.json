@@ -177,7 +177,12 @@
       "cleaning": "تمیزکاری",
       "new": "نو",
       "almost_new": "در حد نو",
-      "second_hand": "کارکرده"
+      "second_hand": "کارکرده",
+      "oldest": "قدیمی\u200Cترین",
+      "popular": "محبوب ترین",
+      "expensive": "گران ترین",
+      "cheap": "ارزان ترین",
+      "not_found": "موردی یافت نشد"
     }
   },
   "consultor": {

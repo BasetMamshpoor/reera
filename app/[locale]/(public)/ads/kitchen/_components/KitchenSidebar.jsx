@@ -1,170 +1,97 @@
 "use client";
-import React, { useMemo, useRef, useState } from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import Filter from "@/assets/icons/filter.svg";
-import { useTranslation } from "@/app/[locale]/TranslationContext";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
 import useSwipeScroll from "@/hooks/useHorizontalScroll";
-import { useQuery } from "@tanstack/react-query";
-import { request } from "@/lib/api";
-import { useForm } from "react-hook-form";
+import {useQuery} from "@tanstack/react-query";
+import {request} from "@/lib/api";
+import {useForm} from "react-hook-form";
 import RecMobileFilter from "./RecMobileFilter";
 import FilterContent from "@/components/Filters/KitchenFilterContent";
+import {useRouter, useSearchParams} from "next/navigation";
+import Icon from "@/assets/icons/add.svg";
+import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 
 const KitchenSidebar = () => {
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const [cityOpen, setCityOpen] = useState(false);
-  const [citySearch, setCitySearch] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 100000]);
-  const [brandOpen, setBrandOpen] = useState(false);
-  const [typeOpen, setTypeOpen] = useState(false);
-  const [brandSearch, setBrandSearch] = useState("");
-  const [typeSearch, setTypeSearch] = useState("");
-  const [isProduct_status, setIsProduct_status] = useState("");
-  const { watch, setValue } = useForm();
-  const dic = useTranslation();
-  const scrollRef = useSwipeScroll();
-  const s = dic.all_ads.sidebar;
-  const l = dic.public.register_ad.location_form;
-  const k = dic.register_ad;
+    const dic = useTranslation();
+    const s = dic.all_ads.sidebar;
 
-  const categories = [
-    s.electrical_appliances,
-    s.kitchen_utensils,
-    s.food_beverages,
-    s.sewing_knitting,
-    s.furniture_wood_products,
-    s.lighting,
-    s.carpet_rugs,
-    s.bedding,
-    s.decorative_items,
-    s.heating_cooling,
-    s.cleaning,
-  ];
-  const product_status = [s.new, s.almost_new, s.second_hand];
+    const {
+        filters,
+        handleChange,
+        clearAllFilters,
+        categoryTree,
+        brands,
+        modelsData,
+        currencies,
+        priceRangeFromAPI,
+        activeFilters
+    } = useCategoryFilters("kitchen");
 
-  const { data: countriesData, isLoading: loadingCountries } = useQuery({
-    queryKey: ["countries"],
-    queryFn: async () => request({ method: "GET", url: `/getCountries` }),
-  });
+    const scrollRef = useSwipeScroll();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["kitchen"],
-    queryFn: async () => request({ method: "GET", url: `/store/kitchen` }),
-  });
-
-  const selectedCountryId = watch("country_id");
-  const selectedBrand = watch("brand");
-  const selectedType = watch("product_type");
-
-  const { data: citiesData, isLoading: loadingCities } = useQuery({
-    queryKey: ["cities", selectedCountryId],
-    queryFn: async () => {
-      if (!selectedCountryId) return { data: { cities: [] } };
-      return request({
-        method: "GET",
-        url: `/getCountries`,
-        query: { country: selectedCountryId },
-      });
-    },
-    enabled: !!selectedCountryId,
-  });
-
-  const countryOptions = useMemo(
-    () =>
-      countriesData?.data?.countries?.map((c) => ({
-        value: c.id.toString(),
-        label: c.name,
-      })) || [],
-    [countriesData]
-  );
-  const filteredCountries = useMemo(
-    () =>
-      countryOptions.filter((country) =>
-        country.label.toLowerCase().includes(search.toLowerCase())
-      ),
-    [search, countryOptions]
-  );
-
-  const cityOptions = useMemo(
-    () =>
-      citiesData?.data?.city?.map((city) => ({
-        value: city.id.toString(),
-        label: city.name,
-      })) || [],
-    [citiesData]
-  );
-  const filteredCities = useMemo(
-    () =>
-      cityOptions.filter((city) =>
-        city.label.toLowerCase().includes(citySearch.toLowerCase())
-      ),
-    [citySearch, cityOptions]
-  );
-
-  const sharedProps = {
-    categories,
-    product_status,
-    isProduct_status,
-    setIsProduct_status,
-    data,
-    brandOpen,
-    setBrandOpen,
-    brandSearch,
-    setBrandSearch,
-    selectedBrand,
-    typeOpen,
-    setTypeOpen,
-    typeSearch,
-    setTypeSearch,
-    selectedType,
-    open,
-    setOpen,
-    search,
-    setSearch,
-    countryOptions,
-    filteredCountries,
-    loadingCountries,
-    selectedCountryId,
-    cityOpen,
-    setCityOpen,
-    citySearch,
-    setCitySearch,
-    cityOptions,
-    filteredCities,
-    loadingCities,
-    priceRange,
-    setPriceRange,
-    watch,
-    setValue,
-  };
-
-  return (
-    <>
-      <div className="border-2 h-fit border-default-divider hidden lg:block bg-transparent rounded-xl w-full max-w-92">
-        <div className="flex flex-col gap-4 p-6">
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center justify-between gap-2 dark:text-white">
-              <Filter className="dark:fill-white" />
-              <span>{s.filter}</span>
+    const sharedProps = {
+        categoryTree,
+        filters,
+        handleChange,
+        priceRangeFromAPI,
+        modelsData,
+        allData: { brands, currency: currencies },
+    };
+    return (
+        <>
+            <div
+                className="hidden lg:block border-2 border-default-divider rounded-xl bg-transparent w-full max-w-92 h-fit">
+                <div className="flex flex-col gap-4 p-6">
+                    <div className="flex justify-between items-center">
+                        <div className="flex gap-2 items-center">
+                            <Filter className="dark:fill-Gray-50"/>
+                            <span>{s.filter}</span>
+                        </div>
+                        <button
+                            className="flex gap-2 items-center text-error-main cursor-pointer"
+                            onClick={clearAllFilters}
+                        >
+                            <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                            <CloseSquare className="fill-error-main"/>
+                        </button>
+                    </div>
+                    <FilterContent {...sharedProps} />
+                </div>
             </div>
-            <button className="flex flex-row items-center gap-2 text-error-main cursor-pointer">
-              <span className="font-[600]">{s.categories_of}</span>
-              <CloseSquare className="fill-error-main" />
-            </button>
-          </div>
-          <FilterContent {...sharedProps} />
-        </div>
-      </div>
 
-      <div
-        ref={scrollRef}
-        className="px-4 overflow-x-auto flex items-center cursor-pointer lg:hidden pb-4 scrollbar-hide"
-      >
-        <RecMobileFilter {...sharedProps} />
-      </div>
-    </>
-  );
+            <div
+                ref={scrollRef}
+                className="lg:hidden flex items-center gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-pointer"
+            >
+                <RecMobileFilter clearAllFilters={clearAllFilters} {...sharedProps} />
+                <div className="flex items-center gap-4">
+                    {activeFilters.map((f) => (
+                        <button
+                            key={f.key}
+                            className="flex bg-Primary-50 border text-Primary-500 border-Primary-500 items-center justify-center px-2 py-2 min-w-20 gap-2 rounded-2xl"
+                            onClick={() => {
+                                if (f.key === "price") {
+                                    handleChange("min_price", priceRangeFromAPI.min);
+                                    handleChange("max_price", priceRangeFromAPI.max);
+                                } else if (f.key === "verified") {
+                                    handleChange("verified", false);
+                                } else {
+                                    handleChange(f.key, "");
+                                }
+                            }}
+                        >
+                            <span className="text-xs font-medium whitespace-nowrap">
+                              {f.label}
+                            </span>
+                            <Icon className="rotate-45 fill-error-main cursor-pointer" />
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default KitchenSidebar;

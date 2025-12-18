@@ -16,6 +16,7 @@ import {request} from "@/lib/api";
 import Spinner from "@/components/Spinner";
 import Like from "@/components/Like";
 import {useSession} from "next-auth/react";
+import Comments from "@/components/Comments";
 
 const Page = () => {
     const dic = useTranslation()
@@ -97,7 +98,7 @@ const Page = () => {
                                 </div>
                             </TabsContent>
                             <TabsContent value="password3">
-                                <SellerComments/>
+                                <Comments id={id}/>
                             </TabsContent>
                         </Tabs>
 
@@ -116,7 +117,7 @@ const Page = () => {
                             </div>
                             <div
                                 className="flex flex-col gap-6 py-6 px-4 bg-surface border border-default-divider ">
-                                <SellerComments/>
+                                <Comments id={id}/>
                             </div>
                         </div>
                     </div>

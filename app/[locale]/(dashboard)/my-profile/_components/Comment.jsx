@@ -2,14 +2,12 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Message from "@/assets/icons/message.svg";
 import More from "@/assets/icons/more.svg";
-import Heart from "@/assets/icons/heart.svg";
 import Star from "@/assets/icons/star.svg";
 import Like from "@/components/Like";
 import Arrow from "@/assets/icons/arrow-down.svg";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
-import ModalComment from "./ModalComment";
 import Reply from "@/components/Reply";
 import Spinner from "@/components/Spinner";
 import User from "@/assets/icons/profile.svg";
@@ -42,7 +40,6 @@ const Comment = () => {
                     </span>
                     <Message className="ltr:hidden fill-gray-800 dark:fill-gray-200 lg:!w-6 lg:!h-6 !w-5 !h-5"/>
                 </div>
-                <ModalComment id={comments.id} a={a}/>
             </div>
             <div className="flex items-center flex-col w-full">
                 {isLoading ?
@@ -80,7 +77,7 @@ const Comment = () => {
                                         <div className="flex flex-col gap-4 lg:flex-row rtl:flex-row-reverse">
                                             <div className="flex flex-row rtl:flex-row-reverse items-center gap-4 ">
                                                 {/*<More className="fill-Gray-800"/>*/}
-                                                <Reply id={item.id}/>
+                                                {/*<Reply id={item.id}/>*/}
                                                 <Like
                                                     url={`profile/comment`}
                                                     id={item.id}
@@ -98,56 +95,6 @@ const Comment = () => {
                                     </span>
                                         </div>
                                         <p className="text-sm text-secondary">{item.body}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center px-20">
-                                <ReplayIcon className="!w-8 !h-8 fill-Primary-500 rotate-180"/>
-                                <div
-                                    className="flex w-full lg:gap-4 "
-                                >
-                                    <div
-                                        className="mx-4 my-auto w-14 h-14 border-2 border-default-divider rounded-full flex items-center justify-center">
-                                        {item.profile ?
-                                            <Image
-                                                src={item.profile}
-                                                alt="profile"
-                                                width={56}
-                                                height={56}
-                                                className="w-screen"
-                                            /> :
-                                            <User className="fill-Gray-800 !w-8 !h-8"/>
-                                        }
-                                    </div>
-                                    <div className="flex flex-col rtl:pl-3 ltr:pr-3 lg:px-4 gap-2  w-full">
-                                        <div className="flex items-center w-full gap-4 justify-between">
-                                            <div className="flex flex-col gap-4">
-                                                <span className="text-base text-Primary-950 font-medium">
-                                                  {item.user_name}
-                                                </span>
-                                            </div>
-                                            <div className="flex flex-col gap-4 lg:flex-row rtl:flex-row-reverse">
-                                                <div className="flex flex-row rtl:flex-row-reverse items-center gap-4 ">
-                                                    {/*<More className="fill-Gray-800"/>*/}
-                                                    {/*<Reply id={item.id}/>*/}
-                                                    <Like
-                                                        url={`profile/comment`}
-                                                        id={item.id}
-                                                        isLike={item.is_like}
-                                                    />
-                                                    <span className="text-xs text-Gray-600 ">{item.created_at}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col gap-2 w-full">
-                                            <div className="flex gap-2 items-center">
-                                                <Star className="fill-warning-main w-4 h-4"/>
-                                                <span className="text-base text-Gray-800 pt-2">
-                                                  {item.rate}
-                                                </span>
-                                            </div>
-                                            <p className="text-sm text-secondary">{item.body}</p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
