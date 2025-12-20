@@ -20,7 +20,6 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import ComponentsForJobSearch from "./ComponentsForJobSearch";
 
 const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) => {
-    console.log(!!data?.donation)
     const dic = useTranslation()
     const a = dic.public.ads.business
     const [changePrice, setChangePrice] = useState(data?.price || 0);
@@ -60,7 +59,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
         queryFn: async () => {
             return await request({
                 method: "get",
-                url: "/ads/currency",
+                url: "/currency",
             })
         }
     })
@@ -95,7 +94,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                         {data?.seller?.profile ?
                                             <Image
                                                 src={data?.seller?.profile}
-                                                alt=""
+                                                alt="image"
                                                 width={100}
                                                 height={100}
                                                 className="w-screen"
@@ -121,9 +120,8 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                 </div>
                             </div>
                             <Link
-                                href="/public"
-                                className="flex items-center justify-center px-4 py-2 w-full border border-[#4299C1] rounded-xl text-sm text-Primary-400 font-bold"
-                            >{a.view_profile}</Link>
+                                href={`/${locale}/register-ad/seller/${session?.user?.id}`}
+                                className="flex items-center justify-center px-4 py-2 w-full border border-[#4299C1] rounded-xl text-sm text-Primary-400 font-bold">{a.view_profile}</Link>
                         </div>
                         {payment && <div
                             className="flex flex-col gap-2 p-4 border border-default-divider dark:bg-[#DCFCE8] bg-[#DCFCE8] rounded-xl">
@@ -184,7 +182,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                     </div>
                     {jobSearch && <ComponentsForJobSearch locale={locale} data={data} a={a}/>}
                     <div
-                        className={`grid ${data?.contact.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
+                        className={`grid ${data?.contact?.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
                         {!!data?.contact?.mobile &&
                             <ModalChatAndCall data={data} locale={locale} a={a}/>
                             // <Link href="/" variant="outline"
@@ -265,8 +263,8 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                         </div>
                         {jobSearch && <ComponentsForJobSearch locale={locale} data={data} a={a}/>}
                         <div
-                            className={`grid ${data?.contact.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
-                            {data?.contact.mobile &&
+                            className={`grid ${data?.contact?.mobile ? "grid-cols-2" : "grid-cols-1"} items-center gap-4 w-full`}>
+                            {data?.contact?.mobile &&
                                 <ModalChatAndCall data={data} locale={locale} a={a}/>
                                 // <Link href="/" variant="outline"
                                 //       className="shadow-none cursor-pointer hover:bg-transparent flex items-center justify-center gap-2 w-full border border-Primary-400 rounded-xl px-5 py-1">
@@ -277,7 +275,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                             <ModalRequest session={session} id={id} data={data} locale={locale} a={a}/>
                         </div>
                     </div>
-                    <Link href="/public"
+                    <Link href={`/${locale}/register-ad/seller/${session?.user?.id}`}
                           className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-95 transition-transform w-full">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">

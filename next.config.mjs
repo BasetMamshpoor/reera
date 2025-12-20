@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["api.reera.co"],
+    domains: ["api.rira24.com"],
   },
 
   webpack(config) {

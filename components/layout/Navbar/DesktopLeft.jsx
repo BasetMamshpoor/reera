@@ -84,7 +84,7 @@ const DesktopLeft = ({}) => {
       </Link>
 
       <Link
-        href={`/${locale}/my-chats`}
+        href={`/${locale}/chat`}
         aria-label="Messages"
         className="bg-transparent border-2 border-gray-500 dark:border-white p-2.5 rounded-lg cursor-pointer hover:scale-105 transition-all"
       >

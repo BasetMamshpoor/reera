@@ -148,7 +148,7 @@ const ServicesForm = ({ isEditing = false, adData }) => {
           <HoverCard>
             <HoverCardTrigger>
               <div className="flex items-center gap-2 cursor-pointer">
-                <span className="text-Primary-700">{b.requester}</span>
+                <span className="text-Primary-700">{b.Service_recipient}</span>
                 <Warning className="fill-Primary-400" />
               </div>
             </HoverCardTrigger>
@@ -173,7 +173,7 @@ const ServicesForm = ({ isEditing = false, adData }) => {
             <HoverCardTrigger>
               {" "}
               <div className="flex items-center gap-2 cursor-pointer">
-                <span className="text-Primary-700">{b.post_ad}</span>
+                <span className="text-Primary-700">{b.Service_provider}</span>
                 <Warning className="fill-Primary-400" />
               </div>
             </HoverCardTrigger>

@@ -9,7 +9,7 @@ export const metadata = {
 const Page = () => {
   return (
     <>
-      <div className="px-4 mx-auto w-full relative">
+      <div className="px-4 mx-auto w-full relative h-screen">
         <NewCategorySelector />
       </div>
     </>

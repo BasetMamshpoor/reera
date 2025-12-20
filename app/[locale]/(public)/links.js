@@ -18,7 +18,7 @@ export const links = [
   },
   {
     href: "/[locale]/legal-services",
-    label: { en: "Legal Advisor", fa: "مشاور یار" },
+    label: { en: "Legal Advisor", fa: "همیار مهاجرت" },
     activeCondition: (pathname, locale) =>
       pathname === `/${locale}/legal-services`,
   },

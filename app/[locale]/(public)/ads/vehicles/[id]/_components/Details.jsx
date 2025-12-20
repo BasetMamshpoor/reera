@@ -23,7 +23,6 @@ const Page = () => {
     const {locale} = useParams()
     const {id} = useParams()
     const {data: session} = useSession()
-
     const {data, isLoading, refetch} = useQuery({
         queryKey: ["vehicle", "slug"],
         queryFn: async () => {

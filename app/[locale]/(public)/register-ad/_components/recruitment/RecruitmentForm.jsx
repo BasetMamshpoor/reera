@@ -293,7 +293,7 @@ const RecruitmentForm = ({ isEditing = false, adData }) => {
           <HoverCard>
             <HoverCardTrigger>
               <div className="flex items-center gap-2 cursor-pointer">
-                <span className="text-Primary-700">{b.requester}</span>
+                <span className="text-Primary-700">{b.Job_seeker}</span>
                 <Warning className="fill-Primary-400" />
               </div>
             </HoverCardTrigger>
@@ -318,7 +318,7 @@ const RecruitmentForm = ({ isEditing = false, adData }) => {
             <HoverCardTrigger>
               {" "}
               <div className="flex items-center gap-2 cursor-pointer">
-                <span className="text-Primary-700">{b.post_ad}</span>
+                <span className="text-Primary-700">{b.Employer}</span>
                 <Warning className="fill-Primary-400" />
               </div>
             </HoverCardTrigger>

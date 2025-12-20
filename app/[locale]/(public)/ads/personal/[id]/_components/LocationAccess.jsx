@@ -23,7 +23,7 @@ const LocationAccess = ({data, isLoading}) => {
                     <Spinner/>
                 </div> :
                 <div className="flex flex-col w-full gap-6 p-6 bg-surface border border-default-divider rounded-2xl">
-                    <ShowMap latitude={data?.address.latitude} longitude={data?.address.longitude}/>
+                    <ShowMap latitude={data?.address?.latitude} longitude={data?.address?.longitude}/>
                     {data?.distance && <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-x-20 w-full">
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center gap-2">

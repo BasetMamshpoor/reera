@@ -177,7 +177,8 @@ const CategoriesModified = () => {
         />
       ),
       count: "4000",
-      href: `https://reera-adviser.vercel.app/en/consultation/consultant/consultor-infirmation`,
+        href: "/"
+      // href: `https://reera-adviser.vercel.app/en/consultation/consultant/consultor-infirmation`,
     },
     {
       id: 12,

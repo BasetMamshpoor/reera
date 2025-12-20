@@ -14,17 +14,19 @@ import Spinner from "@/components/Spinner";
 import User from "@/assets/icons/profile.svg";
 import ReplayIcon from "@/assets/icons/reply.svg"
 
-const Comment = ({id}) => {
+const Comment = ({id, url, user_show}) => {
     const dic = useTranslation();
     const a = dic.public.profile.user_feedback;
     const [showAll, setShowAll] = useState(false);
+
+    const url_comment = url || ""
 
     const {data, isLoading, refetch} = useQuery({
         queryKey: ["user-feedback-comment"],
         queryFn: async () =>
             await request({
                 method: "get",
-                url: `/ads/comments/${id}`,
+                url: `/ads/comments${url_comment}/${id}`,
             }),
     });
 
@@ -34,14 +36,13 @@ const Comment = ({id}) => {
     return (
         <div className="flex flex-col border border-Gray-200 rounded-xl overflow-hidden bg-Surface-2">
             <div className="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-Gray-200">
-                <div className="flex flex-row rtl:flex-row-reverse gap-2 items-center text-gray-800 font-[700]">
-                    <Message className="rtl:hidden fill-gray-800 dark:fill-gray-200 lg:!w-6 lg:!h-6 !w-5 !h-5"/>
+                <div className="flex flex-row gap-2 items-center text-gray-800 font-[700]">
+                    <Message className="fill-gray-800 dark:fill-gray-200 lg:!w-6 lg:!h-6 !w-5 !h-5"/>
                     <span className=" text-gray-800 dark:text-gray-200 text-base lg:text-xl font-bold pt-2">
                        {a.comment}
                     </span>
-                    <Message className="ltr:hidden fill-gray-800 dark:fill-gray-200 lg:!w-6 lg:!h-6 !w-5 !h-5"/>
                 </div>
-                <ModalComment refetch={refetch} id={id} a={a}/>
+                {!user_show && <ModalComment refetch={refetch} id={id} a={a}/>}
             </div>
             <div className="flex items-center flex-col w-full">
                 {isLoading ?
@@ -104,13 +105,14 @@ const Comment = ({id}) => {
                                     </div>
                                 </div>
                                 {!!item.replies?.length && (
-                                    <div className="flex flex-col gap-4 px-8 lg:px-20" >
+                                    <div className="flex flex-col gap-4 px-8 lg:px-20">
                                         {item.replies.map((reply) => (
                                             <div key={reply.id} className="flex gap-4 items-start">
-                                                <ReplayIcon className="!w-8 !h-8 fill-Primary-500 rotate-180" />
+                                                <ReplayIcon className="!w-8 !h-8 fill-Primary-500 rtl:rotate-180"/>
 
                                                 <div className="flex w-full gap-4">
-                                                    <div className="w-10 h-10 border-2 border-default-divider rounded-full overflow-hidden flex items-center justify-center">
+                                                    <div
+                                                        className="w-10 h-10 border-2 border-default-divider rounded-full overflow-hidden flex items-center justify-center">
                                                         {reply.user?.profile ? (
                                                             <Image
                                                                 src={reply.user.profile}
@@ -120,7 +122,7 @@ const Comment = ({id}) => {
                                                                 className="rounded-full"
                                                             />
                                                         ) : (
-                                                            <User className="fill-Gray-800 !w-7 !h-7" />
+                                                            <User className="fill-Gray-800 !w-7 !h-7"/>
                                                         )}
                                                     </div>
 
