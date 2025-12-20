@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import Share from "@/components/Share";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import ProductAccordion from "./ProductAccordion";
-import SwiperModal from "./SwiperModal";
+import SwiperModal from "../../../_components/SwiperModal";
 import Information from "./Information";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import Rules from "./Rules";
@@ -16,12 +16,13 @@ import LocationAccess from "./LocationAccess";
 import Like from "@/components/Like";
 import RoommatePersonalTraits from "./RoommatePersonalTraits";
 import Comments from "@/components/Comments";
+import {useSession} from "next-auth/react";
 
 const Page = () => {
     const dic = useTranslation();
     const a = dic.public.ads.roommate;
     const {locale, id} = useParams();
-
+    const {data: session} = useSession();
     const {data, isLoading, refetch} = useQuery({
         queryKey: ["housing-data", id],
         queryFn: async () => {
@@ -123,6 +124,7 @@ const Page = () => {
                         </Tabs>
                         <div className="flex lg:hidden flex-col gap-10">
                             <InformationAd
+                                session={session}
                                 refetch={refetch}
                                 data={data?.data}
                                 isLoading={isLoading}
@@ -153,6 +155,7 @@ const Page = () => {
                 </div>
                 <div className="hidden lg:flex w-full">
                     <InformationAd
+                        session={session}
                         refetch={refetch}
                         data={data?.data}
                         isLoading={isLoading}

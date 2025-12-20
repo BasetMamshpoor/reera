@@ -21,9 +21,11 @@ import z from "zod";
 import {useParams, useRouter} from "next/navigation";
 import Spinner from "@/components/Spinner";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
+import {Textarea} from "@/components/ui/textarea";
 
 const schema = z.object({
     first_name: z.string().min(1, "نام خود را وارد کنید"),
+    bio: z.string().nullable().optional(),
     last_name: z.string().min(1, "نام خانوادگی خود را وارد کنید"),
     mobile: z.string().min(1, "شماره تماس ضروری است"),
     national_code: z.string().min(1, "کد ملی ضروری است"),
@@ -71,6 +73,7 @@ const CompleteInformation = ({
             national_code: "",
             language_id: "",
             nationality_id: "",
+            bio:""
         },
     });
 
@@ -84,7 +87,7 @@ const CompleteInformation = ({
             setValue("last_name", data.last_name || "");
             setValue("mobile", data.mobile || "");
             setValue("national_code", data.national_code || "");
-
+            setValue("bio", data.bio || "");
             // select defaults
             if (data.language_id) setValue("language_id", data.language_id);
             if (data.nationality_id) setValue("nationality_id", data.nationality_id);
@@ -129,6 +132,7 @@ const CompleteInformation = ({
         formData.append("last_name", formValues.last_name || "");
         formData.append("mobile", formValues.mobile || "");
         formData.append("national_code", formValues.national_code || "");
+        formData.append("bio", formValues.bio || "");
 
         if (formValues.language_id !== undefined && formValues.language_id !== null) {
             formData.append("language_id", String(formValues.language_id));
@@ -347,6 +351,13 @@ const CompleteInformation = ({
                     )}
                 </div>
             </div>
+            <Textarea
+                id="bio"
+                type="text"
+                {...register("bio")}
+                placeholder={c.Biography}
+                className="rtl:text-right w-full rounded-xl px-3 py-5 text-sm lg:text-base"
+            />
 
             <div className="flex flex-col gap-4 w-full rtl:items-end ">
                 <p className="text-Gray-700 text-base">
@@ -427,6 +438,7 @@ const CompleteInformation = ({
                     </label>
                 )}
             </div>
+
 
             <div className="flex items-center gap-4 w-ful ltr:self-end rtl:self-start">
                 <button

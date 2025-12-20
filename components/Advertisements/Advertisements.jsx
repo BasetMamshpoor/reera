@@ -58,7 +58,6 @@ const Advertisements = ({isOnProfile = false}) => {
         initialPageParam: 1,
         staleTime: 5 * 60 * 1000,
     });
-    console.log(data)
     // helper values
     const loadedPagesCount = data?.pages?.length ?? 0;
     const totalPages = data?.pages?.[0]?.last_page ?? 1;

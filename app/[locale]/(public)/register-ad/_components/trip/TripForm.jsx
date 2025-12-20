@@ -378,7 +378,7 @@ const TripForm = ({ isEditing = false, adData }) => {
             <HoverCard>
               <HoverCardTrigger>
                 <div className="flex items-center gap-2 cursor-pointer">
-                  <span className="text-Primary-700">{b.requester}</span>
+                  <span className="text-Primary-700">{b.Freight_Forwarder}</span>
                   <Warning className="fill-Primary-400" />
                 </div>
               </HoverCardTrigger>
@@ -403,7 +403,7 @@ const TripForm = ({ isEditing = false, adData }) => {
               <HoverCardTrigger>
                 {" "}
                 <div className="flex items-center gap-2 cursor-pointer">
-                  <span className="text-Primary-700">{b.post_ad}</span>
+                  <span className="text-Primary-700">{b.Passenger}</span>
                   <Warning className="fill-Primary-400" />
                 </div>
               </HoverCardTrigger>
@@ -483,19 +483,29 @@ const TripForm = ({ isEditing = false, adData }) => {
 
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">{d.luggage_weight}</label>
-            <NumberInput
-              name="luggage_weight"
-              control={control}
-              placeholder={d.luggage_weight}
-              farsiDigits={locale === "fa"}
-              prefix={
-                locale === "fa" ? (
-                  <span className="text-gray-500">کیلوگرم</span>
-                ) : (
-                  <span className="text-gray-500">KG</span>
-                )
-              }
-            />
+              <Input
+                  type="number"
+                  min={0}
+                  max={20}
+                  {...register("luggage_weight", {
+                      valueAsNumber: true,
+                      min: {
+                          value: 0,
+                          message: "وزن نمی‌تواند کمتر از ۰ باشد",
+                      },
+                      max: {
+                          value: 20,
+                          message: "حداکثر وزن ۲۰ کیلوگرم است",
+                      },
+                  })}
+                  onChange={(e) => {
+                      let value = Number(e.target.value);
+                      if (value > 20) e.target.value = 20;
+                      if (value < 0) e.target.value = 0;
+                  }}
+                  placeholder={d.up_to}
+              />
+
             {errors.luggage_weight && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.luggage_weight.message}
