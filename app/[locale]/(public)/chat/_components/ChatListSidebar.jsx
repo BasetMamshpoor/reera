@@ -85,7 +85,7 @@ const ChatListSidebar = ({
                             }`}
                         >
                             <div className="flex flex-col gap-3">
-                                <div className="flex justify-between items-start">
+                                <div className="flex justify-between items-center">
                                     <div>
                                         <div className="flex items-center gap-2">
                                             <p className="font-semibold text-Gray-800 text-sm">{chat.name}</p>
@@ -98,14 +98,14 @@ const ChatListSidebar = ({
                                         </p>
                                     </div>
                                     <span className="text-xs text-Gray-400 whitespace-nowrap">
-                                      {chat.date}
+                                      {chat.created_at}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <div className="w-12 h-12 bg-Gray-200 rounded-lg border-2 border-dashed border-Gray-300 flex items-center justify-center flex-shrink-0">
                                         <Image
-                                            src={chat.image || '/placeholder-house.jpg'} // اگر image null بود placeholder
-                                            alt="آگهی"
+                                            src={chat.image}
+                                            alt="image"
                                             width={48}
                                             height={48}
                                             className="rounded-lg object-cover"

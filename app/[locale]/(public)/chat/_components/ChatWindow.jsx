@@ -4,7 +4,6 @@ import React, {useState, useRef} from 'react';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {request} from '@/lib/api';
 import Image from 'next/image';
-import {format} from 'date-fns';
 import Icon from "@/assets/icons/profile.svg";
 import Dot from "@/assets/icons/more.svg";
 import Link from "next/link";
@@ -18,6 +17,9 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import ModalReports from "./ModalReports";
+import ModalBlock from "./ModalBlock";
+import {Check} from "lucide-react";
+import {CheckCheck} from "lucide-react";
 
 const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
     const [messageText, setMessageText] = useState('');
@@ -144,13 +146,15 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                             <Dot className="rotate-90 cursor-pointer fill-Primary-950"/>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            {/*<DropdownMenuItem  onSelect={(e) => e.preventDefault()}><ModalReports/></DropdownMenuItem>*/}
-                            {/*<DropdownMenuItem>Billing</DropdownMenuItem>*/}
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}><ModalReports/></DropdownMenuItem>
+                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <ModalBlock refetch={refetch} id={chatDetails?.id} status={chatDetails?.status}/>
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
                 <div className="flex items-center gap-4 p-8 bg-Surface-2 border-b border-b-Gray-500">
-                    <Image src={chatDetails?.ads_image} alt="آگهی" width={48} height={48} className="object-cover"/>
+                    <Image src={chatDetails?.ads_image} alt="image" width={48} height={48} className="object-cover"/>
                     <h3 className="font-semibold text-Gray-800">{chatDetails?.ads_name}</h3>
                 </div>
             </div>
@@ -169,48 +173,57 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                             key={msg.id}
                             className={`flex gap-4 ${msg.is_mine ? 'justify-start' : 'justify-end'}`}
                         >
-                            <div
-                                className={`max-w-xs px-4 py-3 rounded-2xl shadow-sm ${
-                                    msg.is_mine ? 'bg-Primary-400 text-white' : 'bg-Gray-100 text-Gray-900'
-                                }`}
-                            >
-                                {/* اگر فایل وجود داشت */}
-                                {msg.file && (
-                                    <div className="mb-3">
-                                        {msg.file_type?.startsWith('image/') ? (
-                                            <Image
-                                                src={msg.file}
-                                                alt="فایل ارسالی"
-                                                width={200}
-                                                height={200}
-                                                className="rounded-lg object-cover max-w-full"
-                                            />
-                                        ) : (
-                                            <a
-                                                href={msg.file}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-2 text-blue-600 underline"
-                                            >
-                                                <Paperclip className="w-5 h-5 "/>
-                                                <span className="text-sm text-white">دانلود فایل</span>
-                                            </a>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* متن پیام */}
-                                {msg.message && (
-                                    <p className="text-sm leading-relaxed">{msg.message}</p>
-                                )}
-
-                                <span
-                                    className={`text-xs block mt-2 text-right ${
-                                        msg.is_mine ? 'text-white' : 'text-Gray-500'
+                            <div className="flex flex-col gap-2">
+                                <div
+                                    className={`max-w-xs px-4 py-3 rounded-2xl shadow-sm ${
+                                        msg.is_mine ? 'bg-Primary-400 text-white' : 'bg-Gray-100 text-Gray-900'
                                     }`}
                                 >
-                                  {msg.created_at ? format(new Date(msg.created_at), 'HH:mm') : ''}
-                                </span>
+                                    {/* اگر فایل وجود داشت */}
+                                    {msg.file && (
+                                        <div className="mb-3">
+                                            {msg.file_type?.startsWith('image/') ? (
+                                                <Image
+                                                    src={msg.file}
+                                                    alt="فایل ارسالی"
+                                                    width={200}
+                                                    height={200}
+                                                    className="rounded-lg object-cover max-w-full"
+                                                />
+                                            ) : (
+                                                <a
+                                                    href={msg.file}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-2 text-Primary-600 underline"
+                                                >
+                                                    <Paperclip className="w-5 h-5 "/>
+                                                    <span className="text-sm text-white">دانلود فایل</span>
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* متن پیام */}
+                                    {msg.message && (
+                                        <p className="text-sm leading-relaxed">{msg.message}</p>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    {!!msg.is_mine &&
+                                        (!!msg.is_seen ?
+                                            <CheckCheck/> :
+                                            <Check/>)
+                                    }
+                                    <span
+                                        className={`text-xs block mt-2 text-right ${
+                                            msg.is_mine ? 'text-white' : 'text-Gray-500'
+                                        }`}
+                                    >
+                                        {msg.created_at}
+                                      </span>
+                                </div>
+
                             </div>
 
                             {/* آواتار طرف مقابل */}
@@ -232,7 +245,6 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                 )}
             </div>
 
-            {/* ورودی ارسال پیام + آیکون پیوست */}
             <div className="p-4 bg-surface">
                 {isBlocked ? (
                     <div className="text-center text-red-600 font-medium">
@@ -241,7 +253,6 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                 ) : (
                     <div className="flex items-center gap-2 relative">
 
-                        {/* ورودی مخفی فایل */}
                         <input
                             ref={fileInputRef}
                             type="file"
@@ -292,7 +303,6 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                         </div>
                     </div>
                 )}
-
             </div>
         </div>
     );
