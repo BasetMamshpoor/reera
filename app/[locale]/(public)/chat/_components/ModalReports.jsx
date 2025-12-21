@@ -70,10 +70,10 @@ const ModalReports = ({locale, id}) => {
                     variant="outline"
                     className="flex gap-2 border-none shadow-none hover:bg-transparent cursor-pointer"
                 >
-                    <Flag className="md:w-6 md:h-6 !w-5 !h-5 fill-error-main"/>
-                    <p className="text-sm md:text-base text-error-main pt-1">
+                    <p className="text-sm md:text-base pt-1 text-Gray-950">
                         {b.report_violation}
                     </p>
+                    <Flag className="md:w-6 md:h-6 !w-5 !h-5 fill-Gray-950"/>
                 </Button>
             </DialogTrigger>
 

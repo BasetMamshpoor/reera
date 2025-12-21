@@ -41,15 +41,15 @@ const MobileFooter = () => {
         </Link>
         <Link
           className={`p-4 rounded-full ${
-            pathname === `/${locale}/my-chats`
+            pathname === `/${locale}/chat`
               ? "bg-Primary-400"
               : "bg-transparent"
           }`}
-          href={`/${locale}/my-chats`}
+          href={`/${locale}/chat`}
         >
           <Message
             className={` ${
-              pathname === `/${locale}/my-chats`
+              pathname === `/${locale}/chat`
                 ? "fill-white"
                 : "fill-Gray-700"
             }`}
@@ -71,7 +71,7 @@ const MobileFooter = () => {
             }`}
           />
         </Link>
-        <button href={`/`}>
+        <button>
           <Category className="fill-Gray-700" />
         </button>
 
