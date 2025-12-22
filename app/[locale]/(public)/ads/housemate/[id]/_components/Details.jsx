@@ -26,7 +26,7 @@ const Page = () => {
     const {data: session} = useSession();
 
     const {data, isLoading} = useQuery({
-        queryKey: ["roommate", id],
+        queryKey: ["housemate", id],
         queryFn: async () => {
             return await request({
                 method: "get",

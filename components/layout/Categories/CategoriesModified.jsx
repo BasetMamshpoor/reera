@@ -117,7 +117,7 @@ const CategoriesModified = () => {
         />
       ),
       count: "4000",
-      href: `/${locale}/ads/roommate`,
+      href: `/${locale}/ads/housemate`,
     },
     {
       id: 8,

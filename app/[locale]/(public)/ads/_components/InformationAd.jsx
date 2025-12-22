@@ -76,7 +76,7 @@ const InformationAd = ({locale, data, isLoading, session, payment, jobSearch}) =
                                 {data?.title}
                             </p>
                             <div className="flex justify-between w-full">
-                                {!!data?.category_parent === "roommate" &&
+                                {!!data?.category_parent === "housemate" &&
                                     <div
                                         className="lex items-center justify-center px-3 py-1 bg-badge-background rounded-lg text-sm text-badge-text w-fit">
                                         {data?.seller?.is_iran ? a.iranian_roommate : a.non_iranian_roommate}

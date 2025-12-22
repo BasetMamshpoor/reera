@@ -161,8 +161,6 @@
       "medical_beauty_health": "پزشکی، زیبایی و سلامت",
       "art_media": "هنر و رسانه",
       "cooperation_type": "نوع همکاری",
-      "part_time": "پاره‌وقت",
-      "full_time": "تمام‌وقت",
       "in_person": "حضوری",
       "required_skills": "مهارت‌های مورد نیاز",
       "salary": "حقوق",
@@ -188,7 +186,30 @@
       "popular": "محبوب ترین",
       "expensive": "گران ترین",
       "cheap": "ارزان ترین",
-      "not_found": "موردی یافت نشد"
+      "not_found": "موردی یافت نشد",
+
+      "full_time": "تمام وقت",
+      "part_time": "پاره وقت",
+      "remote": "دورکاری",
+      "high_school": "دیپلم",
+      "associate_degree": "کاردانی",
+      "bachelor_degree": "کارشناسی",
+      "master_degree": "کارشناسی ارشد",
+      "phd_degree": "دکتری",
+      "1_bedroom": "1 خوابه",
+      "2_bedroom": "2 خوابه",
+      "3_bedroom": "3 خوابه",
+      "4_bedroom": "4 خوابه",
+      "5plus_bedroom": "۵ خوابه و بیشتر",
+      "1_bathroom": "1 سرویس بهداشتی",
+      "2_bathroom": "2 سرویس بهداشتی",
+      "3_bathroom": "3 سرویس بهداشتی",
+      "4_bathroom": "4 سرویس بهداشتی",
+      "5plus_bathroom": "۵ سرویس و بیشتر",
+      "used": "کارکرده",
+      "needs_repair": "نیاز به تعمیر",
+      "meter": "متر",
+      "km": "کیلومتر"
     }
   },
   "consultor": {
@@ -715,7 +736,10 @@
         "write_review": "نظر خود را بنویسید.",
         "text": "متن",
         "cancel": "انصراف",
-        "submit_review": "ارسال نظر"
+        "submit_review": "ارسال نظر",
+        "no_comments_found": "نظری یافت نشد !",
+        "another_reply": "ریپلای دیگر",
+        "close": "بستن"
       },
       "transaction_history": {
         "transaction_history": "تاریخچه تراکنش‌ها",
@@ -1374,6 +1398,20 @@
         "cancel": "انصراف",
         "sending": "در حال ارسال...",
         "entry": "ورودی"
+      },
+      "seller": {
+        "no_comments_found": "نظری یافت نشد !",
+        "another_reply": "ریپلای دیگر",
+        "close": "بستن",
+        "profile": "پروفایل",
+        "membership_duration": "مدت عضویت:",
+        "ads": "آگهی ها",
+        "ratings": "امتیاز ها",
+        "comments": "نظرات",
+        "total_ratings": "تعداد کل امتیازها",
+        "information_accuracy": "صداقت اطلاعات",
+        "owner_behavior": "رفتار مالک",
+        "price_transparency": "شفافیت قیمت"
       }
     }
   }

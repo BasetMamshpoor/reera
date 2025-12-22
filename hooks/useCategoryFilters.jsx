@@ -7,7 +7,7 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 export const CATEGORY_FILTER_KEYS = {
     housing: ["currency_id", "verified", "bedrooms", "bathroom", "min_area", "max_area", "min_price", "max_price", "min_year", "max_year", "category_id"],
     digital: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
-    vehicles: ["currency_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
+    vehicle: ["currency_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
     visa: ["currency_id", "verified", "type_id", "max_price", "min_price"],
     ticket: ["currency_id", "verified", "ticket_type_id", "max_price", "min_price"],
     services: ["currency_id", "verified", "services_expertise_id", "max_price", "min_price"],
@@ -93,7 +93,7 @@ export const useCategoryFilters = (categorySlug) => {
 
     useEffect(() => {
         setBrandQuery(filters.brand_id || null,);
-    }, [filters.brand_id||null]);
+    }, [filters.brand_id]);
 
 
     const [hydrated, setHydrated] = useState(false);
@@ -109,13 +109,14 @@ export const useCategoryFilters = (categorySlug) => {
     }, [categorySlug, defaultFilters, router]);
 
     // 5️⃣ HYDRATE FROM URL
+// 5️⃣ HYDRATE FROM URL
     useEffect(() => {
-        if (hydrated) return;
+        if (hydrated || !categorySlug) return;
 
         const nextFilters = {...defaultFilters};
 
         searchParams.forEach((value, key) => {
-            if (!allowedKeys.includes(key)) return; // فقط کلیدهای مجاز
+            if (!allowedKeys.includes(key)) return;
 
             if (value === "true") nextFilters[key] = true;
             else if (value === "false") nextFilters[key] = false;
@@ -125,7 +126,8 @@ export const useCategoryFilters = (categorySlug) => {
 
         setFilters(nextFilters);
         setHydrated(true);
-    }, [hydrated, searchParams, allowedKeys, defaultFilters]);
+    }, [hydrated, categorySlug, searchParams, allowedKeys, defaultFilters]);
+
 
     // 6️⃣ SYNC TO URL
     useEffect(() => {
@@ -137,12 +139,16 @@ export const useCategoryFilters = (categorySlug) => {
             if (!allowedKeys.includes(key)) return;
             if (value === "" || value === false || value === null) return;
 
-            // ⚡ فقط کلید رو بفرست، بدون f[]
             params.set(key, String(value));
         });
 
-        router.replace(`?${params.toString()}`, {scroll: false});
-    }, [filters, hydrated, allowedKeys, router]);
+        const newQuery = params.toString();
+        const currentQuery = searchParams.toString();
+
+        if (newQuery !== currentQuery) {
+            router.replace(`?${newQuery}`, {scroll: false});
+        }
+    }, [filters, hydrated, allowedKeys, router, searchParams]);
 
 
     // 7️⃣ HANDLERS
@@ -171,25 +177,25 @@ export const useCategoryFilters = (categorySlug) => {
     })), [mainCategories, filters.category_id, filtersData]);
 
     const workType = [
-        {id: "full_time", title: "تمام وقت"},
-        {id: "part_time", title: "پاره وقت"},
-        {id: "remote", title: "دورکاری"},
+        {id: "full_time", title: s.full_time},
+        {id: "part_time", title: s.part_time},
+        {id: "remote", title: s.remote},
     ];
 
     const degrees = [
-        {id: "diploma", label: "دیپلم"},
-        {id: "associate", label: "کاردانی"},
-        {id: "bachelor", label: "کارشناسی"},
-        {id: "master", label: "کارشناسی ارشد"},
-        {id: "phd", label: "دکتری"},
+        {id: "diploma", label: s.high_school},
+        {id: "associate", label: s.associate_degree},
+        {id: "bachelor", label: s.bachelor_degree},
+        {id: "master", label: s.master_degree},
+        {id: "phd", label: s.phd_degree},
     ];
 
     const bedroomsOptions = [
-        {id: "1", label: "۱ خوابه"},
-        {id: "2", label: "۲ خوابه"},
-        {id: "3", label: "۳ خوابه"},
-        {id: "4", label: "۴ خوابه"},
-        {id: "5_plus", label: "۵ خوابه و بیشتر"},
+        {id: "1", label: s.bedroom_1},
+        {id: "2", label: s.bedroom_2},
+        {id: "3", label: s.bedroom_3},
+        {id: "4", label: s.bedroom_4},
+        {id: "5_plus", label: s.plus_bedroom},
     ];
 
     const languages = useMemo(() => {
@@ -201,11 +207,11 @@ export const useCategoryFilters = (categorySlug) => {
     }, [filtersData]);
 
     const bathroomsOptions = [
-        {id: "1", label: "۱ سرویس بهداشتی"},
-        {id: "2", label: "۲ سرویس بهداشتی"},
-        {id: "3", label: "۳ سرویس بهداشتی"},
-        {id: "4", label: "۴ سرویس بهداشتی"},
-        {id: "5_plus", label: "۵ سرویس و بیشتر"},
+        {id: "1", label: s.bathroom_1},
+        {id: "2", label: s.bathroom_2},
+        {id: "3", label: s.bathroom_3},
+        {id: "4", label: s.bathroom_4},
+        {id: "5_plus", label: s.plus_bathroom},
     ];
 
 
@@ -256,10 +262,10 @@ export const useCategoryFilters = (categorySlug) => {
 
         if (filters.condition) {
             const conditionLabels = {
-                new: s.new || "نو",
-                almost_new: s.almost_new || "در حد نو",
-                used: s.used || "کارکرده",
-                needs_repair: s.needs_repair || "نیاز به تعمیر",
+                new: s.new,
+                almost_new: s.almost_new,
+                used: s.used,
+                needs_repair: s.needs_repair,
             };
             list.push({key: "condition", label: conditionLabels[filters.condition] || filters.condition});
         }
@@ -277,17 +283,17 @@ export const useCategoryFilters = (categorySlug) => {
         if (Number(filters.min_area) !== areaRangeFromAPI.min || Number(filters.max_area) !== areaRangeFromAPI.max) {
             const minLabel = Number(filters.min_area).toLocaleString("fa-IR");
             const maxLabel = Number(filters.max_area).toLocaleString("fa-IR");
-            list.push({key: "area", label: `${minLabel} - ${maxLabel} متر`});
+            list.push({key: "area", label: <> {minLabel} - {maxLabel} {s.meter} </>});
         }
 
         if (Number(filters.min_function) !== functionRangeFromAPI.min || Number(filters.max_function) !== functionRangeFromAPI.max) {
             const minLabel = Number(filters.min_function).toLocaleString("fa-IR");
             const maxLabel = Number(filters.max_function).toLocaleString("fa-IR");
-            list.push({key: "function", label: `${minLabel} - ${maxLabel} کیلومتر`});
+            list.push({key: "function", label: <> {minLabel} - {maxLabel}  {s.km} </>});
         }
 
         if (filters.verified) {
-            list.push({key: "verified", label: s.verified_ads || "آگهی تأیید شده"});
+            list.push({key: "verified", label: s.verified_ads});
         }
 
         // زبان

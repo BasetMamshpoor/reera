@@ -21,7 +21,6 @@ import {useParams} from "next/navigation";
 const ModalCoinIncrease = () => {
     const dic = useTranslation();
     const {locale} = useParams();
-    console.log(locale);
     const d = dic.dashboard.myprofile.ModalCoinIncrease;
     const [selectedValue, setSelectedValue] = useState("");
 

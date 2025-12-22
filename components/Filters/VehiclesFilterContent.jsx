@@ -151,7 +151,7 @@ const VisaFilterContent = ({
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
-                            <SelectItem key={c.id} value={c.id.toString()}>
+                            <SelectItem key={c.id} value={c.id}>
                                 {c.title} ({c.code})
                             </SelectItem>
                         ))}
@@ -208,7 +208,7 @@ const VisaFilterContent = ({
                         </SelectTrigger>
                         <SelectContent>
                             {brands?.map((b) => (
-                                <SelectItem key={b.id} value={b.id.toString()}>
+                                <SelectItem key={b.id} value={b.id}>
                                     {b.name}
                                 </SelectItem>
                             ))}
@@ -228,7 +228,7 @@ const VisaFilterContent = ({
                         </SelectTrigger>
                         <SelectContent>
                             {modelsData?.map((m) => (
-                                <SelectItem key={m.id} value={m.id.toString()}>
+                                <SelectItem key={m.id} value={m.id}>
                                     {m.name}
                                 </SelectItem>
                             ))}

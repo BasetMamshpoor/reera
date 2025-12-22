@@ -1,21 +1,24 @@
 "use client"
-import React from 'react';
+import React, {useState} from 'react';
 import JobSearch from "@/components/Advertisements/JobSearch";
 import Card from "@/app/[locale]/(public)/ads/_components/Card";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Spinner from "@/components/Spinner";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
+import AdvPagination from "@/components/AdvPagination";
 
-const Ads = ({id,locale}) => {
+const Ads = ({id, locale}) => {
     const dic = useTranslation();
     const d = dic.public.profile.dashboard;
+    const [page, setPage] = useState()
     const {data, isLoading} = useQuery({
-        queryKey: [`seller`,"user_show","ads", id],
+        queryKey: [`seller`, "user_show", "ads", id, page],
         queryFn: async () => {
             return await request({
                 url: `/user_show/ads/${id}`,
                 method: "get",
+                query:{page}
             })
         }
     });
@@ -24,7 +27,7 @@ const Ads = ({id,locale}) => {
     if (isLoading) {
         return <div className="w-full flex items-center justify-center py-4">
             <Spinner size={40}/>
-        </div> ;
+        </div>;
     }
 
     return (
@@ -38,6 +41,7 @@ const Ads = ({id,locale}) => {
                         <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
                 )}
             </div>
+            <AdvPagination setPage={setPage} totalPages={data?.last_page} page={page}/>
         </>
     );
 };

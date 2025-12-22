@@ -10,22 +10,24 @@ import {
 } from "@/components/ui/breadcrumb";
 import Image from "next/image";
 import ImageOverlay from "@/assets/images/wave-haikei.svg";
-import GreenTick from "@/assets/icons/tick-circle.svg";
-import Star from "@/assets/icons/star.svg";
+import Star from "@/assets/icons/Star-bold.svg";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import StarsTab from "@/app/[locale]/(public)/register-ad/seller/_components/StarsTab";
-import HiringHistory from "@/app/[locale]/(public)/register-ad/seller/_components/HiringHistory";
-import InformationContent from "@/app/[locale]/(public)/register-ad/seller/_components/InformationContent";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Comments from "@/components/Comments";
 import ADS from "./ADS";
 import Spinner from "@/components/Spinner";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
 
 const Details = () => {
+    const dic = useTranslation();
+    const a = dic?.public?.register_ad?.seller || {};
+
     const {id} = useParams();
     const {locale} = useParams()
+
     const {data, isLoading} = useQuery({
         queryKey: [`seller`, "user_show", id],
         queryFn: async () => {
@@ -36,41 +38,44 @@ const Details = () => {
     });
     const i = data?.data || []
 
+    const router = useRouter()
+
     if (isLoading) {
         return <div className="w-full flex items-center justify-center py-4">
             <Spinner size={40}/>
         </div>;
     }
     const user_show = 1
+
     return (
         <>
-            <div className={`flex flex-col gap-4 mt-4 w-full`}>
-                <button
-                    className={`flex flex-row gap-4 items-center self-end md:hidden`}>
-                    <span>پروفایل فروشنده سعید اسدی</span>
-                    <ArrowRight className={` fill-Gray-950`}/>
-                </button>
-                <div className={` hidden md:block`}>
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/public">صفحه اصلی</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator> /</BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/sellers">فروشندگان</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator> /</BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink>املاک</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator> /</BreadcrumbSeparator>
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>پروفایل فروشنده سعید احمدی</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+            <div className={`flex flex-col gap-4 mt-4 w-full cursor-pointer`}>
+                <div onClick={router.back}
+                     className={`flex flex-row gap-2 items-center md:hidden`}>
+                    <ArrowRight className={` fill-Primary-600 ltr:rotate-180`}/>
+                    <span className="pt-1"> {a.profile} {i.name}</span>
                 </div>
+                {/*<div className={` hidden md:block`}>*/}
+                {/*    <Breadcrumb>*/}
+                {/*        <BreadcrumbList>*/}
+                {/*            <BreadcrumbItem>*/}
+                {/*                <BreadcrumbLink href="/public">صفحه اصلی</BreadcrumbLink>*/}
+                {/*            </BreadcrumbItem>*/}
+                {/*            <BreadcrumbSeparator> /</BreadcrumbSeparator>*/}
+                {/*            <BreadcrumbItem>*/}
+                {/*                <BreadcrumbLink href="/sellers">فروشندگان</BreadcrumbLink>*/}
+                {/*            </BreadcrumbItem>*/}
+                {/*            <BreadcrumbSeparator> /</BreadcrumbSeparator>*/}
+                {/*            <BreadcrumbItem>*/}
+                {/*                <BreadcrumbLink>املاک</BreadcrumbLink>*/}
+                {/*            </BreadcrumbItem>*/}
+                {/*            <BreadcrumbSeparator> /</BreadcrumbSeparator>*/}
+                {/*            <BreadcrumbItem>*/}
+                {/*                <BreadcrumbPage>پروفایل فروشنده سعید احمدی</BreadcrumbPage>*/}
+                {/*            </BreadcrumbItem>*/}
+                {/*        </BreadcrumbList>*/}
+                {/*    </Breadcrumb>*/}
+                {/*</div>*/}
                 <div className="flex flex-col w-full">
                     <div className="relative w-full h-[300px] max-h-[300px] overflow-hidden">
                         <Image
@@ -112,7 +117,7 @@ const Details = () => {
                         </div>
                         <div className="flex flex-col gap-4 w-full">
                             <div className="flex flex-row gap-2">
-                                <h2 className="font-medium">مدت عضویت:</h2>
+                                <h2 className="font-medium">{a.membership_duration}</h2>
                                 <span>{i.duration}</span>
                             </div>
                             <h2 className="font-medium">{i.bio}</h2>
@@ -135,22 +140,22 @@ const Details = () => {
                             {/*    تاریخچه استخدام ها*/}
                             {/*</TabsTrigger>*/}
                             <TabsTrigger
-                                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-Primary-400 dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-Primary-400 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-Primary-400 data-[state=active]:shadow-none data-[state=active]:text-Primary-400 md:max-w-42 py-4`}
+                                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-Primary-400 dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-b-Primary-400 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-Primary-400 data-[state=active]:shadow-none data-[state=active]:text-Primary-400 md:max-w-42 py-4`}
                                 value="ads"
                             >
-                                آگهی ها
+                                {a.ads}
                             </TabsTrigger>
                             <TabsTrigger
-                                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-Primary-400 dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-Primary-400 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-Primary-400 data-[state=active]:shadow-none data-[state=active]:text-Primary-400 md:max-w-42 py-4`}
+                                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-Primary-400 dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-b-Primary-400 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-Primary-400 data-[state=active]:shadow-none data-[state=active]:text-Primary-400 md:max-w-42 py-4`}
                                 value="points"
                             >
-                                امتیاز ها
+                                {a.ratings}
                             </TabsTrigger>
                             <TabsTrigger
-                                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-Primary-400 dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-Primary-400 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-Primary-400 data-[state=active]:shadow-none data-[state=active]:text-Primary-400 md:max-w-42 py-4`}
+                                className={`cursor-pointer dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-Primary-400 dark:data-[state=active]:border-b-2 dark:data-[state=active]:border-b-Primary-400 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-Primary-400 data-[state=active]:shadow-none data-[state=active]:text-Primary-400 md:max-w-42 py-4`}
                                 value="comments"
                             >
-                                نظرات
+                                {a.comments}
                             </TabsTrigger>
 
                         </TabsList>
@@ -158,10 +163,10 @@ const Details = () => {
                             <Comments user_show={user_show} url={`/user_show`} id={id}/>
                         </TabsContent>
                         <TabsContent value="points">
-                            <StarsTab id={id}/>
+                            <StarsTab a={a} id={id}/>
                         </TabsContent>
                         <TabsContent value="ads">
-                            <ADS locale={locale} id={id}/>
+                            <ADS a={a} locale={locale} id={id}/>
                         </TabsContent>
                         {/*<TabsContent value="hiring-history">*/}
                         {/*    <HiringHistory/>*/}
