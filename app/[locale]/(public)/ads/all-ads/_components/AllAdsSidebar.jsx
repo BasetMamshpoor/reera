@@ -1,154 +1,55 @@
 "use client";
-import React, {useMemo, useRef, useState} from "react";
+import React from "react";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import Filter from "@/assets/icons/filter.svg";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import useSwipeScroll from "@/hooks/useHorizontalScroll";
-import {useQuery} from "@tanstack/react-query";
-import {request} from "@/lib/api";
-import {useForm} from "react-hook-form";
 import RecMobileFilter from "./RecMobileFilter";
 import AllAdsFilterContent from "@/components/Filters/AllAdsFilterContent";
+import {useCategoryFilters} from "@/hooks/useCategoryFilters";
+import Icon from "@/assets/icons/add.svg";
 
 const AllAdsSidebar = () => {
-    const [open, setOpen] = useState(false);
-    const [search, setSearch] = useState("");
-    const [cityOpen, setCityOpen] = useState(false);
-    const [citySearch, setCitySearch] = useState("");
-    const [priceRange, setPriceRange] = useState([0, 100000]);
-    const [brandOpen, setBrandOpen] = useState(false);
-    const [typeOpen, setTypeOpen] = useState(false);
-    const [brandSearch, setBrandSearch] = useState("");
-    const [typeSearch, setTypeSearch] = useState("");
-    const [isProduct_status, setIsProduct_status] = useState("");
-    const {watch, setValue} = useForm();
     const dic = useTranslation();
-    const scrollRef = useSwipeScroll();
     const s = dic.all_ads.sidebar;
-    const l = dic.public.register_ad.location_form;
-    const k = dic.register_ad;
-    const d = dic.categories;
 
-    const categories = [
-        d.matrimony,
-        d.travel_guide,
-        d.legal_services,
-        d.services,
-        d.digital_goods,
-        d.vehicles,
-        d.real_estate,
-        d.job_recruitment,
-        d.commerce,
-        d.roommate,
-        d.tickets_tours,
-        d.personal_items,
-        d.transportation,
-        d.visa,
-    ];
-    const product_status = [s.new, s.almost_new, s.second_hand];
+    const {
+        filters,
+        handleChange,
+        clearAllFilters,
+        categoryTree,
+        modelsData,
+        currencies,
+        priceRangeFromAPI,
+        activeFilters
+    } = useCategoryFilters("all_ads");
 
-    const {data: countriesData, isLoading: loadingCountries} = useQuery({
-        queryKey: ["countries"],
-        queryFn: async () => request({method: "GET", url: `/getCountries`}),
-    });
-
-    const selectedCountryId = watch("country_id");
-    const selectedBrand = watch("brand");
-    const selectedType = watch("product_type");
-
-    const {data: citiesData, isLoading: loadingCities} = useQuery({
-        queryKey: ["cities", selectedCountryId],
-        queryFn: async () => {
-            if (!selectedCountryId) return {data: {cities: []}};
-            return request({
-                method: "GET",
-                url: `/getCountries`,
-                query: {country: selectedCountryId},
-            });
-        },
-        enabled: !!selectedCountryId,
-    });
-
-    const countryOptions = useMemo(
-        () =>
-            countriesData?.data?.countries?.map((c) => ({
-                value: c.id.toString(),
-                label: c.name,
-            })) || [],
-        [countriesData]
-    );
-    const filteredCountries = useMemo(
-        () =>
-            countryOptions.filter((country) =>
-                country.label.toLowerCase().includes(search.toLowerCase())
-            ),
-        [search, countryOptions]
-    );
-
-    const cityOptions = useMemo(
-        () =>
-            citiesData?.data?.city?.map((city) => ({
-                value: city.id.toString(),
-                label: city.name,
-            })) || [],
-        [citiesData]
-    );
-    const filteredCities = useMemo(
-        () =>
-            cityOptions.filter((city) =>
-                city.label.toLowerCase().includes(citySearch.toLowerCase())
-            ),
-        [citySearch, cityOptions]
-    );
+    const scrollRef = useSwipeScroll();
 
     const sharedProps = {
-        categories,
-        product_status,
-        isProduct_status,
-        setIsProduct_status,
-        brandOpen,
-        setBrandOpen,
-        brandSearch,
-        setBrandSearch,
-        selectedBrand,
-        typeOpen,
-        setTypeOpen,
-        typeSearch,
-        setTypeSearch,
-        selectedType,
-        open,
-        setOpen,
-        search,
-        setSearch,
-        countryOptions,
-        filteredCountries,
-        loadingCountries,
-        selectedCountryId,
-        cityOpen,
-        setCityOpen,
-        citySearch,
-        setCitySearch,
-        cityOptions,
-        filteredCities,
-        loadingCities,
-        priceRange,
-        setPriceRange,
-        watch,
-        setValue,
+        categoryTree,
+        filters,
+        handleChange,
+        priceRangeFromAPI,
+        modelsData,
+        allData: {currency: currencies },
     };
 
     return (
         <>
             <div
-                className="border-2 h-fit border-default-divider hidden lg:block bg-transparent rounded-xl w-full max-w-92">
-                <div className="flex flex-col gap-4 p-4">
-                    <div className="flex flex-row items-center justify-between">
-                        <div className="flex flex-row items-center justify-between gap-2 dark:text-white">
-                            <Filter className="dark:fill-white"/>
+                className="hidden lg:block border-2 border-default-divider rounded-xl bg-transparent w-full max-w-92 h-fit">
+                <div className="flex flex-col gap-4 p-6">
+                    <div className="flex justify-between items-center">
+                        <div className="flex gap-2 items-center">
+                            <Filter className="dark:fill-Gray-50"/>
                             <span>{s.filter}</span>
                         </div>
-                        <button className="flex flex-row items-center gap-2 text-error-main cursor-pointer">
-                            <span className="font-[600]">{s.categories_of}</span>
+                        <button
+                            className="flex gap-2 items-center text-error-main cursor-pointer"
+                            onClick={clearAllFilters}
+                        >
+                            <span className="font-[600]">{s.clear_all || "Clear All"}</span>
                             <CloseSquare className="fill-error-main"/>
                         </button>
                     </div>
@@ -158,9 +59,32 @@ const AllAdsSidebar = () => {
 
             <div
                 ref={scrollRef}
-                className="px-4 overflow-x-auto flex items-center cursor-pointer lg:hidden pb-4 scrollbar-hide"
+                className="lg:hidden flex items-center gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-pointer"
             >
                 <RecMobileFilter {...sharedProps} />
+                <div className="flex items-center gap-4">
+                    {activeFilters.map((f) => (
+                        <button
+                            key={f.key}
+                            className="flex bg-Primary-50 border text-Primary-500 border-Primary-500 items-center justify-center px-2 py-2 min-w-20 gap-2 rounded-2xl"
+                            onClick={() => {
+                                if (f.key === "price") {
+                                    handleChange("min_price", priceRangeFromAPI.min);
+                                    handleChange("max_price", priceRangeFromAPI.max);
+                                } else if (f.key === "verified") {
+                                    handleChange("verified", false);
+                                } else {
+                                    handleChange(f.key, "");
+                                }
+                            }}
+                        >
+                            <span className="text-xs font-medium whitespace-nowrap">
+                              {f.label}
+                            </span>
+                            <Icon className="rotate-45 fill-error-main cursor-pointer" />
+                        </button>
+                    ))}
+                </div>
             </div>
         </>
     );

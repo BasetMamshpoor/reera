@@ -61,14 +61,14 @@ const JobSearch = ({item, d, refetch}) => {
     return (
         <>
             <div key={item.id}
-                 className="grid grid-rows-4 pb-4 bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
-                <div className="row-span-2 relative h-full w-full ">
+                 className="grid pb-4 bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
+                <div className="h-[250px] relative  w-full ">
                     <Image src={item.image} alt="image" width={100} height={100} className="w-full h-full"/>
                     <div className="w-full absolute -bottom-9 right-0 left-0 ">
                         <Cut className="!w-full !h-full fill-white dark:fill-surface border-0"/>
                     </div>
                 </div>
-                <div className="row-span-2 relative z-10 flex flex-col px-4 justify-between gap-6 w-full h-full">
+                <div className=" relative z-10 flex flex-col px-4 justify-between gap-6 w-full h-full">
                     <div class="flex flex-col gap-4 w-full">
                         <div className="flex gap-4 px-4">
                             <div className="max-w-[72px] w-full">
@@ -175,7 +175,7 @@ const JobSearch = ({item, d, refetch}) => {
                             onClick={() => {
                                 mutation1.mutate(item.id);
                             }}
-                            className="flex items-center cursor-pointer gap-2 justify-center py-2 border border-Primary-400 rounded-xl w-full text-Primary-400 text-base font-bold"
+                            className="flex cursor-pointer items-center  gap-2 justify-center py-2 border border-Primary-400 rounded-xl w-full text-Primary-400 text-base font-bold"
                         >
                             <Refresh className="fill-Primary-400 !w-5 !h-5"/>
                             <p className="pt-1">{a.renew_ad}</p>

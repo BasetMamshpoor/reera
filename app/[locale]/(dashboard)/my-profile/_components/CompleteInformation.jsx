@@ -73,7 +73,7 @@ const CompleteInformation = ({
             national_code: "",
             language_id: "",
             nationality_id: "",
-            bio:""
+            bio: ""
         },
     });
 
@@ -446,14 +446,9 @@ const CompleteInformation = ({
                     disabled={isSubmitting || mutation.isLoading}
                     className="flex gap-2 items-center justify-center px-6 py-2 bg-Primary-400 rounded-xl text-white dark:text-black whitespace-nowrap text-base font-bold cursor-pointer transition-all duration-100 hover:scale-[0.98] ease-in-out disabled:opacity-50 disabled:cursor-not-allowed "
                 >
-                    {isSubmitting || mutation.isLoading ? (
-                        <Spinner size="small"/>
-                    ) : (
-                        <>
-                            <Tick className="fill-white dark:fill-black w-5 h-5"/>
-                            <p>{c.save_info}</p>
-                        </>
-                    )}
+                    {mutation.isPending?<Spinner size={25}/>:
+                        <Tick className="fill-white dark:fill-black w-5 h-5"/>}
+                    <p>{c.save_info}</p>
                 </button>
             </div>
         </form>

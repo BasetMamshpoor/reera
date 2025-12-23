@@ -10,7 +10,6 @@ import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 
 const MyAds = ({data, isLoading, selected, setSelected, d, refetch, tab}) => {
-    console.log(data)
     const {locale} = useParams()
     const toggleCategory = (id) => {
         if (selected.includes(id)) {

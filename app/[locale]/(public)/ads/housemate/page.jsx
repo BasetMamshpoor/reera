@@ -17,13 +17,13 @@ const Page = async ({searchParams, params}) => {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ["ads", page, "roommate", categoryId, "newest"],
+        queryKey: ["ads", page, "housemate", categoryId, "newest"],
         queryFn: () =>
             request({
                 url: `/ads`,
                 method: "get",
                 query: {
-                    page, category_id: categoryId, category_slug: "roommate"
+                    page, category_id: categoryId, category_slug: "housemate"
                 },
             }),
     });
@@ -104,7 +104,7 @@ const Page = async ({searchParams, params}) => {
                         {/*        </Link>*/}
                         {/*    </div>*/}
                         {/*</div>*/}
-                        <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"roommate"}
+                        <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"housemate"}
                                  page={page}/>
                     </Providers>
                 </div>

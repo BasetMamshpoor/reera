@@ -15,7 +15,6 @@ import Link from "next/link";
 import Refresh from "@/assets/icons/Refresh.svg";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useParams} from "next/navigation";
-import Date from "@/components/RemainingDays";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Spinner from "@/components/Spinner";
@@ -62,9 +61,9 @@ const Home = ({item, refetch}) => {
         <>
             <div
                 key={item.id}
-                className="grid grid-rows-4 pb-4 bg-surface rounded-xl overflow-hidden w-full shadow-lg border border-Gray-200"
+                className="grid pb-4 bg-surface rounded-xl overflow-hidden w-full shadow-lg border border-Gray-200"
             >
-                <div className="row-span-2 relative h-full w-full ">
+                <div className="h-[250px] relative w-full ">
                     <Link href={`/${locale}/ads/${item.slug}`}
                           className="relative">
                         <Image
@@ -126,7 +125,7 @@ const Home = ({item, refetch}) => {
                         </Badge>
                     )}
                 </div>
-                <div className="row-span-2 relative z-10 flex flex-col px-4 justify-between h-full gap-4 w-full pt-2">
+                <div className=" relative z-10 flex flex-col px-4 justify-between h-full gap-4 w-full pt-2">
                     <div className="flex flex-col gap-4 w-full">
                         <div className="flex flex-col gap-3 w-full">
                             <div className="flex items-center justify-between w-full ">
@@ -188,7 +187,7 @@ const Home = ({item, refetch}) => {
                                 <DialogTrigger asChild>
                                     <button
                                         disabled={mutation.isLoading}
-                                        className="flex items-center justify-center py-2 border rounded-xl w-full border-error-main text-error-main text-sm lg:text-base font-bold"
+                                        className="flex items-center cursor-pointer justify-center py-2 border rounded-xl w-full border-error-main text-error-main text-sm lg:text-base font-bold"
                                     >
                                         {mutation.isLoading ? (
                                             <Spinner/>
@@ -221,7 +220,7 @@ const Home = ({item, refetch}) => {
                                                 mutation.mutate(item.id);
                                             }}
                                         >
-                                            {a.delete}
+                                            {mutation.isPending ? <Spinner size={25}/> : a.delete}
                                         </Button>
                                     </DialogFooter>
                                 </DialogContent>

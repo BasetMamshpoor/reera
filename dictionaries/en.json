@@ -161,8 +161,6 @@
       "medical_beauty_health": "Medical, Beauty & Health",
       "art_media": "Art & Media",
       "cooperation_type": "Cooperation Type",
-      "part_time": "Part Time",
-      "full_time": "Full Time",
       "in_person": "In Person",
       "required_skills": "Required Skills",
       "salary": "Salary",
@@ -188,7 +186,30 @@
       "popular": "popular",
       "expensive": "expensive",
       "cheap": "cheap",
-      "not_found": "No items found"
+      "not_found": "No items found",
+      "full_time": "Full time",
+      "part_time": "Part time",
+      "remote": "Remote",
+      "high_school": "diploma",
+      "associate_degree": "associate",
+      "bachelor_degree": "bachelor",
+      "master_degree": "master",
+      "phd_degree": "PhD",
+      "bedroom_1": "1 Bedroom",
+      "bedroom_2": "2 Bedrooms",
+      "bedroom_3": "3 Bedrooms",
+      "bedroom_4": "4 Bedrooms",
+      "5plus_bedroom": "5+ Bedrooms",
+      "bathroom_1": "1 Bathroom",
+      "bathroom_2": "2 Bathrooms",
+      "bathroom_3": "3 Bathrooms",
+      "bathroom_4": "4 Bathrooms",
+      "plus_bathroom": "5+ Bathrooms",
+      "used": "used",
+      "needs_repair": "Needs Repair",
+      "meter": "meter",
+      "km": "km"
+
     }
   },
   "consultor": {
@@ -715,7 +736,10 @@
         "write_review": "Write your review.",
         "text": "Text",
         "cancel": "Cancel",
-        "submit_review": "Submit Review"
+        "submit_review": "Submit Review",
+        "no_comments_found": "No comments found!",
+        "another_reply": "Another reply",
+        "close": "Close"
       },
       "transaction_history": {
         "transaction_history": "Transaction History",
@@ -1374,6 +1398,20 @@
         "cancel": "Cancel",
         "sending": "Sending...",
         "entry": "Entry"
+      },
+      "seller":{
+        "no_comments_found": "No comments found!",
+        "another_reply": "Another reply",
+        "close": "Close",
+        "profile": "Profile",
+        "membership_duration": "Membership Duration:",
+        "ads": "Ads",
+        "ratings": "Ratings",
+        "comments": "Comments",
+        "total_ratings": "Total Ratings",
+        "information_accuracy": "Information Accuracy",
+        "owner_behavior": "Owner's Behavior",
+        "price_transparency": "Price Transparency"
       }
     }
   }

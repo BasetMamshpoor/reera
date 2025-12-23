@@ -241,9 +241,6 @@ export default function AdForm({isEditing = false, adData}) {
                                 {errors.number_of_bedrooms.message}
                             </p>
                         )}
-
-
-
                     </div>
 
                     <div className="w-full">

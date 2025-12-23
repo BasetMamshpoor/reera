@@ -34,7 +34,6 @@ const Information = ({
     const {locale} = useParams();
     const [totalPages, setTotalPages] = useState(1);
 
-    // Update pagination when data changes
     useEffect(() => {
         if (data) {
             setTotalPages(data.last_page || 1);
@@ -128,7 +127,7 @@ const Information = ({
                 </Select>
             </div>
             {!isEmpty ? (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
                     {data?.data?.map((item) => (item.custom_info.type === "recruitment" ?
                             <JobSearch item={item} isLoading={isLoading} refetch={refetch} d={d}/> :
                             <Home item={item} isLoading={isLoading} refetch={refetch}/>

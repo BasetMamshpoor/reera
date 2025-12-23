@@ -39,21 +39,21 @@ const Card = ({isRow, i, link}) => {
                                 </div>
                                 <div className="flex flex-col gap-1 md:gap-3">
                                     <div className="flex items-center gap-2">
-                                        {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "roommate") ?
+                                        {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "housemate") ?
                                             <Home className="w-3 h-3 md:w-4 md:h-4  fill-Gray-800"/> :
                                             <Category className="w-3 h-3 md:w-4 md:h-4  fill-Gray-800"/>
                                         }
                                         <div className="flex items-center gap-1">
                                             <p className="flex items-center justify-center text-sm md:text-base pt-2">
-                                                {i?.custom_info?.value} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "roommate") && "متر"}
+                                                {i?.custom_info?.value} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "housemate") && "متر"}
                                             </p>
                                             <p className="flex items-center justify-center text-sm md:text-base pt-2">
-                                                {i?.custom_info?.key} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "roommate") && "اتاق"}
+                                                {i?.custom_info?.key} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "housemate") && "اتاق"}
                                             </p>
                                         </div>
                                     </div>
 
-                                    {i?.custom_info?.type === "roommate" &&
+                                    {i?.custom_info?.type === "housemate" &&
                                         <div className="flex items-center gap-2">
                                             <div class="flex items-center gap-2">
                                                 <Icon className="w-3 h-3 md:w-4 md:h-4  fill-Gray-800"/>
@@ -127,21 +127,21 @@ const Card = ({isRow, i, link}) => {
                             </p>
 
                             <div className="flex items-center gap-2">
-                                {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "roommate") ?
+                                {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "housemate") ?
                                     <Home className="w-3 h-3 md:w-4 md:h-4  fill-Gray-800"/> :
                                     <Category className="w-3 h-3 md:w-4 md:h-4  fill-Gray-800"/>
                                 }
                                 <div className="flex items-center gap-1">
                                     <p className="flex items-center justify-center text-sm md:text-base pt-2">
-                                        {i?.custom_info?.value} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "roommate") && "متر"}
+                                        {i?.custom_info?.value} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "housemate") && "متر"}
                                     </p>
                                     <p className="flex items-center justify-center text-sm md:text-base pt-2">
-                                        {i?.custom_info?.key} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "roommate") && "اتاق"}
+                                        {i?.custom_info?.key} {(i?.custom_info?.type === "housing" || i?.custom_info?.type === "housemate") && "اتاق"}
                                     </p>
                                 </div>
                             </div>
 
-                            {i?.custom_info?.type === "roommate" &&
+                            {i?.custom_info?.type === "housemate" &&
                                 <div className="flex items-center gap-2">
                                     <div class="flex items-center gap-2">
                                         <Icon className="w-3 h-3 md:w-4 md:h-4  fill-Gray-800"/>
