@@ -269,13 +269,13 @@ const CategoriesModified = () => {
     ];
     return (
         <div
-            className="w-full grid grid-cols-3 md:flex md:flex-wrap xl:grid xl:grid-cols-5 justify-center gap-2  mt-8 px-4 lg:px-0">
+            className="w-full grid grid-cols-3 xl:grid-cols-5 justify-center gap-2  mt-8 px-4 lg:px-0">
             {categories?.map((category) => (
                 !!category?.coming ?
                     <div
 
                         key={category.id}
-                        className="relative opacity-50 md:min-w-[300px] grid grid-rows-3 last:col-span-3 text-center overflow-hidden hover:scale-[0.98] transition-all py-4 bg-surface duration-100 ease-in items-center justify-center flex-1 border rounded-lg cursor-pointer lg:min-w-58 w-full px-4"
+                        className="relative opacity-50 grid grid-rows-3 last:col-span-3 xl:last:col-span-1 text-center overflow-hidden hover:scale-[0.98] transition-all py-4 bg-surface duration-100 ease-in items-center justify-center flex-1 border rounded-lg cursor-pointer lg:min-w-58 w-full px-4"
                     >
                         <div
                             className="text-xs md:text-sm py-1 absolute -rotate-45 top-4 -left-8 md:top-6 md:-left-16 flex items-center justify-center max-w-[120px] md:max-w-[200px] w-full bg-Primary-400 text-white">
@@ -291,7 +291,7 @@ const CategoriesModified = () => {
                     <Link
                         key={category.id}
                         href={category.href}
-                        className="grid grid-rows-3 last:col-span-3 text-center overflow-hidden md:min-w-[300px] hover:scale-[0.98] transition-all py-4 bg-surface duration-100 ease-in items-center justify-center flex-1 border rounded-lg cursor-pointer lg:min-w-58 w-full px-4"
+                        className="grid grid-rows-3 last:col-span-3 xl:last:col-span-1 text-center overflow-hidden hover:scale-[0.98] transition-all py-4 bg-surface duration-100 ease-in items-center justify-center flex-1 border rounded-lg cursor-pointer lg:min-w-58 w-full px-4"
                     >
                         <div className="flex items-center justify-center row-span-2">
                             {category.icon}

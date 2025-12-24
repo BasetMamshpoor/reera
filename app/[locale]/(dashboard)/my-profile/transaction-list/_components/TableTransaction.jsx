@@ -7,11 +7,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import Profile from "@/public/images/legal.png";
-import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
 import Spinner from "@/components/Spinner";
-import AdvPagination from "@/components/AdvPagination";
 
 const TableTransaction = ({a, data, isLoading}) => {
     return (

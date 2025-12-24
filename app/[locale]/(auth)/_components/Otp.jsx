@@ -7,8 +7,6 @@ import {
 } from "@/components/ui/input-otp";
 import Edit from "@/assets/icons/Edit2.svg";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
-import { request } from "@/lib/api";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useTranslation } from "../../TranslationContext";

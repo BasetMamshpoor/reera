@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Prof from "@/public/images/city-profile.jpg";
 import Image from "next/image";
 import Cut from "@/assets/images/wave-haikei.svg";
 import {Badge} from "@/components/ui/badge";

@@ -7,11 +7,7 @@ import Location from "@/assets/icons/location.svg";
 import Modal from "@/app/[locale]/(public)/ads/_components/Modal";
 import Like from "@/components/Like";
 import User from "@/assets/icons/profile.svg";
-import {useMutation} from "@tanstack/react-query";
-import {request} from "@/lib/api";
-import Spinner from "@/components/Spinner";
 import ModalRequest from "../../../_components/ModalRequest";
-
 import {useParams} from "next/navigation";
 import ModalChatAndCall from "../../../_components/ModalCall";
 

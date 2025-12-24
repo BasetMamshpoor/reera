@@ -3,7 +3,6 @@ import React from "react";
 import Empty from "@/assets/icons/star.svg";
 
 import PLus from "@/assets/icons/add.svg";
-import Search from "@/assets/icons/search.svg";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import Link from "next/link";
 import {useParams} from "next/navigation";
