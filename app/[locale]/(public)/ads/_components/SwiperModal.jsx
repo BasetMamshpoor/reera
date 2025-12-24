@@ -16,7 +16,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import {FreeMode, Navigation, Thumbs, Pagination} from "swiper/modules";
-import Maximize from "@/public/images/Maximize Icon.png";
 import Clock from "@/assets/icons/clock.svg";
 
 const SwiperModal = ({data}) => {
@@ -128,7 +127,7 @@ const SwiperModal = ({data}) => {
                                         className="absolute inset-0 bg-black/60 w-full h-full flex border border-default-divider items-center justify-center">
                                         <div className="relative !w-10 !h-10">
                                             <Image
-                                                src={Maximize}
+                                                src={"/images/Maximize Icon.png"}
                                                 alt="photo"
                                                 width={100}
                                                 height={100}

@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Whatsapp from "@/assets/icons/whatsapp.svg";
-import nemad from "@/assets/images/Icon.png";
 const DesktopFooter = () => {
   return (
     <div className="hidden md:flex flex-col w-full mt-34 bg-gradient-to-b from-[#FAFCFF] to-[#D1E2FC] dark:from-[#14181D0] dark:to-[#142738] lg:h-120 ">
@@ -61,10 +60,10 @@ const DesktopFooter = () => {
       </div>
       <div className="flex flex-row justify-between items-center  mt-6 w-full px-6 mx-auto md:max-w-7xl">
         <div className="flex flex-row items-center gap-4">
-          <Image src={nemad} alt=""></Image>
-          <Image src={nemad} alt=""></Image>
-          <Image src={nemad} alt=""></Image>
-          <Image src={nemad} alt=""></Image>
+          <Image width={100} height={100} src={"/images/Icon.png"} alt=""></Image>
+          <Image width={100} height={100} src={"/images/Icon.png"} alt=""></Image>
+          <Image width={100} height={100} src={"/images/Icon.png"} alt=""></Image>
+          <Image width={100} height={100} src={"/images/Icon.png"} alt=""></Image>
         </div>
         <div className="flex flex-row items-center gap-4">
           <Whatsapp className="dark:fill-white " />
