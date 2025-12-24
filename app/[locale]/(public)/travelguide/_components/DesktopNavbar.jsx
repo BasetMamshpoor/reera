@@ -1,6 +1,4 @@
 import Link from 'next/link';
-// import svgPaths from "../imports/svg-xe8w5rugfm";
-import ImgLogo from "../../../../../public/images/logo.png";
 import Image from "next/image";
 
 function VuesaxLinearAdd() {
@@ -286,8 +284,9 @@ function Logo3() {
     return (
         <div className="h-[80px] relative shrink-0 w-[68.085px]" data-name="Logo">
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <Image fill alt="image" className="absolute h-[115.56%] left-[-34.03%] max-w-none top-[-11.11%] w-[170.16%]"
-                     src={ImgLogo}/>
+                <Image fill alt="image"
+                       className="absolute h-[115.56%] left-[-34.03%] max-w-none top-[-11.11%] w-[170.16%]"
+                       src={"/images/logo.png"}/>
             </div>
         </div>
     );
@@ -302,7 +301,6 @@ function NavbarRightSection() {
         </div>
     );
 }
-
 
 
 export function DesktopNavbar({currentPage = 'home'}) {

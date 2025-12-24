@@ -9,7 +9,6 @@ import Spinner from "@/components/Spinner";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
-import JobSearch from "./JobSearch";
 
 const Details = () => {
     const dic = useTranslation();

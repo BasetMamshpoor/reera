@@ -16,7 +16,6 @@ import Heart from "@/assets/icons/heart.svg";
 import Tag from "@/assets/icons/Tag.svg";
 import LogUot from "@/assets/icons/Logout.svg";
 import Modal from "@/app/[locale]/(dashboard)/my-profile/_components/ModalCoinIncrease";
-import Profile from "@/public/images/city-profile.jpg";
 
 import { useParams, usePathname } from "next/navigation";
 import { useTranslation } from "@/app/[locale]/TranslationContext";
@@ -62,7 +61,7 @@ const DashboardSidebar = () => {
     <div className="flex flex-col gap-8 border border-[#D1D5DB] dark:border-[#374151] bg-[#F9FAFB] dark:bg-[#14181D] rounded-2xl [box-shadow:0_2px_32px_0_rgba(28,_28,_28,_0.06)] w-full max-w-80 h-fit">
       <div className="relative w-full rounded-t-2xl overflow-hidden">
         <Image
-          src={Profile}
+          src={"/images/city-profile.jpg"}
           alt="image"
           width={100}
           height={100}

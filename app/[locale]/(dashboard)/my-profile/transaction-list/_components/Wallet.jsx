@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import {useParams} from "next/navigation";
-import Bg from "@/public/images/wallet.png"
 import Image from "next/image";
 import {useQuery} from "@tanstack/react-query";
 import {request} from "@/lib/api";
@@ -36,7 +35,7 @@ const Wallet = ({a}) => {
                 </div> :
                 <div
                     className="relative flex flex-col gap-5 py-8 items-center justify-center bg-Primary-400  max-w-[364px] w-full rounded-xl">
-                    <Image src={Bg} alt="Bg" width={100} height={100}
+                    <Image src={"/images/wallet.png"} alt="Bg" width={100} height={100}
                            className="absolute top-0 right-0 left-0 bottom-0 w-screen"/>
                     <p className="text-white text-xl">{a.Balance}</p>
                     <p className="text-white text-4xl font-bold">¥ {data?.data.balance || "0.00"}</p>

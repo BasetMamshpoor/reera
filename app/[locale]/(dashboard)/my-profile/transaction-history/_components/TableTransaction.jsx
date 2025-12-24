@@ -7,7 +7,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import Profile from "@/public/images/legal.png";
 import Image from "next/image";
 import {Badge} from "@/components/ui/badge";
 
