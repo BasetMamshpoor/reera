@@ -17,7 +17,7 @@ import SelectLocationComponent from "@/components/layout/Searchbar/SelectLocatio
 import {useParams, useRouter} from "next/navigation";
 import {useCategories} from "@/app/[locale]/CategoryProvider";
 import Link from "next/link";
-import { useGlobalSearch } from "@/hooks/useGlobalSearch";
+import {useGlobalSearch} from "@/hooks/useGlobalSearch";
 
 const MainSearchbar = ({}) => {
     const dic = useTranslation();
@@ -35,7 +35,7 @@ const MainSearchbar = ({}) => {
     const hoverTimeoutRef = useRef(null);
     const hasMounted = useRef(false);
     const {locale} = useParams();
-    const { search, setSearch } = useGlobalSearch();
+    const {search, setSearch} = useGlobalSearch();
     // Handle outside click
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -268,7 +268,7 @@ const MainSearchbar = ({}) => {
                     </div>
                     <Input
                         value={search}
-                        onChange={(e)=>setSearch(e.target.value)}
+                        onChange={(e) => setSearch(e.target.value)}
                         onFocus={handleSearchFocus}
                         className="flex-4 bg-surface border border-default-divider py-5 placeholder:px-2 px-12"
                         type="search"
@@ -276,55 +276,59 @@ const MainSearchbar = ({}) => {
                     />
                 </div>
                 <SelectLocationComponent/>
-                <div
-                    ref={categoryPanelRef}
-                    onMouseEnter={handleCategoryPanelHover}
-                    onMouseLeave={handleCategoryPanelLeave}
-                    className="category-hover-element absolute start-0 top-12 rtl:text-right h-100 w-full bg-surface z-50 flex rounded-lg shadow-lg"
-                >
-                    <ScrollArea
-                        className="w-72 h-full ltr:border-r ltr:border-r-gray-200 rtl:border-r-0 rtl:border-l rtl:border-l-gray-200">
-                        <div className="space-y-0">
-                            {categories?.map((category) => (
-                                <div
-                                    key={category.id}
-                                    className="p-4 cursor-pointer hover:bg-primary-50  flex items-center gap-2 text-lg  transition-all duration-200 rtl:flex-row-reverse rtl:justify-start ltr:hover:border-r-4 ltr:hover:border-r-Primary-400 rtl:hover:border-r-0 rtl:hover:border-l-4 rtl:hover:border-l-Primary-400 hover:bg-Primary-50"
-                                    onMouseEnter={() => setHoveredCategory(category)}
-                                    onClick={handleItemClick}
-                                >
-                                    <span>{category.title}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </ScrollArea>
+                {uiState === "category" && (
+                    <div
+                        ref={categoryPanelRef}
+                        onMouseEnter={handleCategoryPanelHover}
+                        onMouseLeave={handleCategoryPanelLeave}
+                        className="category-hover-element absolute start-0 top-12 rtl:text-right h-100 w-full bg-surface z-50 flex rounded-lg shadow-lg"
+                    >
 
-                    {hoveredCategory && (
                         <ScrollArea
-                            ref={categorySubPanelRef}
-                            className="w-full h-full bg-surface border-l border-gray-200"
-                        >
-                            <div className="p-4">
-                                <h3 className="font-semibold text-lg mb-3 text-gray-800">
-                                    {hoveredCategory.title}
-                                </h3>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {getAllSubcategories(hoveredCategory)?.map(
-                                        (subcategory, index) => (
-                                            <Link
-                                                href={`/${locale}/ads/${hoveredCategory.slug}/?category=${encodeURIComponent(subcategory.id)}`}
-                                                key={subcategory.id}
-                                                className="p-2 rounded-md cursor-pointer text-lg hover:bg-Primary-50 transition-colors duration-200"
-                                                onClick={closeAllPanels}
-                                            >
-                                                {subcategory.title}
-                                            </Link>
-                                        )
-                                    )}
-                                </div>
+                            className="w-72 h-full ltr:border-r ltr:border-r-gray-200 rtl:border-r-0 rtl:border-l rtl:border-l-gray-200">
+                            <div className="space-y-0">
+                                {categories?.map((category) => (
+                                    <div
+                                        key={category.id}
+                                        className="p-4 cursor-pointer hover:bg-primary-50  flex items-center gap-2 text-lg  transition-all duration-200 rtl:flex-row-reverse rtl:justify-start ltr:hover:border-r-4 ltr:hover:border-r-Primary-400 rtl:hover:border-r-0 rtl:hover:border-l-4 rtl:hover:border-l-Primary-400 hover:bg-Primary-50"
+                                        onMouseEnter={() => setHoveredCategory(category)}
+                                        onClick={handleItemClick}
+                                    >
+                                        <span>{category.title}</span>
+                                    </div>
+                                ))}
                             </div>
                         </ScrollArea>
-                    )}
-                </div>
+
+                        {hoveredCategory && (
+                            <ScrollArea
+                                ref={categorySubPanelRef}
+                                className="w-full h-full bg-surface border-l border-gray-200"
+                            >
+                                <div className="p-4">
+                                    <h3 className="font-semibold text-lg mb-3 text-gray-800">
+                                        {hoveredCategory.title}
+                                    </h3>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {getAllSubcategories(hoveredCategory)?.map(
+                                            (subcategory, index) => (
+                                                <Link
+                                                    href={`/${locale}/ads/${hoveredCategory.slug}/?category=${encodeURIComponent(subcategory.id)}`}
+                                                    key={subcategory.id}
+                                                    className="p-2 rounded-md cursor-pointer text-lg hover:bg-Primary-50 transition-colors duration-200"
+                                                    onClick={closeAllPanels}
+                                                >
+                                                    {subcategory.title}
+                                                </Link>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                            </ScrollArea>
+                        )}
+                    </div>
+                )}
+
             </div>
         </>
     );
