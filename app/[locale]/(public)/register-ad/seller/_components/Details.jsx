@@ -49,7 +49,7 @@ const Details = () => {
 
     return (
         <>
-            <div className={`flex flex-col gap-4 mt-4 w-full cursor-pointer`}>
+            <div className={`flex flex-col gap-4 mt-4 w-full `}>
                 <div onClick={router.back}
                      className={`flex flex-row gap-2 items-center md:hidden`}>
                     <ArrowRight className={` fill-Primary-600 ltr:rotate-180`}/>
@@ -76,43 +76,44 @@ const Details = () => {
                 {/*        </BreadcrumbList>*/}
                 {/*    </Breadcrumb>*/}
                 {/*</div>*/}
-                <div className="flex flex-col w-full">
-                    <div className="relative w-full h-[300px] max-h-[300px] overflow-hidden">
-                        <Image
-                            unoptimized
-                            src={`/images/city-profile.jpg`}
-                            alt="0"
-                            fill
-                            className={`w-full object-cover`}
-                        />
-                        <div className="w-full absolute -bottom-10 md:-bottom-16 lg:-bottom-32 xl:-bottom-40">
-                            <ImageOverlay className="!w-full !h-full fill-[#F9FAFB] dark:fill-[#14181D]"/>
-                        </div>
-                    </div>
+                <div className="flex flex-col items-center w-full">
+                    {/*<div className="relative w-full h-[300px] max-h-[300px] overflow-hidden">*/}
+                    {/*    <Image*/}
+                    {/*        unoptimized*/}
+                    {/*        src={`/images/city-profile.jpg`}*/}
+                    {/*        alt="0"*/}
+                    {/*        fill*/}
+                    {/*        className={`w-full object-cover`}*/}
+                    {/*    />*/}
+                    {/*    <div className="w-full absolute -bottom-10 md:-bottom-16 lg:-bottom-32 xl:-bottom-40">*/}
+                    {/*        <ImageOverlay className="!w-full !h-full fill-[#F9FAFB] dark:fill-[#14181D]"/>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <div className="w-full flex flex-col gap-4 px-6">
-                        <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center gap-4">
+                        <div className="flex items-center w-full">
+                            <div className="flex items-center flex-col gap-4">
                                 <div
-                                    className="bg-surface p-2 rounded-2xl w-16 h-16 lg:!w-24 lg:!h-24 border-2 border-surface shadow-sm">
+                                    className="bg-surface p-2 rounded-full overflow-hidden w-16 h-16 lg:!w-24 lg:!h-24 border-2 border-surface shadow-sm">
                                     <Image
                                         src={i.profile}
-                                        className=""
+                                        unoptimized
+                                        className="w-full h-full rounded-full"
                                         width={100}
                                         height={100}
                                         alt="image"
                                     />
                                 </div>
-                                <div className="flex flex-col lg:flex-row gap-1 lg:gap-6">
+                                <div className="flex items-center gap-4 lg:gap-6">
                                     <h2 className="text-lg lg:text-2xl font-medium">{i.name}</h2>
                                     {/*<div className="bg-[#DCFCE8] rounded-lg px-2 flex flex-row py-2 gap-2">*/}
                                     {/*    <GreenTick className="fill-[#16A34A] !w-4 !h-4 lg:!w-5 lg:!h-5"/>*/}
                                     {/*    <h2 className="lg:text-base text-sm font-medium text-[#16A34A]">تایید شده</h2>*/}
                                     {/*</div>*/}
+                                    <div className="flex gap-2 items-center">
+                                        <span className="pt-2">{i.ratings}</span>
+                                        <Star className="fill-warning-main"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex gap-2 items-center">
-                                <span className="pt-2">{i.ratings}</span>
-                                <Star className="fill-warning-main"/>
                             </div>
                         </div>
                         <div className="flex flex-col gap-4 w-full">

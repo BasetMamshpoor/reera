@@ -19,7 +19,7 @@ import {request} from "@/lib/api";
 import {toast} from "sonner";
 
 const JobSearch = ({item, d, tab, refetch, favorite}) => {
-
+    console.log(item)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isSoldDialogOpen, setIsSoldDialogOpen] = useState(false);
 
@@ -61,7 +61,7 @@ const JobSearch = ({item, d, tab, refetch, favorite}) => {
     return (
         <div className="flex flex-col pb-4 bg-surface rounded-xl overflow-hidden w-full border border-Gray-200 h-full">
             <div className="relative max-h-[194px] h-full w-full ">
-                <Image src={item.image} alt="image" width={100} height={100} className="w-full h-full"/>
+                <Image src={item?.image} alt="image" width={100} height={100} className="w-full h-full"/>
                 <div className="w-full absolute bottom-0 right-0 left-0 ">
                     <Cut className="!w-full !h-full fill-white dark:fill-surface border-0"/>
                 </div>
@@ -87,7 +87,7 @@ const JobSearch = ({item, d, tab, refetch, favorite}) => {
                         <div className="flex flex-col items-center gap-2 p-2 border border-default rounded-lg w-full">
                             <p className="text-xs text-Gray-700 font-bold">{d.salary}</p>
                             <p className="text-sm text-Primary-800 font-bold">
-                                {item.custom_info?.price} {item.custom_info?.currency}
+                                {item.custom_info?.price|| 0} {item.custom_info?.currency}
                             </p>
                         </div>
                         <div className="flex flex-col items-center gap-2 p-2 border border-default rounded-lg w-full">
@@ -104,7 +104,7 @@ const JobSearch = ({item, d, tab, refetch, favorite}) => {
                     </div>
                 </div>
 
-                {favorite === 1 ? null : (
+                {!!favorite ? null : (
                     <div className="flex items-center justify-center w-full gap-4">
                         {/* حذف */}
                         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>

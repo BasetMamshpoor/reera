@@ -141,7 +141,7 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                                 </div>
                             </div>
                             <Link
-                                href={`/${locale}/register-ad/seller/${session?.user?.id}`}
+                                href={`/${locale}/register-ad/seller/${data?.user_id}`}
                                 className="flex items-center justify-center px-4 py-2 w-full border border-[#4299C1] rounded-xl text-sm text-Primary-400 font-bold"
                             >
                                 {a.view_profile}
@@ -280,7 +280,7 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                         </div>
                     </div>
                     <Link
-                        href={`/${locale}/register-ad/seller/${session?.user?.id}`}
+                        href={`/${locale}/register-ad/seller/${data?.user_id}`}
                         className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-105 transition-transform w-full"
                     >
                         <div className="flex items-center justify-between">

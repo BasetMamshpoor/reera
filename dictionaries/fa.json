@@ -187,7 +187,6 @@
       "expensive": "گران ترین",
       "cheap": "ارزان ترین",
       "not_found": "موردی یافت نشد",
-
       "full_time": "تمام وقت",
       "part_time": "پاره وقت",
       "remote": "دورکاری",
@@ -333,7 +332,8 @@
     "legal_adviser": "مشاور مهاجرت",
     "transportation": "حمل و نقل",
     "visa": "ویزا",
-    "social": "اجتماعی"
+    "social": "اجتماعی",
+    "coming_soon" : "به زودی"
   },
   "ads": {
     "view_all": "مشاهده همه",
@@ -607,7 +607,8 @@
         "confirm_hired_someone": "آیا کسی را استخدام کرده‌اید؟",
         "confirm_got_hired": "آیا استخدام شده‌اید؟",
         "confirm_delivered": "آیا تحویل داده‌اید؟",
-        "confirm_received": "آیا تحویل گرفتید؟"
+        "confirm_received": "آیا تحویل گرفتید؟",
+        "not_found": "موردی یافت نشد"
       },
       "my_ads": {
         "all": "همه",

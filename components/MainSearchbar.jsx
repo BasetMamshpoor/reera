@@ -17,6 +17,7 @@ import SelectLocationComponent from "@/components/layout/Searchbar/SelectLocatio
 import {useParams, useRouter} from "next/navigation";
 import {useCategories} from "@/app/[locale]/CategoryProvider";
 import Link from "next/link";
+import { useGlobalSearch } from "@/hooks/useGlobalSearch";
 
 const MainSearchbar = ({}) => {
     const dic = useTranslation();
@@ -34,7 +35,7 @@ const MainSearchbar = ({}) => {
     const hoverTimeoutRef = useRef(null);
     const hasMounted = useRef(false);
     const {locale} = useParams();
-
+    const { search, setSearch } = useGlobalSearch();
     // Handle outside click
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -262,10 +263,12 @@ const MainSearchbar = ({}) => {
 
                 {/* Search + location select */}
                 <div className="w-full flex-4 relative">
-                    <div className="absolute -translate-y-1/2 top-1/2 fill-gray-500 start-4">
+                    <div className="absolute -translate-y-1/2 top-1/2 fill-Gray-500 start-4">
                         <Search/>
                     </div>
                     <Input
+                        value={search}
+                        onChange={(e)=>setSearch(e.target.value)}
                         onFocus={handleSearchFocus}
                         className="flex-4 bg-surface border border-default-divider py-5 placeholder:px-2 px-12"
                         type="search"
@@ -277,7 +280,7 @@ const MainSearchbar = ({}) => {
                     ref={categoryPanelRef}
                     onMouseEnter={handleCategoryPanelHover}
                     onMouseLeave={handleCategoryPanelLeave}
-                    className="category-hover-element absolute start-0 top-12 rtl:text-right h-100 w-full bg-surface z-50 flex rounded-lg shadow-lg hidden"
+                    className="category-hover-element absolute start-0 top-12 rtl:text-right h-100 w-full bg-surface z-50 flex rounded-lg shadow-lg"
                 >
                     <ScrollArea
                         className="w-72 h-full ltr:border-r ltr:border-r-gray-200 rtl:border-r-0 rtl:border-l rtl:border-l-gray-200">

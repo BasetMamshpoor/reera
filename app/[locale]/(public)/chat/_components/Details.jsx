@@ -1,24 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 import ChatListSidebar from "@/app/[locale]/(public)/chat/_components/ChatListSidebar";
 import ChatWindow from "@/app/[locale]/(public)/chat/_components/ChatWindow";
-import { useQuery } from "@tanstack/react-query";
-import { request } from "@/lib/api";
+import {useQuery} from "@tanstack/react-query";
+import {request} from "@/lib/api";
+import {useParams} from "next/navigation";
+
 const Details = () => {
     const [selectedChat, setSelectedChat] = useState(null);
     const [sort, setSort] = useState("no_seen");
-
+    const {locale} = useParams()
     // حالت موبایل: فقط وقتی چت انتخاب شده، چت نشون بده
     const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
 
-    const { data: chatsData, isLoading: chatsLoading } = useQuery({
+    const {data: chatsData, isLoading: chatsLoading} = useQuery({
         queryKey: ["chats", sort],
         queryFn: async () => {
             const res = await request({
                 method: "get",
                 url: "/chat",
-                query: { sort },
+                query: {sort},
             });
             return res.data; // آرایه چت‌ها
         },
@@ -63,7 +65,8 @@ const Details = () => {
                 {selectedChat ? (
                     <>
                         <div className="flex-1">
-                            <ChatWindow  handleBackToList={handleBackToList} selectedChat={selectedChat} />
+                            <ChatWindow locale={locale} handleBackToList={handleBackToList}
+                                        selectedChat={selectedChat}/>
                         </div>
                     </>
                 ) : (

@@ -134,7 +134,7 @@ const DigitalCurrency = () => {
     ];
 
     return (
-        <div className="flex flex-col bg-white lg:p-8 p-4 dark:bg-[#252C36] border border-[#D1D5DB] rounded-xl w-full">
+        <div className="flex flex-col bg-surface lg:p-8 p-4  border border-default-divider rounded-xl w-full">
             <h2 className="text-xl font-bold mb-6 rtl:text-right">
                 {p.add_crypto_addresses}
             </h2>
@@ -215,12 +215,12 @@ const DigitalCurrency = () => {
                                                 }}
                                                 className="p-1 hover:bg-Primary-100"
                                             >
-                                                <CopyIcon/>
+                                                <CopyIcon className="fill-Gray-950"/>
                                             </Button>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-2 rtl:flex-row-reverse">
-                                        <p className="text-sm text-gray-600">{p.address}:</p>
+                                        <p className="text-sm text-Gray-600">{p.address}:</p>
                                         <p className="text-sm font-mono break-all">{address}</p>
                                     </div>
                                 </div>

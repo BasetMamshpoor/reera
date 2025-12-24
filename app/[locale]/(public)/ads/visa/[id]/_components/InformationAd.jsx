@@ -1,20 +1,16 @@
 import React, {useState} from "react";
-
 import Link from "next/link";
-
 import Share from "@/components/Share";
 import Image from "next/image";
 import Star from "@/assets/icons/Star-bold.svg";
 import Location from "@/assets/icons/location.svg";
 import Modal from "@/app/[locale]/(public)/ads/_components/Modal";
-
 import Like from "@/components/Like";
 import User from "@/assets/icons/profile.svg";
 import {useMutation} from "@tanstack/react-query";
 import {request} from "@/lib/api";
 import Spinner from "@/components/Spinner";
 import ModalRequest from "../../../_components/ModalRequest";
-
 import {useParams} from "next/navigation";
 import ModalChatAndCall from "../../../_components/ModalCall";
 
@@ -91,7 +87,7 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
                                 </div>
                             </div>
                             <Link
-                                href={`/${locale}/register-ad/seller/${session?.user?.id}`}
+                                href={`/${locale}/register-ad/seller/${data?.user_id}`}
                                 className="flex items-center justify-center px-4 py-2 w-full border border-[#4299C1] rounded-xl text-sm text-Primary-400 font-bold"
                             >
                                 {a?.view_profile || "View Profile"}
@@ -256,7 +252,7 @@ const InformationAd = ({a, locale, data, isLoading, session}) => {
 
                     {/* Seller Profile Card */}
                     <Link
-                        href={`/${locale}/register-ad/seller/${session?.user?.id}`}
+                        href={`/${locale}/register-ad/seller/${data?.user_id}`}
                         className="flex flex-col gap-6 p-4 border border-default-divider bg-surface rounded-xl hover:scale-95 transition-transform w-full"
                     >
                         <div className="flex items-center justify-between">

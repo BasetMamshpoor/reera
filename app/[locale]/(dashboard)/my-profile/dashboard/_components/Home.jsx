@@ -137,12 +137,12 @@ const Home = ({item, isLoading, refetch, tab, favorite}) => {
                     </div>
                     <div className="flex items-center justify-end w-full">
                         <p className="lg:text-lg text-alpha-100 font-bold">
-                            {Number(item.price).toLocaleString()} {locale === "fa" ? "تومان" : "Toman"}
+                            {Number(item.custom_info?.price).toLocaleString()|| 0} {item.custom_info?.currency}
                         </p>
                     </div>
                 </div>
 
-                {favorite === 1 ? null : (
+                {!!favorite ? null : (
                     <div className="flex items-center justify-center w-full mt-auto gap-4">
                         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                             <DialogTrigger asChild>

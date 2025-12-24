@@ -1,42 +1,45 @@
 "use client";
 
-import React, {useState} from "react";
-import {ScrollArea} from "@/components/ui/scroll-area";
+import React, { useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Accordion,
     AccordionItem,
     AccordionTrigger,
     AccordionContent,
 } from "@/components/ui/accordion";
-import {Checkbox} from "@/components/ui/checkbox";
-import {X} from "lucide-react";
-import {ReusableDialog} from "@/components/modified_shadcn/Dialog";
-import {useCountry} from "@/app/[locale]/CountryProvider";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
+import { Checkbox } from "@/components/ui/checkbox";
+import { X } from "lucide-react";
+import { ReusableDialog } from "@/components/modified_shadcn/Dialog";
+import { useCountry } from "@/app/[locale]/CountryProvider";
+import { useTranslation } from "@/app/[locale]/TranslationContext";
 
 const SelectLocationComponent = () => {
-    const {navbar} = useTranslation()
+    const { navbar } = useTranslation();
     const [isLocationPanelOpen, setIsLocationPanelOpen] = useState(false);
     const {
         countries,
         cities,
         setCountry_id,
         country_id,
-        isLoading, setCities,
-        error, selectedCities,
-    } = useCountry()
+        isLoading,
+        setCities,
+        selectedCities,
+    } = useCountry();
 
+    // Toggle city selection
     const handleCityToggle = (city) => {
-        const alreadySelected = selectedCities.find((c) => c.id === city.id);
-        if (alreadySelected) {
-            setCities((prev) => prev.filter((c) => c.id !== city.id));
-        } else {
-            setCities((prev) => [...prev, city]);
-        }
+        const exists = selectedCities.includes(city.id);
+        setCities(
+            exists
+                ? selectedCities.filter((id) => id !== city.id)
+                : [...selectedCities, city.id]
+        );
     };
 
+    // Remove city from selected
     const handleRemoveTag = (cityId) => {
-        setCities((prev) => prev.filter((c) => c.id !== cityId));
+        setCities(selectedCities.filter((id) => id !== cityId));
     };
 
     const handleLocationChange = () => {
@@ -45,9 +48,7 @@ const SelectLocationComponent = () => {
 
     return (
         <ReusableDialog
-            contentProps={{
-                className: "w-full max-w-160",
-            }}
+            contentProps={{ className: "w-full max-w-160" }}
             open={isLocationPanelOpen}
             setOpen={setIsLocationPanelOpen}
             trigger={
@@ -61,29 +62,32 @@ const SelectLocationComponent = () => {
         >
             <h2 className="text-xl font-bold">{navbar.select_location}</h2>
 
-
             <div className="space-y-4">
-                {/* Selected Cities Tags */}
+                {/* Selected Cities Chips */}
                 {selectedCities.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-2">
-                        {selectedCities.map((city) => (
-                            <div
-                                key={city.id}
-                                className="flex items-center gap-1 bg-Primary-50 text-Primary-800 px-3 py-1 rounded-full text-sm"
-                            >
-                                <span>{city.name}</span>
-                                <button
-                                    onClick={() => handleRemoveTag(city.id)}
-                                    className="hover:text-red-600 transition-colors cursor-pointer"
+                        {selectedCities.map((cityId) => {
+                            const city = cities.find((c) => c.id === cityId);
+                            if (!city) return null;
+                            return (
+                                <div
+                                    key={city.id}
+                                    className="flex items-center gap-1 bg-Primary-50 text-Primary-800 px-3 py-1 rounded-full text-sm"
                                 >
-                                    <X size={14}/>
-                                </button>
-                            </div>
-                        ))}
+                                    <span>{city.name}</span>
+                                    <button
+                                        onClick={() => handleRemoveTag(city.id)}
+                                        className="hover:text-red-600 transition-colors cursor-pointer"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                </div>
+                            );
+                        })}
                     </div>
                 )}
 
-                {/* Scrollable Country + Cities List */}
+                {/* Countries + Cities List */}
                 <ScrollArea className="h-96 rounded-md p-2">
                     <Accordion type="single" collapsible className="w-full">
                         {countries.map((country) => (
@@ -93,7 +97,9 @@ const SelectLocationComponent = () => {
                                 className="border-b"
                             >
                                 <AccordionTrigger
-                                    onClick={() => country_id === country.id ? {} : setCountry_id(country.id)}
+                                    onClick={() =>
+                                        country_id === country.id ? {} : setCountry_id(country.id)
+                                    }
                                     className="font-bold py-4 flex items-center justify-between"
                                 >
                                     {country.name}
@@ -110,9 +116,7 @@ const SelectLocationComponent = () => {
                                                         className="flex items-center gap-2 cursor-pointer py-2 border-b border-b-Primary-100"
                                                     >
                                                         <Checkbox
-                                                            checked={
-                                                                !!selectedCities.find((c) => c.id === city.id)
-                                                            }
+                                                            checked={selectedCities.includes(city.id)}
                                                             onCheckedChange={() => handleCityToggle(city)}
                                                         />
                                                         <span>{city.name}</span>
@@ -131,6 +135,7 @@ const SelectLocationComponent = () => {
                     </Accordion>
                 </ScrollArea>
 
+                {/* Actions */}
                 <div className="flex flex-row justify-end items-center gap-2">
                     <button
                         onClick={handleLocationChange}

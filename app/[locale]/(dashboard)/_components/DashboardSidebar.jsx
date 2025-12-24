@@ -19,8 +19,9 @@ import LogUot from "@/assets/icons/Logout.svg";
 import Modal from "@/app/[locale]/(dashboard)/my-profile/_components/ModalCoinIncrease";
 import Profile from "@/public/images/city-profile.jpg";
 import List from "@/assets/icons/Card Recive.svg";
-import {useParams, usePathname} from "next/navigation";
+import {useParams, usePathname, useRouter} from "next/navigation";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
+import {signOut} from "next-auth/react";
 
 const SidebarLink = ({href, icon: Icon, label}) => {
     const dic = useTranslation();
@@ -60,6 +61,18 @@ const DashboardSidebar = () => {
     const {locale} = useParams();
     const p = dic.dashboard.myprofile.sidebar;
 
+    const router = useRouter();
+    const handleLogout = async () => {
+        try {
+            await signOut({
+                redirect: true,
+                callbackUrl: `/${locale}`,
+            });
+            router.push(`/${locale}`);
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
+    };
     return (
         <div
             className="flex flex-col gap-8 border border-[#D1D5DB] dark:border-[#374151] bg-[#F9FAFB] dark:bg-[#14181D] rounded-2xl [box-shadow:0_2px_32px_0_rgba(28,_28,_28,_0.06)] w-full max-w-80 h-fit sticky top-4">
@@ -112,11 +125,11 @@ const DashboardSidebar = () => {
                     icon={User}
                     label={p.my_ads}
                 />
-                <SidebarLink
-                    href={`/${locale}/my-profile/requests`}
-                    icon={Document}
-                    label={p.requests}
-                />
+                {/*<SidebarLink*/}
+                {/*    href={`/${locale}/my-profile/requests`}*/}
+                {/*    icon={Document}*/}
+                {/*    label={p.requests}*/}
+                {/*/>*/}
                 <SidebarLink
                     href={`/${locale}/my-profile/transaction-history`}
                     icon={Transaction}
@@ -148,9 +161,9 @@ const DashboardSidebar = () => {
                     label={p.digital_currency}
                 />
             </div>
-            <Link
-                href="/"
-                className="flex gap-2 hover:bg-white border border-t-[#D1D5DB] dark:border-t-[#374151] dark:hover:bg-[#252C36] py-4 px-4 w-full"
+            <button
+                onClick={handleLogout}
+                className="cursor-pointer flex gap-2 hover:bg-white border border-t-[#D1D5DB] dark:border-t-[#374151] dark:hover:bg-[#252C36] py-4 px-4 w-full"
             >
                 <LogUot
                     className={`fill-[#EF4444] w-5 h-5 ${
@@ -160,7 +173,7 @@ const DashboardSidebar = () => {
                 <p className="text-[#EF4444] text-sm lg:text-base font-bold pt-1">
                     {p.exit}
                 </p>
-            </Link>
+            </button>
         </div>
     );
 };
