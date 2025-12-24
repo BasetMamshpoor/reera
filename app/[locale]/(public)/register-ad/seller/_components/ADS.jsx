@@ -41,7 +41,7 @@ const Ads = ({id, locale}) => {
                         <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
                 )}
             </div>
-            <AdvPagination setPage={setPage} totalPages={data?.last_page} page={page}/>
+            {/*<AdvPagination setPage={setPage} totalPages={data?.last_page} page={page}/>*/}
         </>
     );
 };

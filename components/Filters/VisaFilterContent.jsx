@@ -47,10 +47,11 @@ const VisaFilterContent = ({
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
+
         <div className="flex flex-col gap-4 p-6 lg:p-0">
             {/* Categories */}
             <div className="flex flex-col gap-3">
-                <p className="rtl:text-right text-Gray-700 font-medium">{s.categories_of}</p>
+                <p className="rtl:text-right text-Gray-700 font-medium">نوع ویزا:</p>
                 <div className="border border-Gray-200 rounded-lg p-3 bg-gray-50/50 max-h-80 overflow-y-auto">
                     {categoryTree?.map((cat) => (
                         <TreeCategory

@@ -12,7 +12,7 @@ import Spinner from "@/components/Spinner"
 const Details = () => {
     const dic = useTranslation();
     const a = dic.public.profile.favorite_ads;
-
+    const d = dic.public.profile.dashboard;
     const {data, isLoading, refetch,} = useQuery({
         queryKey: ['favorite-ad'],
         queryFn: async () => {
@@ -34,16 +34,19 @@ const Details = () => {
                         {a.favorite_ads}
                     </p>
                 </div>
-                {isLoading ? <div className="flex items-center justify-center w-full py-6"><Spinner/></div> : !isEmpty ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:p-6 p-4 gap-6">
-                        <JobSearch favorite={favorite} data={data} isLoading={isLoading} refetch={refetch} d={a}/>
-                        <Home favorite={favorite} data={data} isLoading={isLoading} refetch={refetch}/>
-                    </div>
-                ) : (
-                    <div className="flex items-center justify-center w-full">
-                        <Null a={a}/>
-                    </div>
-                )}
+                {isLoading ?
+                    <div className="flex items-center justify-center w-full py-6"><Spinner/></div> : !isEmpty ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 p-4 lg:p-6">
+                            {data?.data?.map((item) => (item.custom_info?.type === "recruitment" ?
+                                    <JobSearch favorite={favorite} item={item} isLoading={isLoading} refetch={refetch} d={d}/> :
+                                    <Home favorite={favorite} item={item} isLoading={isLoading} refetch={refetch}/>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center w-full">
+                            <Null a={a}/>
+                        </div>
+                    )}
             </div>
         </>
     );

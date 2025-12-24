@@ -333,7 +333,8 @@
     "legal_adviser": "Immigration consultant",
     "transportation": "Transportation",
     "visa": "Visa",
-    "social": "Social"
+    "social": "Social",
+    "coming_soon" : "Coming Soon"
   },
   "ads": {
     "view_all": "View All",
@@ -607,7 +608,8 @@
         "confirm_hired_someone": "Have you hired someone?",
         "confirm_got_hired": "Have you been hired?",
         "confirm_delivered": "Have you delivered?",
-        "confirm_received": "Have you received?"
+        "confirm_received": "Have you received?",
+        "not_found": "No items found"
       },
       "my_ads": {
         "all": "All",

@@ -1,9 +1,6 @@
 "use client";
 import React, {useState, useEffect, useRef, useCallback} from "react";
-import Image from "next/image";
-import Home from "@/assets/icons/home-hashtag.svg";
-import Location from "@/assets/icons/location.svg";
-import GreenTick from "@/assets/icons/tick-circle.svg";
+
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import Link from "next/link";
 import {useParams, useRouter, useSearchParams} from "next/navigation";
@@ -30,6 +27,10 @@ const Advertisements = ({isOnProfile = false}) => {
     const [showPagination, setShowPagination] = useState(false);
     const [currentPage, setCurrentPage] = useState(initialPage);
 
+    const search = searchParams.get("search") || "";
+    const city_id = searchParams.get("city_id") || "";
+
+
     // ---------- Infinite Query (no setState inside getNextPageParam) ----------
     const {
         data,
@@ -39,11 +40,12 @@ const Advertisements = ({isOnProfile = false}) => {
         isLoading,
         error,
     } = useInfiniteQuery({
-        queryKey: ["all-ads-infinite"],
+        queryKey: ["all-ads-infinite", search, city_id],
         queryFn: async ({pageParam = 1}) => {
             const response = await request({
                 url: `/ads?page=${pageParam}`,
                 method: "get",
+                query: {search, city_id},
             });
             // make sure response shape matches what the component expects:
             // { data: [...], last_page: X, total: Y }
@@ -262,11 +264,11 @@ const Advertisements = ({isOnProfile = false}) => {
                     isOnProfile ? "lg:grid-cols-3" : "lg:grid-cols-4"
                 } lg:gap-x-6`}
             >
-                {adsToShow?.map((ad) =>
+                {!!adsToShow.length ? adsToShow?.map((ad) =>
                     ad?.root_category_slug === "recruitment" ?
                         <JobSearch key={ad.id} item={ad} link={`${locale}/ads`} d={d}/> :
                         <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
-                )}
+                ) : <p className="col-span-4 text-center">{d.not_found}!</p>}
             </div>
 
             {!showPagination && (

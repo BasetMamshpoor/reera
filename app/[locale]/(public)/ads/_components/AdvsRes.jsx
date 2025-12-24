@@ -28,6 +28,9 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
     const dic = useTranslation();
     const a = dic.all_ads.sidebar;
     const d = dic.public.profile.dashboard;
+    const search = searchParams.get("search" || "");
+    const city_id = searchParams.get("city_id") || "";
+
     // خواندن همه پارامترهای URL
     const queryFromURL = useMemo(() => {
         const params = {};
@@ -44,12 +47,12 @@ const AdvsRes = ({page, link, category_slug, category_id}) => {
     queryFromURL.category_id = category_id;
 
     const {data, isLoading} = useQuery({
-                queryKey: ["ads", queryFromURL, page, category_id, category_slug, sort],
+                queryKey: ["ads", queryFromURL, page, category_id, category_slug, sort, search,city_id],
                 queryFn: async () =>
                     await request({
                         url: "/ads",
                         method: "get",
-                        query: queryFromURL, page, category_id, category_slug, sort,
+                        query: queryFromURL, page, category_id, category_slug, sort, search,city_id
                     }),
             }
         )

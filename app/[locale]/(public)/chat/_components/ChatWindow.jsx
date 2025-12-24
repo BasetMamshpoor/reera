@@ -12,7 +12,7 @@ import {toast} from "sonner";
 import Paperclip from "@/assets/icons/paperclip.svg"
 import Arrow from "@/assets/icons/arrow-left.svg"
 import {Mic} from "lucide-react";
-import Trash from "@/assets/icons/trash.svg";
+import Trash from  "@/assets/icons/Trash.svg";
 import {
     DropdownMenu,
     DropdownMenuContent, DropdownMenuItem,
@@ -242,7 +242,7 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                             <Arrow className="w-6 h-6 rtl:rotate-180 fill-Primary-600 cursor-pointer"/>
                         </button>
                         <Link
-                            href={`/${locale}/register-ad/seller/${chatDetails?.id}`}
+                            href={`/${locale}/register-ad/seller/${chatDetails?.user_id}`}
                             className="w-14 h-14 bg-Surface-2 rounded-full overflow-hidden flex items-center justify-center"
                         >
                             {!!chatDetails?.profile ? (
@@ -353,7 +353,7 @@ const ChatWindow = ({selectedChat, locale, handleBackToList}) => {
                                 {/* آواتار طرف مقابل */}
                                 {!msg.is_mine && (
                                     <Link
-                                        href={`/${locale}/register-ad/seller/${chatDetails?.id}`}
+                                        href={`/${locale}/register-ad/seller/${chatDetails?.user_id}`}
                                         className="w-14 h-14 shadow-sm bg-surface rounded-full overflow-hidden flex items-center justify-center"
                                     >
                                         {!!chatDetails?.profile ? (

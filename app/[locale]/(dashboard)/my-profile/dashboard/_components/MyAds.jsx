@@ -83,7 +83,7 @@ const MyAds = ({data, isLoading, selected, setSelected, d, refetch, tab}) => {
                 </Select>
                 {!isEmpty ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {data?.data?.map((item) => (item.custom_info.type === "recruitment" ?
+                        {data?.data?.map((item) => (item.custom_info?.type === "recruitment" ?
                                 <JobSearch item={item} tab={tab} isLoading={isLoading} refetch={refetch} d={d}/> :
                                 <Home item={item} tab={tab} isLoading={isLoading} refetch={refetch}/>
                         ))}

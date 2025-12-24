@@ -4,25 +4,21 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import {Input} from "@/components/ui/input"
-import {Label} from "@/components/ui/label"
+
 import Plus from "@/assets/icons/add.svg"
 import {
     Select,
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import PLus from "@/assets/icons/add.svg";
 
 
 const Modal = ({a}) => {
@@ -42,9 +38,9 @@ const Modal = ({a}) => {
                             <DialogTitle>{a.new_ticket}</DialogTitle>
                         </DialogHeader>
                         <div className="flex flex-col gap-6 py-10">
-                            <Select >
+                            <Select>
                                 <SelectTrigger className="border border-default-divider rounded-xl w-full">
-                                    <SelectValue placeholder={a.related_unit} />
+                                    <SelectValue placeholder={a.related_unit}/>
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
@@ -56,9 +52,9 @@ const Modal = ({a}) => {
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
-                            <Select >
+                            <Select>
                                 <SelectTrigger className="border border-default-divider rounded-xl w-full">
-                                    <SelectValue placeholder={a.request_title} />
+                                    <SelectValue placeholder={a.request_title}/>
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
@@ -70,14 +66,19 @@ const Modal = ({a}) => {
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
-                            <textarea placeholder={a.description} className="border border-default-divider rounded-xl w-full py-2 px-4"/>
+                            <textarea placeholder={a.description}
+                                      className="border border-default-divider rounded-xl w-full py-2 px-4"/>
                         </div>
                         <DialogFooter>
                             <div className="flex items-center gap-6 w-full ">
-                                <button className="flex items-center justify-center gap-1 px-6 py-2 border border-warning-main text-warning-main rounded-xl w-full text-base font-bold">
-                                    <p className="pt-1.5">{a.cancel}</p>
-                                </button>
-                                <div className="flex items-center justify-center gap-1 px-6 py-2 bg-Primary-400 border rounded-xl w-full text-white text-base font-bold">
+                                <DialogClose asChild>
+                                    <button
+                                        className="flex cursor-pointer items-center justify-center gap-1 px-6 py-2 border border-warning-main text-warning-main rounded-xl w-full text-base font-bold">
+                                        <p className="pt-1.5">{a.cancel}</p>
+                                    </button>
+                                </DialogClose>
+                                <div
+                                    className="flex cursor-pointer items-center justify-center gap-1 px-6 py-2 bg-Primary-400 border rounded-xl w-full text-white text-base font-bold">
                                     <p className="pt-1.5">{a.send_ticket}</p>
                                 </div>
                             </div>

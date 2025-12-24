@@ -70,7 +70,7 @@ const JobSearch = ({item, d, link, isRow}) => {
                             <Cut className="!w-full !h-full fill-white dark:fill-surface border-0"/>
                         </div>
                     </div>
-                    <div className=" relative z-10 flex flex-col px-4 pb-4 pt-0 gap-4 w-full">
+                    <div className=" relative z-10 flex flex-col px-4 pb-5 pt-0 gap-4 w-full h-full">
                         <div className="flex gap-4 px-4">
                             <Image
                                 unoptimized
@@ -99,7 +99,7 @@ const JobSearch = ({item, d, link, isRow}) => {
                                 <p className="text-sm text-Primary-800 font-bold">{item.custom_info?.type}</p>
                             </div>
                         </div>
-                        <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center justify-between w-full mt-auto">
                             <div className="flex items-center gap-2">
                                 <Location className="!w-4 lg:!w-5 !h-4 lg:!h-5 fill-Gray-700 "/>
                                 <p className="text-sm text-Gray-700 pt-1">{item.location}</p>
