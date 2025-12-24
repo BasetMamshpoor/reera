@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Lines from "@/public/images/Lines.png";
 import Profile_circle from "@/assets/icons/profile.svg";
 import Arrow from "@/assets/icons/arrow-down.svg";
 const ChatSidebar = ({ a }) => {
@@ -13,7 +12,7 @@ const ChatSidebar = ({ a }) => {
         <div className="relative hidden lg:flex flex-col items-center gap-4 lg:justify-between w-full h-full p-4 lg:p-6 bg-Primary-100 rounded-xl">
           <div className="absolute top-0 bottom-0 right-0 left-0">
             <Image
-              src={Lines}
+              src={"/images/Lines.png"}
               alt="lines"
               width={100}
               height={100}
@@ -110,7 +109,7 @@ const ChatSidebar = ({ a }) => {
         <div className="relative lg:hidden flex flex-col items-center gap-4 lg:justify-between w-full h-full p-4 lg:p-6 bg-Primary-100 rounded-xl">
           <div className="absolute top-0 bottom-0 right-0 left-0">
             <Image
-              src={Lines}
+              src={"/images/Lines.png"}
               alt="lines"
               width={100}
               height={100}

@@ -10,14 +10,12 @@ import Arrow from "@/assets/icons/arrow-left.svg";
 import DigitalCurrency from "@/assets/icons/coin.svg";
 import Layer from "@/assets/icons/Layer.svg";
 import User from "@/assets/icons/profile.svg";
-import Document from "@/assets/icons/DocumentText.svg";
 import Transaction from "@/assets/icons/TransactionMinus.svg";
 import Star from "@/assets/icons/star.svg";
 import Heart from "@/assets/icons/heart.svg";
 import Tag from "@/assets/icons/Tag.svg";
 import LogUot from "@/assets/icons/Logout.svg";
 import Modal from "@/app/[locale]/(dashboard)/my-profile/_components/ModalCoinIncrease";
-import Profile from "@/public/images/city-profile.jpg";
 import List from "@/assets/icons/Card Recive.svg";
 import {useParams, usePathname, useRouter} from "next/navigation";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
@@ -79,7 +77,7 @@ const DashboardSidebar = () => {
             {/* Rest of the component remains the same */}
             <div className="relative w-full rounded-t-2xl overflow-hidden">
                 <Image
-                    src={Profile}
+                    src={"/images/city-profile.jpg"}
                     alt="image"
                     width={100}
                     height={100}

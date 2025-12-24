@@ -1,15 +1,8 @@
 "use client";
 import React from "react";
-import Prof from "@/public/images/city-profile.jpg";
 import Image from "next/image";
 import Cut from "@/assets/images/wave-haikei.svg";
-import {Badge} from "@/components/ui/badge";
-import Hashtag from "@/assets/icons/home-hashtag.svg";
 import Location from "@/assets/icons/location.svg";
-
-import Tick from "@/assets/icons/tick-circle.svg";
-import Clock from "@/assets/icons/clock.svg";
-import Snapp from "@/public/images/Buttoncontainer.png";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {
     Dialog, DialogClose,
