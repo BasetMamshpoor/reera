@@ -4,11 +4,16 @@
       "login_signup": "Login & Sign Up",
       "enter_your_mobile_number": "Enter Your Mobile Number",
       "send_verification_code": "Send Verification Code",
-      "continue_with_google": "Continue with Google",
       "continue_with_twitter": "Continue with Twitter",
       "enter_code_sent_to_number": "Enter Code Sent to your Number",
       "edit_phone": "Edit your phone number",
-      "login": "Login"
+      "login": "Login",
+      "login_with": "Login with Google or Email",
+      "continue_with_google": "Continue with Google",
+      "send_otp": "Send OTP",
+      "or": "OR",
+      "enter_6_digit_code": "Enter the 6-digit code sent to your email",
+      "email": "Email"
     }
   },
   "register_ad": {

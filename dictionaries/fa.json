@@ -4,11 +4,16 @@
       "login_signup": "ورود و ثبت‌نام",
       "enter_your_mobile_number": "شماره موبایل خود را وارد کنید",
       "send_verification_code": "ارسال کد تأیید",
-      "continue_with_google": "ادامه با گوگل",
       "continue_with_twitter": "ادامه با توییتر",
       "enter_code_sent_to_number": "کد ارسال‌شده به شماره را وارد کنید",
       "edit_phone": "ویرایش شماره تلفن",
-      "login": "ورود"
+      "login": "ورود",
+      "login_with": "ورود با گوگل یا ایمیل",
+      "continue_with_google": "ادامه با گوگل",
+      "send_otp": "ارسال کد یکبار مصرف",
+      "or": "یا",
+      "enter_6_digit_code": "کد ۶ رقمی ارسال شده به ایمیل خود را وارد کنید",
+      "email": "ایمیل"
     }
   },
   "register_ad": {

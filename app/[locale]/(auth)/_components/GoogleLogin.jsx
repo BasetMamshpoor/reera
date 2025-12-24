@@ -3,78 +3,81 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Google from "@/assets/icons/Google Icon.svg";
-import { useTranslation } from "../../TranslationContext";
+import Otp1 from "./Otp1";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
 
 const Login = () => {
     const dic = useTranslation();
     const p = dic.auth.login;
 
+    const [step, setStep] = useState("email"); // email -> otp
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
-    const handleEmailLogin = async (e) => {
+    const handleSendOtp = async (e) => {
         e.preventDefault();
+        if (!email) return;
 
-        await signIn("credentials", {
-            email,
-            password,
-            callbackUrl: "/en",
-        });
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/send-otp`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setStep("otp");
+            } else {
+                alert(data?.message || "Failed to send OTP");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error sending OTP");
+        }
     };
 
+    if (step === "otp") {
+        return <Otp1 p={p} email={email} />;
+    }
+
     return (
-        <div className="bg-surface flex flex-col gap-6 w-full max-w-2xl p-10 rounded-xl border border-default-divider">
+        <div className="flex flex-col gap-6 w-full max-w-md p-6 bg-surface rounded-xl border">
+            <h2 className="text-2xl font-semibold">{p.login_signup}</h2>
+            <p className="text-Gray-600">{p.login_with}</p>
 
-            <div>
-                <h2 className="font-bold text-2xl">{p.login_signup}</h2>
-                <p className="text-Gray-600">
-                    Login with Google or Email
-                </p>
-            </div>
-
-            {/* Google Login */}
             <button
-                type="button"
                 onClick={() => signIn("google")}
-                className="flex cursor-pointer items-center gap-2 border p-3 rounded-xl justify-center hover:scale-[0.99]"
+                className="flex items-center gap-2 border p-3 rounded-xl justify-center hover:scale-[0.99]"
             >
                 <Google />
                 {p.continue_with_google}
             </button>
 
-            {/* Divider */}
             <div className="flex items-center gap-4">
-                <div className="flex-1 h-px bg-default-divider" />
-                <span className="text-sm text-Gray-400">OR</span>
-                <div className="flex-1 h-px bg-default-divider" />
+                <div className="flex-1 h-px bg-Gray-300" />
+                <span>OR</span>
+                <div className="flex-1 h-px bg-Gray-300" />
             </div>
 
-            {/* Email Login */}
-            <form onSubmit={handleEmailLogin} className="flex flex-col gap-4">
-                <input
+            <form onSubmit={handleSendOtp} className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3 w-full">
+                  <p className="text-Gray-950 px-4">{p.email}:</p>
+                <Input
                     type="email"
-                    placeholder="Email"
-                    className="border rounded-xl p-3"
+                    placeholder="example@gmail.com"
+                    className="border rounded-xl p-6"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="border rounded-xl p-3"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-
-                <button
+                </div>
+                <Button
                     type="submit"
-                    className="bg-Primary-400 text-white rounded-xl py-3 font-semibold"
+                    className=" bg-Primary-400 hover:bg-Primary-400 text-white rounded-xl py-3 font-semibold"
                 >
-                    {p.login}
-                </button>
+                    {p.send_otp}
+                </Button>
             </form>
         </div>
     );
