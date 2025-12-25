@@ -19,6 +19,7 @@ export default async function Layout({children, params}) {
             lang={locale}
             dir={locale === "en" ? "ltr" : "rtl"}
         >
+
         <body className="font-farsi-primary">
         <ThemeProvider
             attribute="class"

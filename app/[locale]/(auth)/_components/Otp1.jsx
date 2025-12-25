@@ -18,7 +18,7 @@ const Otp1 = ({ email, p }) => {
 
     const { locale } = useParams();
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || `/${locale}`;
+    const callbackUrl = searchParams.get("callbackUrl") || `https://rira24.com/${locale}`;
 
     const loginMutation = useMutation({
         mutationFn: async (otp) =>
