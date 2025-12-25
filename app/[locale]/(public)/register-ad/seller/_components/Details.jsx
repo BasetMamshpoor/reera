@@ -1,15 +1,7 @@
 "use client"
 import React from 'react';
 import ArrowRight from "@/assets/icons/arrow-right.svg";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList, BreadcrumbPage,
-    BreadcrumbSeparator
-} from "@/components/ui/breadcrumb";
 import Image from "next/image";
-import ImageOverlay from "@/assets/images/wave-haikei.svg";
 import Star from "@/assets/icons/Star-bold.svg";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import StarsTab from "@/app/[locale]/(public)/register-ad/seller/_components/StarsTab";
@@ -20,10 +12,12 @@ import Comments from "@/components/Comments";
 import ADS from "./ADS";
 import Spinner from "@/components/Spinner";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
+import User from "@/assets/icons/profile.svg"
 
 const Details = () => {
     const dic = useTranslation();
     const a = dic?.public?.register_ad?.seller || {};
+    const d = dic.public.profile.dashboard;
 
     const {id} = useParams();
     const {locale} = useParams()
@@ -46,7 +40,6 @@ const Details = () => {
         </div>;
     }
     const user_show = 1
-
     return (
         <>
             <div className={`flex flex-col gap-4 mt-4 w-full `}>
@@ -94,23 +87,26 @@ const Details = () => {
                             <div className="flex items-center flex-col gap-4">
                                 <div
                                     className="bg-surface p-2 rounded-full overflow-hidden w-16 h-16 lg:!w-24 lg:!h-24 border-2 border-surface shadow-sm">
-                                    <Image
-                                        src={i.profile}
-                                        unoptimized
-                                        className="w-full h-full rounded-full"
-                                        width={100}
-                                        height={100}
-                                        alt="image"
-                                    />
+                                    {!!i.profile ?
+                                        <Image
+                                            src={i.profile}
+                                            unoptimized
+                                            className="w-full h-full rounded-full"
+                                            width={100}
+                                            height={100}
+                                            alt="image"
+                                        /> :
+                                        <User className="w-14 h-14 lg:!w-20 lg:!h-20 fill-Gray-950"/>
+                                    }
                                 </div>
                                 <div className="flex items-center gap-4 lg:gap-6">
-                                    <h2 className="text-lg lg:text-2xl font-medium">{i.name}</h2>
+                                    <h2 className="text-lg lg:text-2xl font-medium">{!!i.name ? i.name : d.anonymous}</h2>
                                     {/*<div className="bg-[#DCFCE8] rounded-lg px-2 flex flex-row py-2 gap-2">*/}
                                     {/*    <GreenTick className="fill-[#16A34A] !w-4 !h-4 lg:!w-5 lg:!h-5"/>*/}
                                     {/*    <h2 className="lg:text-base text-sm font-medium text-[#16A34A]">تایید شده</h2>*/}
                                     {/*</div>*/}
                                     <div className="flex gap-2 items-center">
-                                        <span className="pt-2">{i.ratings}</span>
+                                        <span className="pt-2">{i.ratings || 0}</span>
                                         <Star className="fill-warning-main"/>
                                     </div>
                                 </div>

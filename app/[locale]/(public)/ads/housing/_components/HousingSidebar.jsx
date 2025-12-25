@@ -8,9 +8,8 @@ import RecMobileFilter from "./RecMobileFilter";
 import HousingFilterContent from "@/components/Filters/HousingFilterContent";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 
-const HousingSidebar = () => {
+const HousingSidebar = ({s}) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
 
     const {
         filters,
@@ -51,22 +50,22 @@ const HousingSidebar = () => {
             <div className="hidden lg:block border-2 rounded-xl p-6 h-fit">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex gap-2 items-center">
-                        <Filter/>
+                        <Filter className="fill-Gray-950"/>
                         <span>{s.filter}</span>
                     </div>
                     <button
                         className="flex gap-2 items-center text-error-main cursor-pointer"
                         onClick={clearAllFilters}
                     >
-                        <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                        <span className="font-[600]">{s.clear_all}</span>
                         <CloseSquare className="fill-error-main rotate-45"/>
                     </button>
                 </div>
-                <HousingFilterContent {...sharedProps} clearAllFilters={clearAllFilters}/>
+                <HousingFilterContent s={s} {...sharedProps} clearAllFilters={clearAllFilters}/>
             </div>
 
             <div ref={scrollRef} className="lg:hidden flex gap-4 overflow-x-auto scrollbar-hide px-4 pb-4 h-fit">
-                <RecMobileFilter {...sharedProps} />
+                <RecMobileFilter s={s} {...sharedProps} />
                 {activeFilters.map((f) => (
                     <button
                         key={f.key}

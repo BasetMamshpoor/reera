@@ -2,8 +2,7 @@ import React from "react";
 import {QueryClient, dehydrate} from "@tanstack/react-query";
 import Providers from "../../../Providers";
 import {request} from "@/lib/api";
-import ServicesSidebar from "@/app/[locale]/(public)/ads/services/_components/ServicesSidebar";
-import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
+import Details from "./_components/Details";
 
 export const metadata = {
     title: `Reera | Services Ads`,
@@ -36,18 +35,10 @@ const Page = async ({searchParams, params}) => {
     });
     return (
         <>
-            <div className="w-full flex flex-col gap-16">
-                <div className="flex items-center flex-col gap-1 ">
-                    <p className="text-xl font-bold text-Primary-950 ">آگهی‌های</p>
-                    <p className="text-4xl text-Primary-400 font-bold">خدمات</p>
-                </div>
-                <div className="flex gap-6 lg:flex-row flex-col">
-                    <Providers dehydratedState={dehydrate(queryClient)}>
-                        <ServicesSidebar/>
-                        <AdvsRes link={`/${locale}/ads`} category_id={categoryId} category_slug={"services"}
-                                 page={page}/>
-                    </Providers>
-                </div>
+            <div className="w-full">
+                <Providers dehydratedState={dehydrate(queryClient)}>
+                    <Details page={page} locale={locale} />
+                </Providers>
             </div>
         </>
     );

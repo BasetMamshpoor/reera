@@ -1,9 +1,8 @@
 import React from "react";
-import {QueryClient, dehydrate} from "@tanstack/react-query";
-import Providers from "../../../Providers";
+import {dehydrate, QueryClient} from "@tanstack/react-query";
 import {request} from "@/lib/api";
-import AllAdsSidebar from "@/app/[locale]/(public)/ads/all-ads/_components/AllAdsSidebar";
-import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
+import Details from "./_components/Details";
+import Providers from "@/app/[locale]/Providers";
 
 export const metadata = {
     title: `Reera | All Ads`,
@@ -32,17 +31,10 @@ const Page = async ({searchParams, params}) => {
 
     return (
         <>
-            <div className="w-full flex flex-col gap-16">
-                <div className="flex items-center flex-col gap-1 ">
-                    <p className="text-xl font-bold text-Primary-950 ">آگهی‌های</p>
-                    <p className="text-4xl text-Primary-400 font-bold">ریـــــرا</p>
-                </div>
-                <div className="flex gap-6 lg:flex-row flex-col">
-                    <Providers dehydratedState={dehydrate(queryClient)}>
-                        <AllAdsSidebar/>
-                        <AdvsRes link={`/${locale}/ads`} page={page}/>
-                    </Providers>
-                </div>
+            <div className="w-full">
+                <Providers dehydratedState={dehydrate(queryClient)}>
+                    <Details page={page} locale={locale} />
+                </Providers>
             </div>
         </>
     );

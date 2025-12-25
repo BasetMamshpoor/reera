@@ -9,9 +9,7 @@ import AllAdsFilterContent from "@/components/Filters/AllAdsFilterContent";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 import Icon from "@/assets/icons/add.svg";
 
-const AllAdsSidebar = () => {
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
+const AllAdsSidebar = ({s}) => {
 
     const {
         filters,
@@ -42,18 +40,18 @@ const AllAdsSidebar = () => {
                 <div className="flex flex-col gap-4 p-6">
                     <div className="flex justify-between items-center">
                         <div className="flex gap-2 items-center">
-                            <Filter className="dark:fill-Gray-50"/>
+                            <Filter className="fill-Gray-950"/>
                             <span>{s.filter}</span>
                         </div>
                         <button
                             className="flex gap-2 items-center text-error-main cursor-pointer"
                             onClick={clearAllFilters}
                         >
-                            <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                            <span className="font-semibold pt-1">{s.clear_all}</span>
                             <CloseSquare className="fill-error-main"/>
                         </button>
                     </div>
-                    <AllAdsFilterContent {...sharedProps} />
+                    <AllAdsFilterContent s={s} {...sharedProps} />
                 </div>
             </div>
 
@@ -61,7 +59,7 @@ const AllAdsSidebar = () => {
                 ref={scrollRef}
                 className="lg:hidden flex items-center gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-pointer"
             >
-                <RecMobileFilter {...sharedProps} />
+                <RecMobileFilter s={s} {...sharedProps} />
                 <div className="flex items-center gap-4">
                     {activeFilters.map((f) => (
                         <button

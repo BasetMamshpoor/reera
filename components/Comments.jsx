@@ -15,10 +15,12 @@ import Spinner from "@/components/Spinner";
 import User from "@/assets/icons/profile.svg";
 import ReplayIcon from "@/assets/icons/reply.svg";
 import {useSession} from "next-auth/react";
+import {log} from "next/dist/server/typescript/utils";
 
 const Comment = ({id, url, user_show}) => {
     const dic = useTranslation();
     const a = dic.public.profile.user_feedback;
+    const d = dic.public.profile.dashboard;
 
     const [showAll, setShowAll] = useState(false);
     const [showReplies, setShowReplies] = useState({});
@@ -37,7 +39,6 @@ const Comment = ({id, url, user_show}) => {
 
     const comments = data?.data || [];
     const visibleComments = showAll ? comments : comments.slice(0, 3);
-
     return (
         <div className="flex flex-col border border-Gray-200 rounded-xl overflow-hidden bg-Surface-2">
             <div className="flex items-center justify-between px-4 lg:px-8 py-4 border-b border-Gray-200">
@@ -81,12 +82,13 @@ const Comment = ({id, url, user_show}) => {
                                     <div className="flex items-center w-full gap-4 justify-between">
                                         <div className="flex flex-col gap-4">
                                             <span className="text-base text-Primary-950 font-medium">
-                                                {item.user?.name}
+                                                {!!item.user?.name?.trim(" ") ? item.user?.name : d.anonymous}
                                             </span>
                                         </div>
 
                                         <div className="flex flex-col gap-4 lg:flex-row rtl:flex-row-reverse">
-                                            <div className="flex flex-row rtl:flex-row-reverse items-center gap-4 px-2 ">
+                                            <div
+                                                className="flex flex-row rtl:flex-row-reverse items-center gap-4 px-2 ">
                                                 {!!session?.accessToken && <Reply refetch={refetch} id={item.id}/>}
                                                 <div className="flex items-center gap-2">
                                                     <Like
@@ -150,7 +152,7 @@ const Comment = ({id, url, user_show}) => {
                                                 <div className="flex flex-col gap-2 w-full">
                                                     <div className="flex items-center justify-between">
                                                         <span className="text-sm font-medium text-Primary-950">
-                                                            {reply.user?.name}
+                                                            {!!reply.user?.name?.trim(" ") ? reply.user?.name : d.anonymous}
                                                         </span>
                                                         <span className="text-xs text-Gray-600">
                                                             {reply.created_at}

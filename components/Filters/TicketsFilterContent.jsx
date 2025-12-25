@@ -39,10 +39,9 @@ const TicketsFilterContent = ({
                                   filters,
                                   handleChange,
                                   priceRangeFromAPI,
-                                  allData
+                                  allData,s
                               }) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     const d = dic.public.register_ad.trip;
 
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
@@ -58,21 +57,21 @@ const TicketsFilterContent = ({
                         <TreeCategory
                             key={cat.id}
                             category={cat}
-                            selectedCategory={filters.category_id}
+                            selectedCategory={filters.ticket_type_id}
                             onCategorySelect={(id) => handleChange("ticket_type_id", id)}
                         />
                     ))}
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{d.currency || "ارز"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.currency}</Label>
                 <Select
                     value={filters.currency_id}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"} />
+                        <SelectValue placeholder={s.select_currency} />
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
@@ -84,7 +83,7 @@ const TicketsFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
                 <Label>{s.price_range || "Price Range"}</Label>
                 <Slider
                     disabled={!filters.currency_id}

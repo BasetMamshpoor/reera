@@ -35,11 +35,11 @@ const Ads = ({id, locale}) => {
             <div
                 className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10 mt-10 overflow-hidden sm:grid-cols-2 sm:gap-x-4 px-6 xl:px-0 lg:gap-x-6`}
             >
-                {data?.data?.map((ad) =>
+                {!!i?.length? i.map((ad) =>
                     ad?.root_category_slug === "recruitment" ?
                         <JobSearch key={ad.id} item={ad} link={`${locale}/ads`} d={d}/> :
                         <Card key={ad.id} i={ad} link={`/${locale}/ads`}/>
-                )}
+                ):<p className="text-center">{d.not_found}</p>}
             </div>
             {/*<AdvPagination setPage={setPage} totalPages={data?.last_page} page={page}/>*/}
         </>

@@ -22,11 +22,10 @@ const RecMobileFilter = ({
                              languages,
                              workType,
                              degree,
-                             clearAllFilters
+                             clearAllFilters,
+                             s
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     return (
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
@@ -37,7 +36,7 @@ const RecMobileFilter = ({
                 </button>
             </DrawerTrigger>
 
-            <DrawerContent className="h-[95vh]">
+            <DrawerContent className="max-h-[95vh] h-fit">
                 <DrawerHeader>
                     <DrawerTitle className="text-center text-lg font-bold">{s.filter}</DrawerTitle>
                     <div className="flex justify-end mt-2">
@@ -45,7 +44,7 @@ const RecMobileFilter = ({
                             className="flex gap-2 items-center text-error-main cursor-pointer"
                             onClick={clearAllFilters}
                         >
-                            <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                            <span className="font-[600]">{s.clear_all}</span>
                             <CloseSquare className="fill-error-main"/>
                         </button>
                     </div>
@@ -53,6 +52,7 @@ const RecMobileFilter = ({
 
                 <div className="overflow-y-auto flex-1 px-4 scrollbar-hide">
                     <RecruitmentFilterContent
+                        s={s}
                         categoryTree={categoryTree}
                         allData={allData}
                         filters={filters}
@@ -69,12 +69,12 @@ const RecMobileFilter = ({
                         onClick={() => setIsDrawerOpen(false)}
                         className="py-3 bg-Primary-500 text-white font-semibold rounded-xl cursor-pointer"
                     >
-                        اعمال فیلترها
+                        {s.apply_filters}
                     </button>
                     <DrawerClose asChild>
                         <button
                             className="py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
-                            انصراف
+                            {s.cancel}
                         </button>
                     </DrawerClose>
                 </DrawerFooter>

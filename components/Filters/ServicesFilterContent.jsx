@@ -1,54 +1,53 @@
 "use client";
 import React from "react";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import {Checkbox} from "@/components/ui/checkbox";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
-import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import {CheckIcon, ChevronsUpDownIcon} from "lucide-react";
+import {cn} from "@/lib/utils";
+import {Button} from "@/components/ui/button";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
 } from "@/components/ui/command";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
 } from "@/components/ui/popover";
 import SearchIcon from "@/assets/icons/search.svg";
 import MultiRangeSlider from "@/components/ui/multirangeslider";
-import { Switch } from "@/components/ui/switch";
-import { useTranslation } from "@/app/[locale]/TranslationContext";
+import {Switch} from "@/components/ui/switch";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
 import TreeCategory from "@/components/ui/TreeCategory";
 import {Slider} from "@/components/ui/slider";
 
-// Memoize to prevent unnecessary re-renders
 const ServicesFilterContent = ({
                                    categoryTree,
                                    filters,
                                    handleChange,
                                    priceRangeFromAPI,
-                                   allData
+                                   allData,
+                                   s
                                }) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     const d = dic.public.register_ad.trip;
 
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
-        <div className="flex flex-col gap-4 p-6 lg:p-0">
+        <div className="flex flex-col gap-6 p-6 lg:p-0">
             {/* Categories */}
             <div className="flex flex-col gap-3">
                 <p className="rtl:text-right text-Gray-700 font-medium">{s.categories_of}</p>
@@ -57,25 +56,25 @@ const ServicesFilterContent = ({
                         <TreeCategory
                             key={cat.id}
                             category={cat}
-                            selectedCategory={filters.category_id}
+                            selectedCategory={filters.services_expertise_id}
                             onCategorySelect={(id) => handleChange("services_expertise_id", id)}
                         />
                     ))}
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{d.currency || "ارز"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.currency}</Label>
                 <Select
                     value={filters.currency_id}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"} />
+                        <SelectValue placeholder={s.select_currency}/>
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
-                            <SelectItem key={c.id} value={c.id.toString()}>
+                            <SelectItem key={c.id} value={c.id}>
                                 {c.title} ({c.code})
                             </SelectItem>
                         ))}
@@ -83,7 +82,7 @@ const ServicesFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
                 <Label>{s.price_range || "Price Range"}</Label>
                 <Slider
                     disabled={!filters.currency_id}
@@ -133,6 +132,6 @@ const ServicesFilterContent = ({
             </div>
         </div>
     );
-  }
+}
 
 export default ServicesFilterContent;

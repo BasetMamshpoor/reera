@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Input} from "@/components/ui/input";
 import {
     Select,
     SelectContent, SelectGroup,
@@ -9,8 +9,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { useTranslation } from "@/app/[locale]/TranslationContext";
+import {Switch} from "@/components/ui/switch";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
 import TreeCategory from "@/components/ui/TreeCategory";
 import {Slider} from "@/components/ui/slider";
 
@@ -23,10 +23,10 @@ const HousingFilterContent = ({
                                   yearRangeFromAPI,
                                   areaRangeFromAPI,
                                   bedroomsOptions,
-                                  bathroomsOptions
+                                  bathroomsOptions,
+                                  s
                               }) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     const d = dic.public.register_ad.trip;
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
     return (
@@ -46,14 +46,14 @@ const HousingFilterContent = ({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{s.bathroom||"bathroom"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.bathrooms}</Label>
                 <Select
                     value={filters.bathroom.toString()}
                     onValueChange={(val) => handleChange("bathroom", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={s.select_workType || "bathroom"}/>
+                        <SelectValue placeholder={s.number_of_bathrooms}/>
                     </SelectTrigger>
                     <SelectContent>
                         {bathroomsOptions?.map((b) => (
@@ -65,14 +65,14 @@ const HousingFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{s.bedrooms || "bedrooms"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.bedrooms}</Label>
                 <Select
                     value={filters.bedrooms.toString()}
                     onValueChange={(val) => handleChange("bedrooms", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={s.select_degree || "bedrooms"}/>
+                        <SelectValue placeholder={s.number_of_bedrooms}/>
                     </SelectTrigger>
                     <SelectContent>
                         {bedroomsOptions?.map((m) => (
@@ -84,14 +84,14 @@ const HousingFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{s.currency || "ارز"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.currency}</Label>
                 <Select
                     value={filters.currency_id.toString()}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"}/>
+                        <SelectValue placeholder={s.select_currency}/>
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
@@ -103,8 +103,8 @@ const HousingFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>{s.price_range || "Price Range"}</Label>
+            <div className="flex flex-col gap-4">
+                <Label>{s.price_range}</Label>
                 <Slider
                     disabled={!filters.currency_id}
                     value={[filters.min_price, filters.max_price]}
@@ -142,8 +142,8 @@ const HousingFilterContent = ({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>{s.price_range || "year Range"}</Label>
+            <div className="flex flex-col gap-4">
+                <Label>{s.year_range}</Label>
                 <Slider
                     value={[filters.min_year, filters.max_year]}
                     min={yearRangeFromAPI?.min}
@@ -178,7 +178,7 @@ const HousingFilterContent = ({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2 ">
+            <div className="flex flex-col gap-4 ">
                 <Label>{s.price_range || "area Range"}</Label>
                 <Slider
                     value={[filters.min_area, filters.max_area]}
@@ -225,6 +225,6 @@ const HousingFilterContent = ({
             </div>
         </div>
     );
-  }
+}
 
 export default HousingFilterContent;

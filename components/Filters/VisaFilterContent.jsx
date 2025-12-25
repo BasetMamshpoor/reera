@@ -38,10 +38,10 @@ const VisaFilterContent = ({
                                filters,
                                handleChange,
                                priceRangeFromAPI,
-                               allData
+                               allData,
+                               s
                            }) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     const d = dic.public.register_ad.trip;
 
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
@@ -51,13 +51,13 @@ const VisaFilterContent = ({
         <div className="flex flex-col gap-4 p-6 lg:p-0">
             {/* Categories */}
             <div className="flex flex-col gap-3">
-                <p className="rtl:text-right text-Gray-700 font-medium">نوع ویزا:</p>
+                <p className="rtl:text-right text-Gray-700 font-medium">{s.type_visa}:</p>
                 <div className="border border-Gray-200 rounded-lg p-3 bg-gray-50/50 max-h-80 overflow-y-auto">
                     {categoryTree?.map((cat) => (
                         <TreeCategory
                             key={cat.id}
                             category={cat}
-                            selectedCategory={filters.category_id}
+                            selectedCategory={filters.type_id}
                             onCategorySelect={(id) => handleChange("type_id", id)}
                         />
                     ))}
@@ -65,14 +65,14 @@ const VisaFilterContent = ({
             </div>
 
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{d.currency || "ارز"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.currency }</Label>
                 <Select
                     value={filters.currency_id}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"}/>
+                        <SelectValue placeholder={s.select_currency}/>
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
@@ -84,7 +84,7 @@ const VisaFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2 mt-2">
+            <div className="flex flex-col gap-4 mt-2">
                 <Label>{s.price_range || "Price Range"}</Label>
                 <Slider
                     disabled={!filters.currency_id}

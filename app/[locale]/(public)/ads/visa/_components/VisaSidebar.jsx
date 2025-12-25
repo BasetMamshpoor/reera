@@ -10,9 +10,7 @@ import VisaFilterContent from "@/components/Filters/VisaFilterContent";
 import Icon from "@/assets/icons/add.svg";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 
-const VisaSidebar = () => {
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
+const VisaSidebar = ({s}) => {
 
     const {
         filters,
@@ -42,7 +40,7 @@ const VisaSidebar = () => {
                 <div className="flex flex-col gap-4 p-6">
                     <div className="flex justify-between items-center">
                         <div className="flex gap-2 items-center">
-                            <Filter className="dark:fill-Gray-50"/>
+                            <Filter className="fill-Gray-950"/>
                             <span>{s.filter}</span>
                         </div>
                         <button
@@ -53,7 +51,7 @@ const VisaSidebar = () => {
                             <CloseSquare className="fill-error-main"/>
                         </button>
                     </div>
-                    <VisaFilterContent {...sharedProps} />
+                    <VisaFilterContent s={s} {...sharedProps} />
                 </div>
             </div>
 
@@ -62,7 +60,7 @@ const VisaSidebar = () => {
                 ref={scrollRef}
                 className="lg:hidden flex items-center gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-pointer"
             >
-                <RecMobileFilter clearAllFilters={clearAllFilters} {...sharedProps} />
+                <RecMobileFilter s={s} clearAllFilters={clearAllFilters} {...sharedProps} />
                 <div className="flex items-center gap-4">
                     {activeFilters.map((f) => (
                         <button

@@ -2,10 +2,10 @@
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-
+import MarkerIcon from "@/assets/icons/Marker.svg"
 // آیکون اختصاصی برای Marker
 const customIcon = new L.Icon({
-    iconUrl: "/icons/mymarker.svg", // آیکون دلخواه خودت
+    iconUrl: "/images/Location Icon.png", // آیکون دلخواه خودت
     iconSize: [32, 32],
     iconAnchor: [16, 32],
 });

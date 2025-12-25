@@ -38,10 +38,9 @@ const AllAdsFilterContent = ({
                                filters,
                                handleChange,
                                priceRangeFromAPI,
-                               allData
+                               allData,s
                            }) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     const d = dic.public.register_ad.trip;
 
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
@@ -64,14 +63,14 @@ const AllAdsFilterContent = ({
             </div>
 
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{d.currency || "ارز"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.currency}</Label>
                 <Select
                     value={filters.currency_id}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"}/>
+                        <SelectValue placeholder={s.select_currency}/>
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
@@ -83,8 +82,8 @@ const AllAdsFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2 mt-2">
-                <Label>{s.price_range || "Price Range"}</Label>
+            <div className="flex flex-col gap-5 mt-2">
+                <Label>{s.price_range}</Label>
                 <Slider
                     disabled={!filters.currency_id}
                     value={[filters.min_price, filters.max_price]}

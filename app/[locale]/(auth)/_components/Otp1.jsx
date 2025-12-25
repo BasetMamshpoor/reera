@@ -1,81 +1,92 @@
 "use client";
 
-import {useState, useEffect, useCallback} from "react";
-import {signIn} from "next-auth/react";
-import {toast} from "sonner";
-
+import { useState, useEffect, useCallback } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 import {
     InputOTP,
     InputOTPGroup,
     InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useParams, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
-import {useParams} from "next/navigation";
-import {Button} from "@/components/ui/button";
-
-const Otp1 = ({email, p}) => {
+const Otp1 = ({ email, p }) => {
     const [otp, setOtp] = useState("");
-    const {locale} = useParams();
+    const [hasSubmitted, setHasSubmitted] = useState(false); // ← اضافه شده برای جلوگیری از تکرار
 
-    const handleSubmit = useCallback(async () => {
-        if (otp.length !== 6) return;
+    const { locale } = useParams();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callbackUrl") || `/${locale}`;
 
-        try {
-            const res = await signIn("credentials", {
+    const loginMutation = useMutation({
+        mutationFn: async (otp) =>
+            await signIn("email-otp", {
                 email,
-                otp,
+                otp: otp.trim(),
                 redirect: false,
-                callbackUrl: `/${locale || "en"}`,
-            });
-
-            if (res?.error) {
-                toast.error("Invalid OTP");
-            } else if (res?.ok) {
-                toast.success("Successfully logged in!");
-                if (res?.url) window.location.href = res.url;
+                callbackUrl,
+            }),
+        onSuccess: (result) => {
+            if (result?.ok) {
+                toast.success(p.successfully_logged_in || "با موفقیت وارد شدید!");
+                if (result.url) {
+                    // مستقیم ریدایرکت کن بدون اینکه منتظر بمونی
+                    window.location.href = result.url;
+                }
             }
-        } catch (err) {
-            toast.error("Login failed, try again.");
-            console.error("OTP submit error:", err);
-        }
-    }, [email, otp, locale]);
+        },
+        onError: () => {
+            toast.error("کد تأیید اشتباه است یا منقضی شده");
+            setOtp("");
+            setHasSubmitted(false); // اجازه بده دوباره امتحان کنه
+        },
+    });
 
+    const handleSubmit = useCallback(() => {
+        if (otp.length !== 6 || hasSubmitted || loginMutation.isPending) return;
+
+        setHasSubmitted(true);
+        loginMutation.mutate(otp);
+    }, [otp, hasSubmitted, loginMutation]);
+
+    // فقط وقتی otp کامل شد و قبلاً ارسال نشده، خودکار بفرست
     useEffect(() => {
-        if (otp.length === 6) {
-            (async () => await handleSubmit())();
+        if (otp.length === 6 && !hasSubmitted) {
+            handleSubmit();
         }
-    }, [otp, handleSubmit]);
+    }, [otp, hasSubmitted, handleSubmit]);
 
     return (
         <div className="flex flex-col gap-20 w-fit py-12 px-20 bg-surface rounded-xl border">
             <div className="flex flex-col gap-6 w-full">
-             <span className="text-sm text-Gray-600 text-center">
-               {p.enter_6_digit_code}
-             </span>
+        <span className="text-sm text-Gray-600 text-center">
+          {p.enter_6_digit_code}
+        </span>
                 <InputOTP
                     maxLength={6}
                     value={otp}
-                    onChange={(value) => setOtp(value)}
+                    onChange={setOtp}
+                    disabled={loginMutation.isPending || hasSubmitted}
                 >
-                    <InputOTPGroup
-                        className="data-[data-slot=input-otp-slot]:border data-[data-slot=input-otp-slot]:border-gray-300">
-                        <InputOTPSlot index={0}/>
-                        <InputOTPSlot index={1}/>
-                        <InputOTPSlot index={2}/>
-                        <InputOTPSlot index={3}/>
-                        <InputOTPSlot index={4}/>
-                        <InputOTPSlot index={5}/>
+                    <InputOTPGroup className="data-[data-slot=input-otp-slot]:border data-[data-slot=input-otp-slot]:border-gray-300">
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
                     </InputOTPGroup>
                 </InputOTP>
             </div>
 
             <Button
-                type="button"
                 onClick={handleSubmit}
-                disabled={otp.length !== 6}
-                className="cursor-pointer bg-Primary-400 hover:bg-Primary-400 text-white rounded-xl py-3 px-6 disabled:opacity-50"
+                disabled={otp.length !== 6 || loginMutation.isPending || hasSubmitted}
+                className="bg-Primary-400 hover:bg-Primary-400 text-white rounded-xl py-3 px-6 disabled:opacity-50"
             >
-                {p.login}
+                {loginMutation.isPending ? "در حال ورود..." : p.login}
             </Button>
         </div>
     );
