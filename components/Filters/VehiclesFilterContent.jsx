@@ -42,16 +42,16 @@ const VisaFilterContent = ({
                                allData,
                                brands,
                                yearRangeFromAPI,
-                               functionRangeFromAPI
+                               functionRangeFromAPI,
+                               s
                            }) => {
     const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     const d = dic.public.register_ad.trip;
 
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
-        <div className="flex flex-col gap-4 p-6 lg:p-0">
+        <div className="flex flex-col gap-4  p-6 lg:p-0">
             {/* Categories */}
             <div className="flex flex-col gap-3">
                 <p className="rtl:text-right text-Gray-700 font-medium">{s.categories_of}</p>
@@ -67,8 +67,8 @@ const VisaFilterContent = ({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>{s.price_range || "year Range"}</Label>
+            <div className="flex flex-col gap-4">
+                <Label>{s.year_range}</Label>
                 <Slider
                     value={[filters.min_year, filters.max_year]}
                     min={yearRangeFromAPI?.min}
@@ -103,8 +103,8 @@ const VisaFilterContent = ({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>{s.price_range || "function Range"}</Label>
+            <div className="flex flex-col gap-4">
+                <Label>{s.mileage_range}</Label>
                 <Slider
                     value={[filters.min_function, filters.max_function]}
                     min={functionRangeFromAPI?.min}
@@ -140,14 +140,14 @@ const VisaFilterContent = ({
             </div>
 
 
-            <div className="flex flex-col gap-2 w-full">
-                <Label>{d.currency || "ارز"}</Label>
+            <div className="flex flex-col gap-4 w-full">
+                <Label>{s.currency}</Label>
                 <Select
                     value={filters.currency_id}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"}/>
+                        <SelectValue placeholder={s.select_currency}/>
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
@@ -159,8 +159,8 @@ const VisaFilterContent = ({
                 </Select>
             </div>
 
-            <div className="flex flex-col gap-2">
-                <Label>{s.price_range || "Price Range"}</Label>
+            <div className="flex flex-col gap-4">
+                <Label>{s.price_range}</Label>
                 <Slider
                     disabled={!filters.currency_id}
                     value={[filters.min_price, filters.max_price]}
@@ -172,7 +172,7 @@ const VisaFilterContent = ({
                         handleChange("max_price", max);
                     }}
                 />
-                <div className="flex gap-2 mt-2">
+                <div className="flex gap-4 mt-2">
                     <Input
                         disabled={!filters.currency_id}
                         value={formatPrice(filters.min_price)}
@@ -197,14 +197,14 @@ const VisaFilterContent = ({
                     />
                 </div>
 
-                <div className="flex flex-col gap-2 w-full">
-                    <Label>{s.brand || "برند"}</Label>
+                <div className="flex flex-col gap-4 w-full">
+                    <Label>{s.brand}</Label>
                     <Select
                         value={filters.brand_id}
                         onValueChange={(val) => handleChange("brand_id", val)}
                     >
                         <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                            <SelectValue placeholder={s.select_brand || "انتخاب برند"} />
+                            <SelectValue placeholder={s.select_brand}/>
                         </SelectTrigger>
                         <SelectContent>
                             {brands?.map((b) => (
@@ -216,15 +216,15 @@ const VisaFilterContent = ({
                     </Select>
                 </div>
 
-                <div className="flex flex-col gap-2 w-full">
-                    <Label>{s.model || "مدل"}</Label>
+                <div className="flex flex-col gap-4 w-full">
+                    <Label>{s.model}</Label>
                     <Select
                         value={filters.model_id}
                         onValueChange={(val) => handleChange("model_id", val)}
                         disabled={!filters.brand_id}
                     >
                         <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                            <SelectValue placeholder={s.select_model || "انتخاب مدل"} />
+                            <SelectValue placeholder={s.select_model}/>
                         </SelectTrigger>
                         <SelectContent>
                             {modelsData?.map((m) => (

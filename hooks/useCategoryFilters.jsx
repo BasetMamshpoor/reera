@@ -10,13 +10,12 @@ export const CATEGORY_FILTER_KEYS = {
     vehicle: ["currency_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
     visa: ["currency_id", "verified", "type_id", "max_price", "min_price"],
     ticket: ["currency_id", "verified", "ticket_type_id", "max_price", "min_price"],
-    services: ["currency_id", "verified", "services_expertise_id", "max_price", "min_price"],
+    service: ["currency_id", "verified", "services_expertise_id", "max_price", "min_price"],
     recruitment: ["currency_id", "verified", "recruitment_categories_id", "cooperation", "max_price", "min_price", "languages_id", "degree"],
     personal: ["currency_id", "verified", "personal_ads_type_id", "condition", "max_price", "min_price", "gender"],
     kitchen: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
     business: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price"],
     all_ads: ["currency_id", "verified", "category_id", "max_price", "min_price"],
-
 };
 
 export const useCategoryFilters = (categorySlug) => {

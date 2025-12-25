@@ -1,32 +1,23 @@
 "use client";
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React from "react";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import Filter from "@/assets/icons/filter.svg";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
 import useSwipeScroll from "@/hooks/useHorizontalScroll";
-import {useQuery} from "@tanstack/react-query";
-import {request} from "@/lib/api";
-import {useForm} from "react-hook-form";
 import RecMobileFilter from "./RecMobileFilter";
 import TicketsFilterContent from "@/components/Filters/TicketsFilterContent";
-import {useRouter, useSearchParams} from "next/navigation";
 import Icon from "@/assets/icons/add.svg";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 
-const TicketsSidebar = () => {
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
+const TicketsSidebar = ({s}) => {
 
     const {
         filters,
         handleChange,
         clearAllFilters,
         categoryTree,
-        brands,
         modelsData,
         currencies,
         priceRangeFromAPI,
-        filtersData,
         activeFilters
     } = useCategoryFilters("ticket");
 
@@ -48,7 +39,7 @@ const TicketsSidebar = () => {
                 <div className="flex flex-col gap-4 p-6">
                     <div className="flex justify-between items-center">
                         <div className="flex gap-2 items-center">
-                            <Filter className="dark:fill-Gray-50"/>
+                            <Filter className="fill-Gray-950"/>
                             <span>{s.filter}</span>
                         </div>
                         <button
@@ -59,7 +50,7 @@ const TicketsSidebar = () => {
                             <CloseSquare className="fill-error-main"/>
                         </button>
                     </div>
-                    <TicketsFilterContent {...sharedProps} />
+                    <TicketsFilterContent s={s} {...sharedProps} />
                 </div>
             </div>
 
@@ -67,7 +58,7 @@ const TicketsSidebar = () => {
                 ref={scrollRef}
                 className="lg:hidden flex items-center gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-pointer"
             >
-                <RecMobileFilter clearAllFilters={clearAllFilters} {...sharedProps} />
+                <RecMobileFilter s={s} clearAllFilters={clearAllFilters} {...sharedProps} />
                 <div className="flex items-center gap-4">
                     {activeFilters.map((f) => (
                         <button

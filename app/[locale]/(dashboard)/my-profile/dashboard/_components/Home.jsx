@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Cut from "@/assets/images/wave-haikei.svg";
 import {Badge} from "@/components/ui/badge";
@@ -67,35 +67,48 @@ const Home = ({item, isLoading, refetch, tab, favorite}) => {
     });
 
     return (
-        <div key={item.id} className="flex flex-col pb-4 bg-surface rounded-xl overflow-hidden w-full h-full border border-Gray-200">
+        <div key={item.id}
+             className="flex flex-col pb-4 bg-surface rounded-xl overflow-hidden w-full h-full border border-Gray-200">
             <div className="relative max-h-[194px] h-full w-full ">
-                <Image src={item.image} width={100} height={100} alt="image" className="w-full h-full"/>
+                <Image
+                    unoptimized
+                    src={item.image}
+                    width={100}
+                    height={100}
+                    alt="image"
+                    className="w-full h-full"
+                />
                 <div className="w-full absolute bottom-0 right-0 left-0 ">
                     <Cut className="!w-full !h-full fill-white dark:fill-surface border-0 "/>
                 </div>
                 {item.status === "approved" ? (
-                    <Badge className="absolute top-2 right-2 bg-success-accent text-success-main flex items-center gap-1  text-xs px-3">
+                    <Badge
+                        className="absolute top-2 right-2 bg-success-accent text-success-main flex items-center gap-1  text-xs px-3">
                         <Tick className="fill-success-main !w-4 !h-4"/>
                         <p className="text-xs text-success-main ltr:pt-1">{d.verified}</p>
                     </Badge>
                 ) : item.status === "pending" ? (
-                    <Badge className="absolute top-2 right-2 bg-warning-accent text-success-main flex items-center gap-1  text-xs px-3">
+                    <Badge
+                        className="absolute top-2 right-2 bg-warning-accent text-success-main flex items-center gap-1  text-xs px-3">
                         <Clock className="fill-warning-main !w-4 !h-4"/>
                         <p className="text-xs text-warning-main ltr:pt-1">{d.pending_verification}</p>
                     </Badge>
                 ) : item.status === "rejected" ? (
-                    <Badge className="absolute top-2 right-2 bg-error-accent text-error-main flex items-center gap-1  text-xs px-3">
+                    <Badge
+                        className="absolute top-2 right-2 bg-error-accent text-error-main flex items-center gap-1  text-xs px-3">
                         <Close className="fill-error-main !w-4 !h-4"/>
                         <p className="text-xs ltr:pt-1">{d.rejected}</p>
                     </Badge>
                 ) : item.status === "expired" ? (
-                    <Badge className="absolute top-2 right-2 bg-natural-accent text-natural-main flex items-center text-xs px-3">
+                    <Badge
+                        className="absolute top-2 right-2 bg-natural-accent text-natural-main flex items-center text-xs px-3">
                         <p className="text-xs ltr:pt-1">{d.expired}</p>
                     </Badge>
                 ) : null}
 
                 {item.remaining !== "expired" &&
-                    <Badge className="absolute top-2 left-2 bg-natural-accent text-natural-main flex items-center gap-1 text-xs px-2">
+                    <Badge
+                        className="absolute top-2 left-2 bg-natural-accent text-natural-main flex items-center gap-1 text-xs px-2">
                         <Clock className="fill-natural-main !w-4 !h-4"/>
                         <p className="text-xs pt-1">
                             {item.remaining === "today" ? d.only_today : `${item.remaining} ${d.days_remaining}`}
@@ -136,7 +149,7 @@ const Home = ({item, isLoading, refetch, tab, favorite}) => {
                     </div>
                     <div className="flex items-center justify-end w-full">
                         <p className="lg:text-lg text-alpha-100 font-bold">
-                            {Number(item.custom_info?.price).toLocaleString()|| 0} {item.custom_info?.currency}
+                            {Number(item.custom_info?.price).toLocaleString() || 0} {item.custom_info?.currency}
                         </p>
                     </div>
                 </div>
@@ -205,7 +218,8 @@ const Home = ({item, isLoading, refetch, tab, favorite}) => {
                                         className="bg-Primary-400 hover:bg-Primary-400"
                                         onClick={() => mutation1.mutate(item.id)}
                                     >
-                                        {mutation1.isPending ? <Spinner size={25}/> : tab === "request" ? d.delivered : d.i_delivered}
+                                        {mutation1.isPending ?
+                                            <Spinner size={25}/> : tab === "request" ? d.delivered : d.i_delivered}
                                     </Button>
                                 </DialogFooter>
                             </DialogContent>

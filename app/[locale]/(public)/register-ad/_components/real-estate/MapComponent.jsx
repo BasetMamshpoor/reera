@@ -16,7 +16,7 @@ import CitySearch from "../common/CitySearch";
 
 // Custom marker icon
 const customIcon = new L.Icon({
-  iconUrl: "/icons/mymarker.svg",
+  iconUrl: "/images/Location Icon.png",
   iconSize: [32, 32],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],

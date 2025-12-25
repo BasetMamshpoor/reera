@@ -21,16 +21,16 @@ const RecMobileFilter = ({
                              modelsData,
                              clearAllFilters,
                              categoryTree,
+                             s
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
 
     return (
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
-                <button className="flex items-center justify-center gap-2 px-2 min-w-20 py-2 cursor-pointer rounded-2xl border border-Primary-500 bg-Primary-50 text-Primary-500 whitespace-nowrap">
-                    <FilterIcon className="fill-Primary-500" />
+                <button
+                    className="flex items-center justify-center gap-2 px-2 min-w-20 py-2 cursor-pointer rounded-2xl border border-Primary-500 bg-Primary-50 text-Primary-500 whitespace-nowrap">
+                    <FilterIcon className="fill-Primary-500"/>
                     <span className="text-xs font-medium">{s.filter}</span>
                 </button>
             </DrawerTrigger>
@@ -51,6 +51,7 @@ const RecMobileFilter = ({
 
                 <div className="overflow-y-auto flex-1 px-4 scrollbar-hide">
                     <ServicesFilterContent
+                        s={s}
                         categoryTree={categoryTree}
                         allData={allData}
                         filters={filters}
@@ -68,7 +69,8 @@ const RecMobileFilter = ({
                         اعمال فیلترها
                     </button>
                     <DrawerClose asChild>
-                        <button className="py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
+                        <button
+                            className="py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
                             انصراف
                         </button>
                     </DrawerClose>

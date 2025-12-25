@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from "@/components/ui/drawer";
 import FilterIcon from "@/assets/icons/filter.svg";
 import CloseSquare from "@/assets/icons/closesquare.svg";
-import { useTranslation } from "@/app/[locale]/TranslationContext";
+import {useTranslation} from "@/app/[locale]/TranslationContext";
 import Filter from "@/assets/icons/filter.svg";
 import VehiclesFilterContent from "@/components/Filters/VehiclesFilterContent";
+
 const RecMobileFilter = ({
                              allData,
                              filters,
@@ -21,11 +22,10 @@ const RecMobileFilter = ({
                              modelsData,
                              clearAllFilters,
                              categoryTree,
-                             functionRangeFromAPI
+                             functionRangeFromAPI,
+                             s
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
     return (
         <div className="flex space-x-3 rtl:space-x-reverse min-w-max">
             <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
@@ -57,6 +57,7 @@ const RecMobileFilter = ({
 
                     <div className="overflow-y-auto flex-1 p-4">
                         <VehiclesFilterContent
+                            s={s}
                             functionRangeFromAPI={functionRangeFromAPI}
                             categoryTree={categoryTree}
                             allData={allData}
@@ -72,12 +73,12 @@ const RecMobileFilter = ({
                             className="w-full py-3 bg-Primary-400 text-Gray-50 font-semibold rounded-xl cursor-pointer"
                             onClick={() => setIsDrawerOpen(false)}
                         >
-                            اعمال فیلترها
+                            {s.apply_filters}
                         </button>
                         <DrawerClose asChild>
                             <button
                                 className="w-full py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
-                                انصراف
+                                {s.cancel}
                             </button>
                         </DrawerClose>
                     </DrawerFooter>

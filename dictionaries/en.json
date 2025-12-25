@@ -104,7 +104,7 @@
       "personal_items": "Personal Items",
       "social": "Social",
       "job_recruitment": "Job & Recruitment",
-      "real_estate": "Real Estate",
+      "real_estate": "Housing",
       "digital_goods": "Digital Goods",
       "services": "Services",
       "tickets_tours": "Tickets and Tours",
@@ -213,8 +213,33 @@
       "used": "used",
       "needs_repair": "Needs Repair",
       "meter": "meter",
-      "km": "km"
-
+      "km": "km",
+      "ads": "Ads",
+      "rira": "Reera",
+      "clear_all": "Clear all",
+      "currency": "Currency",
+      "select_currency": "Select currency",
+      "price_range": "Price range",
+      "apply_filters": "Apply filters",
+      "cancel": "Cancel",
+      "year_range": "Year range",
+      "mileage_range": "Mileage range",
+      "brand": "Brand",
+      "select_brand": "Select brand",
+      "model": "Model",
+      "bathrooms": "Bathrooms",
+      "number_of_bathrooms": "Number of Bathrooms",
+      "bedrooms": "Bedrooms",
+      "workType": "Work Type",
+      "select_workType": "Select Work Type",
+      "degree": "Degree",
+      "type_visa": "Visa Type",
+      "visa": "Visa",
+      "select_degree": "Select Degree",
+      "languages": "Languages",
+      "select_languages": "Select Languages",
+      "number_of_bedrooms": "Number of Bedrooms",
+      "select_model": "Select model"
     }
   },
   "consultor": {
@@ -339,7 +364,7 @@
     "transportation": "Transportation",
     "visa": "Visa",
     "social": "Social",
-    "coming_soon" : "Coming Soon"
+    "coming_soon": "Coming Soon"
   },
   "ads": {
     "view_all": "View All",
@@ -614,7 +639,8 @@
         "confirm_got_hired": "Have you been hired?",
         "confirm_delivered": "Have you delivered?",
         "confirm_received": "Have you received?",
-        "not_found": "No items found"
+        "not_found": "No items found",
+        "anonymous": "No name"
       },
       "my_ads": {
         "all": "All",
@@ -791,7 +817,7 @@
         "slug": {
           "general_info": "General Information",
           "facilities": "Facilities",
-          "anonymous": "Anonymous",
+          "anonymous": "No name",
           "location_access": "Location & Access",
           "rules": "Rules",
           "contract_terms": "Contract Terms",
@@ -891,7 +917,7 @@
         "chat": "Chat",
         "toman": "Toman",
         "dollar": "Dollar",
-        "anonymous": "Anonymous",
+        "anonymous": "No name",
         "login_required_for_compatibility": "To view roommate compatibility percentage, please log in or sign up first.",
         "euro": "Euro",
         "iranian_roommate": "Iranian roommate",
@@ -1022,7 +1048,7 @@
       },
       "digital": {
         "information": "Information",
-        "anonymous": "Anonymous",
+        "anonymous": "No name",
         "location": "Location",
         "contract_conditions": "Contract Conditions",
         "comments": "Comments",
@@ -1055,7 +1081,7 @@
         "needs_repair": "Needs Repair"
       },
       "business": {
-        "anonymous": "Anonymous",
+        "anonymous": "No name",
         "information": "Information",
         "location": "Location",
         "contract_conditions": "Contract Conditions",
@@ -1099,7 +1125,7 @@
         "secure_payment_info": "By activating secure payment on Rira, the deposit or rent amount is temporarily held on the platform and will only be released to the owner after the property is delivered and confirmed by the tenant. This method increases mutual trust and helps prevent fraud."
       },
       "kitchen": {
-        "anonymous": "Anonymous",
+        "anonymous": "No name",
         "information": "Information",
         "location": "Location",
         "contract_conditions": "Contract Conditions",
@@ -1406,7 +1432,7 @@
         "sending": "Sending...",
         "entry": "Entry"
       },
-      "seller":{
+      "seller": {
         "no_comments_found": "No comments found!",
         "another_reply": "Another reply",
         "close": "Close",

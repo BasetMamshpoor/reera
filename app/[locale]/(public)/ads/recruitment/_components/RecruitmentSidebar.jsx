@@ -1,17 +1,13 @@
 "use client";
-import React, {useMemo, useRef, useState} from "react";
+import React from "react";
 import CloseSquare from "@/assets/icons/add.svg";
 import Filter from "@/assets/icons/filter.svg";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
 import useSwipeScroll from "@/hooks/useHorizontalScroll";
 import RecMobileFilter from "./RecMobileFilter";
 import RecruitmentFilterContent from "@/components/Filters/RecruitmentFilterContent";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
 
-const RecruitmentSidebar = () => {
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
-
+const RecruitmentSidebar = ({s}) => {
     const {
         filters,
         handleChange,
@@ -42,21 +38,21 @@ const RecruitmentSidebar = () => {
             <div className="hidden lg:block border-2 rounded-xl p-6 h-fit">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex gap-2 items-center">
-                        <Filter/>
+                        <Filter className="fill-Gray-950"/>
                         <span>{s.filter}</span>
                     </div>
                     <button
                         className="flex gap-2 items-center text-error-main cursor-pointer"
                         onClick={clearAllFilters}
                     >
-                        <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                        <span className="font-semibold">{s.clear_all}</span>
                         <CloseSquare className="fill-error-main rotate-45"/>
                     </button>
                 </div>
-                <RecruitmentFilterContent {...sharedProps} />
+                <RecruitmentFilterContent s={s} {...sharedProps} />
             </div>
             <div ref={scrollRef} className="lg:hidden flex gap-4 overflow-x-auto scrollbar-hide px-4 pb-4">
-                <RecMobileFilter {...sharedProps} clearAllFilters={clearAllFilters}/>
+                <RecMobileFilter s={s} {...sharedProps} clearAllFilters={clearAllFilters}/>
                 {activeFilters.map((f) => (
                     <button
                         key={f.key}

@@ -22,11 +22,9 @@ const RecMobileFilter = ({
                              handleChange,
                              priceRangeFromAPI,
                              clearAllFilters,
-                             categoryTree
+                             categoryTree, s
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
 
     return (
         <div className="flex space-x-3 rtl:space-x-reverse min-w-max">
@@ -39,25 +37,26 @@ const RecMobileFilter = ({
                     </button>
                 </DrawerTrigger>
 
-                <DrawerContent className="h-[100vh]">
+                <DrawerContent className="h-[95vh]">
                     <DrawerHeader className="flex p-4">
                         <DrawerTitle>{s.filter}</DrawerTitle>
                         <div className="flex justify-between items-center">
                             <div className="flex gap-2 items-center">
-                                <Filter className="dark:fill-Gray-50"/>
+                                <Filter className="fill-Gray-950"/>
                                 <span>{s.filter}</span>
                             </div>
                             <button
                                 className="flex gap-2 items-center text-error-main cursor-pointer"
                                 onClick={clearAllFilters}
                             >
-                                <span className="font-[600]">{s.clear_all || "Clear All"}</span>
+                                <span className="font-[600]">{s.clear_all}</span>
                                 <CloseSquare className="fill-error-main"/>
                             </button>
                         </div>
                     </DrawerHeader>
                     <div className="overflow-y-auto flex-1 p-4">
                         <TicketsFilterContent
+                            s={s}
                             categoryTree={categoryTree}
                             allData={allData}
                             filters={filters}
@@ -71,12 +70,12 @@ const RecMobileFilter = ({
                             className="w-full py-3 bg-Primary-400 text-Gray-50 font-semibold rounded-xl cursor-pointer"
                             onClick={() => setIsDrawerOpen(false)}
                         >
-                            اعمال فیلترها
+                            {s.apply_filters}
                         </button>
                         <DrawerClose asChild>
                             <button
                                 className="w-full py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
-                                انصراف
+                                {s.cancel}
                             </button>
                         </DrawerClose>
                     </DrawerFooter>

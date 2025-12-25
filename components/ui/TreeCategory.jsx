@@ -45,7 +45,7 @@ const TreeCategory = ({
           level > 0 && "",
           isSelected
             ? "bg-Primary-50 border border-Primary-200"
-            : "hover:bg-gray-50"
+            : "hover:bg-Gray-50"
         )}
         onClick={handleClick}
       >
@@ -85,7 +85,7 @@ const TreeCategory = ({
         <span
           className={cn(
             "flex-1 text-sm font-normal",
-            isSelected ? "text-Primary-700 font-medium" : "text-Gray-950v"
+            isSelected ? "text-Primary-700 font-medium" : "text-Gray-950"
           )}
         >
           {category.label}

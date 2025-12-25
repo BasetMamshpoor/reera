@@ -99,7 +99,6 @@
     "sidebar": {
       "all": "همه",
       "filter": "فیلتر",
-      "vehicles": "خودرو",
       "home_kitchen": "خانه و آشپزخانه",
       "personal_items": "وسایل شخصی",
       "social": "اجتماعی",
@@ -213,7 +212,34 @@
       "used": "کارکرده",
       "needs_repair": "نیاز به تعمیر",
       "meter": "متر",
-      "km": "کیلومتر"
+      "km": "کیلومتر",
+      "ads": "آگهی‌های",
+      "rira": "ریرا",
+      "clear_all": "پاک کردن همه",
+      "currency": "ارز",
+      "select_currency": "انتخاب نوع ارز",
+      "price_range": "بازه قیمت",
+      "vehicles": "وسایل نقلیه",
+      "year_range": "بازه سال",
+      "mileage_range": "بازه کارکرد",
+      "brand": "برند",
+      "select_brand": "انتخاب برند",
+      "model": "مدل",
+      "select_model": "انتخاب مدل",
+      "bathrooms": "سرویس‌های بهداشتی",
+      "number_of_bathrooms": "تعداد سرویس بهداشتی",
+      "bedrooms": "اتاق‌خواب‌ها",
+      "number_of_bedrooms": "تعداد اتاق‌خواب",
+      "workType": "نوع همکاری",
+      "select_workType": "انتخاب نوع همکاری",
+      "degree": "مدرک تحصیلی",
+      "select_degree": "انتخاب مدرک تحصیلی",
+      "languages": "زبان‌ها",
+      "select_languages": "انتخاب زبان‌ها",
+      "visa": "ویزا",
+      "type_visa": "نوع ویزا",
+      "apply_filters": "اعمال فیلترها",
+      "cancel": "انصراف"
     }
   },
   "consultor": {
@@ -338,7 +364,7 @@
     "transportation": "حمل و نقل",
     "visa": "ویزا",
     "social": "اجتماعی",
-    "coming_soon" : "به زودی"
+    "coming_soon": "به زودی"
   },
   "ads": {
     "view_all": "مشاهده همه",
@@ -613,7 +639,8 @@
         "confirm_got_hired": "آیا استخدام شده‌اید؟",
         "confirm_delivered": "آیا تحویل داده‌اید؟",
         "confirm_received": "آیا تحویل گرفتید؟",
-        "not_found": "موردی یافت نشد"
+        "not_found": "موردی یافت نشد",
+        "anonymous": "بدون نام"
       },
       "my_ads": {
         "all": "همه",
@@ -790,7 +817,7 @@
         "slug": {
           "general_info": "اطلاعات کلی",
           "facilities": "امکانات",
-          "anonymous": "ناشناس",
+          "anonymous": "بدون نام",
           "location_access": "موقعیت و دسترسی",
           "rules": "قوانین",
           "contract_terms": "شرایط قرارداد",
@@ -890,7 +917,7 @@
         "chat": "چت",
         "toman": "تومان",
         "dollar": "دلار",
-        "anonymous": "ناشناس",
+        "anonymous": "بدون نام",
         "login_required_for_compatibility": "برای مشاهده درصد تطابق هم‌خانه، ابتدا وارد حساب کاربری خود شوید یا ثبت‌نام کنید.",
         "euro": "یورو",
         "iranian_roommate": "هم‌خانه ایرانی",
@@ -1021,7 +1048,7 @@
       },
       "digital": {
         "information": "اطلاعات",
-        "anonymous": "ناشناس",
+        "anonymous": "بدون نام",
         "location": "موقعیت",
         "contract_conditions": "شرایط قرارداد",
         "comments": "نظرات",
@@ -1054,7 +1081,7 @@
         "needs_repair": "نیاز به تعمیر"
       },
       "business": {
-        "anonymous": "ناشناس",
+        "anonymous": "بدون نام",
         "information": "اطلاعات",
         "location": "موقعیت",
         "contract_conditions": "شرایط قرارداد",
@@ -1098,7 +1125,7 @@
         "secure_payment_info": "با فعال کردن پرداخت امن در ریرا، مبلغ ودیعه یا اجاره ابتدا به‌صورت موقت در پلتفرم نگه‌داری شده و پس از تحویل ملک و تأیید مستأجر، به صاحب ملک پرداخت می‌شود. این روش اعتماد دوطرفه را افزایش داده و از کلاهبرداری جلوگیری می‌کند."
       },
       "kitchen": {
-        "anonymous": "ناشناس",
+        "anonymous": "بدون نام",
         "information": "اطلاعات",
         "location": "موقعیت",
         "contract_conditions": "شرایط قرارداد",

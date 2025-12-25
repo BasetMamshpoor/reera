@@ -52,7 +52,7 @@ const Like = ({isLike, id, url, className,refetch,session}) => {
     });
 
     const handleLoginRedirect = () => {
-        router.push(`/${locale}/login?backUrl=${pathname}`);
+        router.push(`/${locale}/login?callbackUrl=${pathname}`);
     };
 
     return (
