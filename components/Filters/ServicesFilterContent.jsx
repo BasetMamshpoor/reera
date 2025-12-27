@@ -41,10 +41,6 @@ const ServicesFilterContent = ({
                                    allData,
                                    s
                                }) => {
-    const dic = useTranslation();
-    const d = dic.public.register_ad.trip;
-
-    const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
         <div className="flex flex-col gap-6 p-6 lg:p-0">
@@ -83,10 +79,10 @@ const ServicesFilterContent = ({
             </div>
 
             <div className="flex flex-col gap-4">
-                <Label>{s.price_range || "Price Range"}</Label>
+                <Label>{s.price_range}</Label>
                 <Slider
+                    value={[filters?.min_price,filters.max_price]}
                     disabled={!filters.currency_id}
-                    value={[filters.min_price, filters.max_price]}
                     min={priceRangeFromAPI?.min}
                     max={priceRangeFromAPI?.max}
                     step={1000}
@@ -95,28 +91,28 @@ const ServicesFilterContent = ({
                         handleChange("max_price", max);
                     }}
                 />
-                <div className="flex gap-2">
+                <div className="flex gap-4 mt-2">
                     <Input
                         disabled={!filters.currency_id}
-                        value={formatPrice(filters.min_price)}
+                        value={filters.min_price}
                         onChange={(e) =>
                             handleChange(
                                 "min_price",
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Min price"
+                        placeholder={priceRangeFromAPI?.min}
                     />
                     <Input
                         disabled={!filters.currency_id}
-                        value={formatPrice(filters.max_price)}
+                        value={filters.max_price}
                         onChange={(e) =>
                             handleChange(
                                 "max_price",
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Max price"
+                        placeholder={priceRangeFromAPI?.max}
                     />
                 </div>
             </div>

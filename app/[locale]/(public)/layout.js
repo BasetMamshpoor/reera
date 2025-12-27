@@ -6,9 +6,8 @@ import {CategoryProvider} from "@/app/[locale]/CategoryProvider";
 import {CountryProvider} from "@/app/[locale]/CountryProvider";
 
 export const metadata = {
-    title: "20438829",
+    title: "Reera",
     description: "Reera Website",
-    enamad:"20438829"
 };
 
 export default async function RootLayout({children, params}) {

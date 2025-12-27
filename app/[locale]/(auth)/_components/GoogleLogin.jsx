@@ -9,6 +9,7 @@ import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {toast} from "sonner";
+import Spinner from "@/components/Spinner";
 
 const request = async ({method, url, data}) => {
     const fullUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`;
@@ -95,7 +96,7 @@ const Login = () => {
                     disabled={sendOtpMutation.isPending}
                     className="bg-Primary-400 hover:bg-Primary-400 text-white rounded-xl py-3 font-semibold"
                 >
-                    {sendOtpMutation.isPending ? "در حال ارسال..." : p.send_otp}
+                    {sendOtpMutation.isPending ? <Spinner size={25}/> : p.send_otp}
                 </Button>
             </form>
         </div>

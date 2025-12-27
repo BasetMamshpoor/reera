@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useParams, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Spinner from "@/components/Spinner";
 
 const Otp1 = ({ email, p }) => {
     const [otp, setOtp] = useState("");
@@ -86,7 +87,7 @@ const Otp1 = ({ email, p }) => {
                 disabled={otp.length !== 6 || loginMutation.isPending || hasSubmitted}
                 className="bg-Primary-400 hover:bg-Primary-400 text-white rounded-xl py-3 px-6 disabled:opacity-50"
             >
-                {loginMutation.isPending ? "در حال ورود..." : p.login}
+                {loginMutation.isPending ? <Spinner size={25}/> : p.login}
             </Button>
         </div>
     );

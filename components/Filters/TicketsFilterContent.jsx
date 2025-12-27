@@ -33,7 +33,6 @@ import { useTranslation } from "@/app/[locale]/TranslationContext";
 import TreeCategory from "@/components/ui/TreeCategory";
 import {Slider} from "@/components/ui/slider";
 
-// Memoize to prevent unnecessary re-renders
 const TicketsFilterContent = ({
                                   categoryTree,
                                   filters,
@@ -41,8 +40,6 @@ const TicketsFilterContent = ({
                                   priceRangeFromAPI,
                                   allData,s
                               }) => {
-    const dic = useTranslation();
-    const d = dic.public.register_ad.trip;
 
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 

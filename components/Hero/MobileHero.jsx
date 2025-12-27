@@ -45,7 +45,7 @@ const MobileHero = ({ slides }) => {
   };
 
   return (
-    <div className="relative flex flex-col items-center h-220 mt-10 max-h-110 w-full rounded-tr-[4rem] rounded-bl-[4rem] bg-[#4299C1] lg:hidden">
+    <div className="relative flex flex-col items-center h-220 max-h-110 w-full rounded-tr-[4rem] rounded-bl-[4rem] bg-[#4299C1] lg:hidden">
       {/* Navigation Arrows */}
       <div
         onClick={handlePrev}

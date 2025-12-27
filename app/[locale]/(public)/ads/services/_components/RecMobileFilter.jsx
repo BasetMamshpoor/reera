@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/drawer";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import FilterIcon from "@/assets/icons/filter.svg";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
 import ServicesFilterContent from "@/components/Filters/ServicesFilterContent";
 
 const RecMobileFilter = ({
@@ -61,17 +60,17 @@ const RecMobileFilter = ({
                     />
                 </div>
 
-                <DrawerFooter className="grid grid-cols-2 gap-4">
+                <DrawerFooter className="p-4 grid grid-cols-2 gap-4">
                     <button
+                        className="w-full py-3 bg-Primary-400 text-Gray-50 font-semibold rounded-xl cursor-pointer"
                         onClick={() => setIsDrawerOpen(false)}
-                        className="py-3 bg-Primary-500 text-white font-semibold rounded-xl cursor-pointer"
                     >
-                        اعمال فیلترها
+                        {s.apply_filters}
                     </button>
                     <DrawerClose asChild>
                         <button
-                            className="py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
-                            انصراف
+                            className="w-full py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
+                            {s.cancel}
                         </button>
                     </DrawerClose>
                 </DrawerFooter>
