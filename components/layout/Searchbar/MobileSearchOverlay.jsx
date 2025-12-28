@@ -1,12 +1,10 @@
 "use client";
 
-import React, {useState} from "react";
+import React from "react";
 import {
     Drawer,
     DrawerContent,
     DrawerHeader,
-    DrawerTitle,
-    DrawerDescription,
     DrawerFooter,
     DrawerClose,
 } from "@/components/ui/drawer";
@@ -14,11 +12,9 @@ import {Input} from "../../ui/input";
 import Close from "@/assets/icons/close.svg";
 import SearchIcon from "@/assets/icons/search.svg";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
-import {useSearchParams} from "next/navigation";
 import {useGlobalSearch} from "@/hooks/useGlobalSearch";
 
 const MobileSearchOverlay = ({mobileSearchFocus, setMobileSearchFocus}) => {
-    const [mobileSearchInput, setMobileSearchInput] = useState("");
     const dic = useTranslation();
     const s = dic.navbar;
     const { search, setSearch } = useGlobalSearch();

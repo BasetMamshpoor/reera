@@ -7,17 +7,17 @@ import {request} from "@/lib/api";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 
 export const CATEGORY_FILTER_KEYS = {
-    housing: ["currency_id", "verified", "bedrooms", "bathroom", "min_area", "max_area", "min_price", "max_price", "min_year", "max_year", "category_id"],
-    digital: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
-    vehicle: ["currency_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
-    visa: ["currency_id", "verified", "type_id", "max_price", "min_price"],
-    ticket: ["currency_id", "verified", "ticket_type_id", "max_price", "min_price"],
-    service: ["currency_id", "verified", "services_expertise_id", "max_price", "min_price"],
-    recruitment: ["currency_id", "verified", "recruitment_categories_id", "cooperation", "max_price", "min_price", "languages_id", "degree"],
-    personal: ["currency_id", "verified", "personal_ads_type_id", "condition", "max_price", "min_price", "gender"],
-    kitchen: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
-    business: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price"],
-    all_ads: ["currency_id", "verified", "category_id", "max_price", "min_price"],
+    housing: ["currency_id","city_id", "verified", "bedrooms", "bathroom", "min_area", "max_area", "min_price", "max_price", "min_year", "max_year", "category_id"],
+    digital: ["currency_id","city_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
+    vehicle: ["currency_id","city_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
+    visa: ["currency_id","city_id", "verified", "type_id", "max_price", "min_price"],
+    ticket: ["currency_id","city_id", "verified", "ticket_type_id", "max_price", "min_price"],
+    service: ["currency_id","city_id", "verified", "services_expertise_id", "max_price", "min_price"],
+    recruitment: ["currency_id","city_id", "verified", "recruitment_categories_id", "cooperation", "max_price", "min_price", "languages_id", "degree"],
+    personal: ["currency_id","city_id", "verified", "personal_ads_type_id", "condition", "max_price", "min_price", "gender"],
+    kitchen: ["currency_id","city_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
+    business: ["currency_id","city_id", "verified", "category_id", "condition", "min_price", "max_price"],
+    all_ads: ["currency_id","city_id", "verified", "category_id", "max_price", "min_price"],
 };
 
 export const useCategoryFilters = (categorySlug) => {
@@ -29,7 +29,6 @@ export const useCategoryFilters = (categorySlug) => {
     const prevCategoryRef = useRef(categorySlug);
     const [brandQuery, setBrandQuery] = useState();
     const allowedKeys = CATEGORY_FILTER_KEYS[categorySlug] || [];
-
     // ================= API Queries =================
     const {data: currencyRes} = useQuery({
         queryKey: ["currency"],
