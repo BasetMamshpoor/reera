@@ -77,7 +77,7 @@ const HamburgerMenu = ({
         className={`fixed ${positionClass} w-80 ${panelBackground} shadow-xl z-40 transform transition-transform duration-300 ease-in-out lg:hidden ${transformClass}`}
         dir={direction}
       >
-        <div className="h-full overflow-y-auto">{children}</div>
+        <div className="h-fit overflow-y-auto">{children}</div>
       </div>
     </>
   );

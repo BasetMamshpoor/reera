@@ -19,7 +19,6 @@ import {request} from "@/lib/api";
 import {toast} from "sonner";
 
 const JobSearch = ({item, d, tab, refetch, favorite}) => {
-    console.log(item)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isSoldDialogOpen, setIsSoldDialogOpen] = useState(false);
 

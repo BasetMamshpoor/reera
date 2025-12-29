@@ -3,7 +3,7 @@ import React from "react";
 import { useParams, usePathname } from "next/navigation";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import MainNavigationContent from "@/components/MainNavigationContent";
-import ProfileNavigationContent from "./ProfileNavigationContent"; // You'll create this
+import ProfileNavigationContent from "@/app/[locale]/(dashboard)/_components/DashboardSidebar"
 
 const NavigationMenuWrapper = () => {
   const params = useParams();

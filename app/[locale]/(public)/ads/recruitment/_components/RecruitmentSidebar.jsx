@@ -6,6 +6,7 @@ import useSwipeScroll from "@/hooks/useHorizontalScroll";
 import RecMobileFilter from "./RecMobileFilter";
 import RecruitmentFilterContent from "@/components/Filters/RecruitmentFilterContent";
 import {useCategoryFilters} from "@/hooks/useCategoryFilters";
+import {Skeleton} from "@/components/ui/skeleton";
 
 const RecruitmentSidebar = ({s}) => {
     const {
@@ -18,7 +19,9 @@ const RecruitmentSidebar = ({s}) => {
         languages,
         workType,
         degrees,
-        activeFilters
+        activeFilters,
+        filtersLoading,
+        functionRangeFromAPI,
     } = useCategoryFilters("recruitment");
     const scrollRef = useSwipeScroll();
 
@@ -30,27 +33,40 @@ const RecruitmentSidebar = ({s}) => {
         languages,
         degrees,
         workType,
-        allData: { currency: currencies},
+        filtersLoading,
+        functionRangeFromAPI,
+        allData: {currency: currencies},
     };
 
     return (
         <>
-            <div className="hidden lg:block border-2 rounded-xl p-6 h-fit">
-                <div className="flex justify-between items-center mb-4">
-                    <div className="flex gap-2 items-center">
-                        <Filter className="fill-Gray-950"/>
-                        <span>{s.filter}</span>
-                    </div>
-                    <button
-                        className="flex gap-2 items-center text-error-main cursor-pointer"
-                        onClick={clearAllFilters}
-                    >
-                        <span className="font-semibold">{s.clear_all}</span>
-                        <CloseSquare className="fill-error-main rotate-45"/>
-                    </button>
-                </div>
-                <RecruitmentFilterContent s={s} {...sharedProps} />
+            <div className=" hidden lg:block max-w-[360px] w-full">
+                {filtersLoading || !filters ?
+                    <div className="flex flex-col gap-4 p-4 border-2 border-default-divider rounded-xl">
+                        <div className="flex flex-col items-center gap-5 p-4">
+                            <Skeleton className="h-20 w-full"/>
+                            {Array.from({length: 6}).map((_, index) =>
+                                <Skeleton key={index} className="h-4 w-full"/>)}
+                        </div>
+                    </div> :
+                    <div className=" border-2 rounded-xl p-6 h-fit">
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="flex gap-2 items-center">
+                                <Filter className="fill-Gray-950"/>
+                                <span>{s.filter}</span>
+                            </div>
+                            <button
+                                className="flex gap-2 items-center text-error-main cursor-pointer"
+                                onClick={clearAllFilters}
+                            >
+                                <span className="font-semibold">{s.clear_all}</span>
+                                <CloseSquare className="fill-error-main rotate-45"/>
+                            </button>
+                        </div>
+                        <RecruitmentFilterContent s={s} {...sharedProps} />
+                    </div>}
             </div>
+
             <div ref={scrollRef} className="lg:hidden flex gap-4 overflow-x-auto scrollbar-hide px-4 pb-4">
                 <RecMobileFilter s={s} {...sharedProps} clearAllFilters={clearAllFilters}/>
                 {activeFilters.map((f) => (
@@ -63,7 +79,12 @@ const RecruitmentSidebar = ({s}) => {
                                 handleChange("max_price", priceRangeFromAPI.max);
                             } else if (f.key === "verified") {
                                 handleChange("verified", false);
-                            } else {
+                            }else if (f.key === "currency_id") {
+                                handleChange("currency_id", "");
+                                handleChange("min_price", priceRangeFromAPI.min);
+                                handleChange("max_price", priceRangeFromAPI.max);
+                            }
+                            else {
                                 handleChange(f.key, "");
                             }
                         }}

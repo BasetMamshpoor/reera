@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/drawer";
 import FilterIcon from "@/assets/icons/filter.svg";
 import CloseSquare from "@/assets/icons/closesquare.svg";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
 import RecruitmentFilterContent from "@/components/Filters/RecruitmentFilterContent";
 
 const RecMobileFilter = ({
@@ -21,9 +20,10 @@ const RecMobileFilter = ({
                              allData,
                              languages,
                              workType,
-                             degree,
+                             degrees,
                              clearAllFilters,
-                             s
+                             s,
+                             functionRangeFromAPI
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     return (
@@ -52,6 +52,7 @@ const RecMobileFilter = ({
 
                 <div className="overflow-y-auto flex-1 px-4 scrollbar-hide">
                     <RecruitmentFilterContent
+                        functionRangeFromAPI={functionRangeFromAPI}
                         s={s}
                         categoryTree={categoryTree}
                         allData={allData}
@@ -59,7 +60,7 @@ const RecMobileFilter = ({
                         handleChange={handleChange}
                         priceRangeFromAPI={priceRangeFromAPI}
                         languages={languages}
-                        degree={degree}
+                        degrees={degrees}
                         workType={workType}
                     />
                 </div>

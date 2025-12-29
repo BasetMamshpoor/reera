@@ -38,13 +38,11 @@ const TicketDetails = () => {
                     {uiState === "ticket" && !chat && <Modal a={a}/>}
                 </div>
                 <div className="w-full">
-                    {isLoading ? <div className="flex items-center justify-center w-full pt-6"><Spinner/></div> : chat ? (
-                        <Chats a={a} chat={chat} setChat={setChat}/>
-                    ) : uiState === "ticket" ? (
-                        <TableTicket data={data} a={a} chat={chat} setChat={setChat}/>
-                    ) : uiState === "no-ticket" ? (
-                        <Null a={a}/>
-                    ) : null}
+                    {isLoading ?
+                        <div className="flex items-center justify-center w-full pt-6"><Spinner/></div> :
+                        chat ? (<Chats a={a} chat={chat} setChat={setChat}/>) :
+                            uiState === "ticket" ? (<TableTicket data={data} a={a} chat={chat} setChat={setChat}/>) :
+                                uiState === "no-ticket" ? (<Null a={a}/>) : null}
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ import {Switch} from "@/components/ui/switch";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import TreeCategory from "@/components/ui/TreeCategory";
 import {Slider} from "@/components/ui/slider";
+import Spinner from "@/components/Spinner";
 
 const HousingFilterContent = ({
                                   categoryTree,
@@ -24,11 +25,10 @@ const HousingFilterContent = ({
                                   areaRangeFromAPI,
                                   bedroomsOptions,
                                   bathroomsOptions,
-                                  s
+                                  s,
+
                               }) => {
-    const dic = useTranslation();
-    const d = dic.public.register_ad.trip;
-    const formatPrice = (price) => new Intl.NumberFormat().format(price);
+    console.log(bedroomsOptions)
     return (
         <div className="flex flex-col gap-4 p-6 lg:p-0">
             {/* Categories */}
@@ -106,8 +106,8 @@ const HousingFilterContent = ({
             <div className="flex flex-col gap-4">
                 <Label>{s.price_range}</Label>
                 <Slider
+                    value={[filters?.min_price, filters.max_price]}
                     disabled={!filters.currency_id}
-                    value={[filters.min_price, filters.max_price]}
                     min={priceRangeFromAPI?.min}
                     max={priceRangeFromAPI?.max}
                     step={1000}
@@ -116,28 +116,28 @@ const HousingFilterContent = ({
                         handleChange("max_price", max);
                     }}
                 />
-                <div className="flex gap-2 mt-2">
+                <div className="flex gap-4 mt-2">
                     <Input
                         disabled={!filters.currency_id}
-                        value={formatPrice(filters.min_price)}
+                        value={filters.min_price}
                         onChange={(e) =>
                             handleChange(
                                 "min_price",
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Min price"
+                        placeholder={priceRangeFromAPI?.min}
                     />
                     <Input
                         disabled={!filters.currency_id}
-                        value={formatPrice(filters.max_price)}
+                        value={filters.max_price}
                         onChange={(e) =>
                             handleChange(
                                 "max_price",
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Max price"
+                        placeholder={priceRangeFromAPI?.max}
                     />
                 </div>
             </div>
@@ -163,7 +163,7 @@ const HousingFilterContent = ({
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Min year"
+                        placeholder={filters.min_year}
                     />
                     <Input
                         value={filters.max_year}
@@ -173,13 +173,13 @@ const HousingFilterContent = ({
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Max year"
+                        placeholder={filters.max_year}
                     />
                 </div>
             </div>
 
             <div className="flex flex-col gap-4 ">
-                <Label>{s.price_range || "area Range"}</Label>
+                <Label>{s.area_range || "area Range"}</Label>
                 <Slider
                     value={[filters.min_area, filters.max_area]}
                     min={areaRangeFromAPI?.min}
@@ -199,7 +199,7 @@ const HousingFilterContent = ({
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Min area"
+                        placeholder={areaRangeFromAPI.min}
                     />
                     <Input
                         value={filters.max_area}
@@ -209,7 +209,7 @@ const HousingFilterContent = ({
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Max area"
+                        placeholder={areaRangeFromAPI.max}
                     />
                 </div>
             </div>

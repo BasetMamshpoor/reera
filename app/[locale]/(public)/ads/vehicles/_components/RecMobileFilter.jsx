@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/drawer";
 import FilterIcon from "@/assets/icons/filter.svg";
 import CloseSquare from "@/assets/icons/closesquare.svg";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
 import Filter from "@/assets/icons/filter.svg";
 import VehiclesFilterContent from "@/components/Filters/VehiclesFilterContent";
 
@@ -23,6 +22,8 @@ const RecMobileFilter = ({
                              clearAllFilters,
                              categoryTree,
                              functionRangeFromAPI,
+                             yearRangeFromAPI,
+                             brands,
                              s
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -57,6 +58,8 @@ const RecMobileFilter = ({
 
                     <div className="overflow-y-auto flex-1 p-4">
                         <VehiclesFilterContent
+                            yearRangeFromAPI={yearRangeFromAPI}
+                            brands={brands}
                             s={s}
                             functionRangeFromAPI={functionRangeFromAPI}
                             categoryTree={categoryTree}

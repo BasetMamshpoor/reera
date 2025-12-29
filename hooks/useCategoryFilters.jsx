@@ -1,3 +1,5 @@
+"use client";
+
 import {useEffect, useMemo, useRef, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {useQuery} from "@tanstack/react-query";
@@ -5,17 +7,17 @@ import {request} from "@/lib/api";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 
 export const CATEGORY_FILTER_KEYS = {
-    housing: ["currency_id", "verified", "bedrooms", "bathroom", "min_area", "max_area", "min_price", "max_price", "min_year", "max_year", "category_id"],
-    digital: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
-    vehicle: ["currency_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
-    visa: ["currency_id", "verified", "type_id", "max_price", "min_price"],
-    ticket: ["currency_id", "verified", "ticket_type_id", "max_price", "min_price"],
-    service: ["currency_id", "verified", "services_expertise_id", "max_price", "min_price"],
-    recruitment: ["currency_id", "verified", "recruitment_categories_id", "cooperation", "max_price", "min_price", "languages_id", "degree"],
-    personal: ["currency_id", "verified", "personal_ads_type_id", "condition", "max_price", "min_price", "gender"],
-    kitchen: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
-    business: ["currency_id", "verified", "category_id", "condition", "min_price", "max_price"],
-    all_ads: ["currency_id", "verified", "category_id", "max_price", "min_price"],
+    housing: ["currency_id","city_id", "verified", "bedrooms", "bathroom", "min_area", "max_area", "min_price", "max_price", "min_year", "max_year", "category_id"],
+    digital: ["currency_id","city_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
+    vehicle: ["currency_id","city_id", "verified", "category_id", "min_year", "max_year", "min_function", "max_function", "min_price", "max_price", "brand_id", "model_id"],
+    visa: ["currency_id","city_id", "verified", "type_id", "max_price", "min_price"],
+    ticket: ["currency_id","city_id", "verified", "ticket_type_id", "max_price", "min_price"],
+    service: ["currency_id","city_id", "verified", "services_expertise_id", "max_price", "min_price"],
+    recruitment: ["currency_id","city_id", "verified", "recruitment_categories_id", "cooperation", "max_price", "min_price", "languages_id", "degree"],
+    personal: ["currency_id","city_id", "verified", "personal_ads_type_id", "condition", "max_price", "min_price", "gender"],
+    kitchen: ["currency_id","city_id", "verified", "category_id", "condition", "min_price", "max_price", "brand_id", "model_id"],
+    business: ["currency_id","city_id", "verified", "category_id", "condition", "min_price", "max_price"],
+    all_ads: ["currency_id","city_id", "verified", "category_id", "max_price", "min_price"],
 };
 
 export const useCategoryFilters = (categorySlug) => {
@@ -25,9 +27,9 @@ export const useCategoryFilters = (categorySlug) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const prevCategoryRef = useRef(categorySlug);
-    const [brandQuery, setBrandQuery] = useState()
+    const [brandQuery, setBrandQuery] = useState();
     const allowedKeys = CATEGORY_FILTER_KEYS[categorySlug] || [];
-
+    // ================= API Queries =================
     const {data: currencyRes} = useQuery({
         queryKey: ["currency"],
         queryFn: () => request({url: "/currency", method: "get"}),
@@ -49,26 +51,28 @@ export const useCategoryFilters = (categorySlug) => {
     const modelsData = filtersData.models || [];
     const mainCategories = filtersData.main_category || [];
 
+    // ================= Ranges =================
     const priceRangeFromAPI = useMemo(() => ({
-        min: Number(filtersData.min_price) || 0,
-        max: Number(filtersData.max_price) || 100000000,
+        min: filtersData?.min_price != null ? Number(filtersData.min_price) : 0,
+        max: filtersData?.max_price != null ? Number(filtersData.max_price) : 100000000,
     }), [filtersData]);
 
     const yearRangeFromAPI = useMemo(() => ({
-        min: Number(filtersData.min_year) || 1300,
-        max: Number(filtersData.max_year) || 2025,
+        min: filtersData?.min_year != null ? Number(filtersData.min_year) : 1300,
+        max: filtersData?.max_year != null ? Number(filtersData.max_year) : 2025,
     }), [filtersData]);
 
     const areaRangeFromAPI = useMemo(() => ({
-        min: Number(filtersData.min_area) || 0,
-        max: Number(filtersData.max_area) || 1000,
+        min: filtersData?.min_area != null ? Number(filtersData.min_area) : 0,
+        max: filtersData?.max_area != null ? Number(filtersData.max_area) : 1000,
     }), [filtersData]);
 
     const functionRangeFromAPI = useMemo(() => ({
-        min: Number(filtersData.minFunction) || 0,
-        max: Number(filtersData.maxFunction) || 1000000,
+        min: filtersData?.minFunction != null ? Number(filtersData.minFunction) : 0,
+        max: filtersData?.maxFunction != null ? Number(filtersData.maxFunction) : 1000000,
     }), [filtersData]);
 
+    // ================= Default Filters =================
     const defaultFilters = useMemo(() => ({
         category_id: "",
         brand_id: "",
@@ -90,16 +94,22 @@ export const useCategoryFilters = (categorySlug) => {
         min_function: functionRangeFromAPI.min,
         max_function: functionRangeFromAPI.max,
     }), [priceRangeFromAPI, yearRangeFromAPI, areaRangeFromAPI, functionRangeFromAPI]);
-    const [filters, setFilters] = useState(defaultFilters);
 
-    useEffect(() => {
-        setBrandQuery(filters.brand_id || null,);
-    }, [filters.brand_id]);
-
-
+    // ================= State =================
+    const [filters, setFilters] = useState(null);
     const [hydrated, setHydrated] = useState(false);
 
-    // 4️⃣ RESET ON CATEGORY CHANGE
+    // ================= Hydrate Filters =================
+    useEffect(() => {
+        if (filtersLoading || filters) return;
+        setFilters(defaultFilters);
+    }, [filtersLoading, defaultFilters, filters]);
+
+    useEffect(() => {
+        if (!filters) return;
+        setBrandQuery(filters.brand_id || null);
+    }, [filters?.brand_id]);
+
     useEffect(() => {
         if (prevCategoryRef.current !== categorySlug) {
             prevCategoryRef.current = categorySlug;
@@ -109,37 +119,34 @@ export const useCategoryFilters = (categorySlug) => {
         }
     }, [categorySlug, defaultFilters, router]);
 
-    // 5️⃣ HYDRATE FROM URL
-// 5️⃣ HYDRATE FROM URL
     useEffect(() => {
-        if (hydrated || !categorySlug) return;
+        if (hydrated || !categorySlug || !filters) return;
 
         const nextFilters = {...defaultFilters};
-
         searchParams.forEach((value, key) => {
             if (!allowedKeys.includes(key)) return;
-
             if (value === "true") nextFilters[key] = true;
             else if (value === "false") nextFilters[key] = false;
             else if (!isNaN(value)) nextFilters[key] = Number(value);
             else nextFilters[key] = value;
         });
-
         setFilters(nextFilters);
         setHydrated(true);
-    }, [hydrated, categorySlug, searchParams, allowedKeys, defaultFilters]);
+    }, [hydrated, categorySlug, searchParams, allowedKeys, defaultFilters, filters]);
 
+    const isDefaultValue = (key, value) => {
+        if (!(key in defaultFilters)) return false;
+        return String(value) === String(defaultFilters[key]);
+    };
 
-    // 6️⃣ SYNC TO URL
     useEffect(() => {
-        if (!hydrated) return;
+        if (!hydrated || !filters) return;
 
         const params = new URLSearchParams();
-
         Object.entries(filters).forEach(([key, value]) => {
             if (!allowedKeys.includes(key)) return;
             if (value === "" || value === false || value === null) return;
-
+            if (isDefaultValue(key, value)) return;
             params.set(key, String(value));
         });
 
@@ -149,13 +156,10 @@ export const useCategoryFilters = (categorySlug) => {
         if (newQuery !== currentQuery) {
             router.replace(`?${newQuery}`, {scroll: false});
         }
-    }, [filters, hydrated, allowedKeys, router, searchParams]);
+    }, [filters, hydrated, allowedKeys, router, searchParams, defaultFilters]);
 
-
-    // 7️⃣ HANDLERS
     const handleChange = (key, value) => {
         if (!allowedKeys.includes(key)) return;
-
         setFilters(prev => ({
             ...prev,
             [key]: value,
@@ -164,18 +168,17 @@ export const useCategoryFilters = (categorySlug) => {
     };
 
     const clearAllFilters = () => {
-        setFilters(defaultFilters);
+        if (defaultFilters) setFilters(defaultFilters);
         router.replace("?", {scroll: false});
     };
 
-    // 8️⃣ CATEGORY TREE
     const categoryTree = useMemo(() => mainCategories.map(cat => ({
         id: cat.id,
         label: cat.category,
-        children: String(filters.category_id) === String(cat.id)
+        children: String(filters?.category_id) === String(cat.id)
             ? filtersData.selected_category || []
             : [],
-    })), [mainCategories, filters.category_id, filtersData]);
+    })), [mainCategories, filters?.category_id, filtersData]);
 
     const workType = [
         {id: "full_time", title: s.full_time},
@@ -192,20 +195,12 @@ export const useCategoryFilters = (categorySlug) => {
     ];
 
     const bedroomsOptions = [
-        {id: "1", label: s.bedroom_1},
-        {id: "2", label: s.bedroom_2},
-        {id: "3", label: s.bedroom_3},
-        {id: "4", label: s.bedroom_4},
+        {id: "1", label: s.bedroom_1 || "rgr"},
+        {id: "2", label: s.bedroom_2 || "rgr"},
+        {id: "3", label: s.bedroom_3 || "rgr"},
+        {id: "4", label: s.bedroom_4 || "rgr"},
         {id: "5_plus", label: s.plus_bedroom},
     ];
-
-    const languages = useMemo(() => {
-        if (!filtersData.language || !Array.isArray(filtersData.language)) return [];
-        return filtersData.language.map((lang) => ({
-            id: lang.id,
-            title: lang.title,
-        }));
-    }, [filtersData]);
 
     const bathroomsOptions = [
         {id: "1", label: s.bathroom_1},
@@ -215,59 +210,49 @@ export const useCategoryFilters = (categorySlug) => {
         {id: "5_plus", label: s.plus_bathroom},
     ];
 
+    const languages = useMemo(() => {
+        if (!filtersData.language || !Array.isArray(filtersData.language)) return [];
+        return filtersData.language.map(lang => ({id: lang.id, title: lang.title}));
+    }, [filtersData]);
 
+    // ================= Active Filters =================
     const activeFilters = useMemo(() => {
         if (!filters || !filtersData) return [];
-
         const list = [];
 
+        // Categories
         if (filters.category_id) {
-            const cat = mainCategories.find(c => c.id.toString() === filters.category_id.toString());
+            const cat = mainCategories.find(c => String(c.id) === String(filters.category_id));
             if (cat) list.push({key: "category_id", label: cat.category || cat.name || cat.title});
         }
-
-        if (filters.recruitment_categories_id) {
-            const cat = mainCategories.find(c => c.id.toString() === filters.recruitment_categories_id.toString());
-            if (cat) list.push({key: "recruitment_categories_id", label: cat.category});
-        }
-
-        if (filters.personal_ads_type_id) {
-            const cat = mainCategories.find(c => c.id.toString() === filters.personal_ads_type_id.toString());
-            if (cat) list.push({key: "personal_ads_type_id", label: cat.category});
-        }
-
-        if (filters.type_id) {
-            const cat = mainCategories.find(c => c.id.toString() === filters.type_id.toString());
-            if (cat) list.push({key: "type_id", label: cat.category});
+        if (filters.services_expertise_id) {
+            const cat = mainCategories.find(c => String(c.id) === String(filters.services_expertise_id));
+            if (cat) list.push({key: "services_expertise_id", label: cat.category || cat.name || cat.title});
         }
 
         if (filters.ticket_type_id) {
-            const cat = mainCategories.find(c => c.id.toString() === filters.ticket_type_id.toString());
-            if (cat) list.push({key: "ticket_type_id", label: cat.category});
+            const cat = mainCategories.find(c => String(c.id) === String(filters.ticket_type_id));
+            if (cat) list.push({key: "ticket_type_id", label: cat.category || cat.name || cat.title});
         }
 
-        if (filters.services_expertise_id) {
-            const cat = mainCategories.find(c => c.id.toString() === filters.services_expertise_id.toString());
-            if (cat) list.push({key: "services_expertise_id", label: cat.category});
+        if (filters.type_id) {
+            const cat = mainCategories.find(c => String(c.id) === String(filters.type_id));
+            if (cat) list.push({key: "type_id", label: cat.category || cat.name || cat.title});
         }
 
+        // Other filters
         if (filters.brand_id) {
-            const brand = brands.find(b => b.id.toString() === filters.brand_id.toString());
+            const brand = brands.find(b => String(b.id) === String(filters.brand_id));
             if (brand) list.push({key: "brand_id", label: brand.name});
         }
 
         if (filters.model_id) {
-            const model = modelsData.find(m => m.id.toString() === filters.model_id.toString());
+            const model = modelsData.find(m => String(m.id) === String(filters.model_id));
             if (model) list.push({key: "model_id", label: model.name});
         }
 
         if (filters.condition) {
-            const conditionLabels = {
-                new: s.new,
-                almost_new: s.almost_new,
-                used: s.used,
-                needs_repair: s.needs_repair,
-            };
+            const conditionLabels = {new: s.new, almost_new: s.almost_new, used: s.used, needs_repair: s.needs_repair};
             list.push({key: "condition", label: conditionLabels[filters.condition] || filters.condition});
         }
 
@@ -278,7 +263,7 @@ export const useCategoryFilters = (categorySlug) => {
         }
 
         if (Number(filters.min_year) !== yearRangeFromAPI.min || Number(filters.max_year) !== yearRangeFromAPI.max) {
-            list.push({key: "year", label: `${filters.min_year} - ${filters.max_year}`});
+            list.push({key: "year_range", label: `${filters.min_year} - ${filters.max_year}`});
         }
 
         if (Number(filters.min_area) !== areaRangeFromAPI.min || Number(filters.max_area) !== areaRangeFromAPI.max) {
@@ -290,17 +275,14 @@ export const useCategoryFilters = (categorySlug) => {
         if (Number(filters.min_function) !== functionRangeFromAPI.min || Number(filters.max_function) !== functionRangeFromAPI.max) {
             const minLabel = Number(filters.min_function).toLocaleString("fa-IR");
             const maxLabel = Number(filters.max_function).toLocaleString("fa-IR");
-            list.push({key: "function", label: <> {minLabel} - {maxLabel}  {s.km} </>});
+            list.push({key: "function_range", label: <> {minLabel} - {maxLabel} {s.km} </>});
         }
 
-        if (filters.verified) {
-            list.push({key: "verified", label: s.verified_ads});
-        }
+        if (filters.verified) list.push({key: "verified", label: s.verified_ads});
 
-        // زبان
-        if (filters.language_id) {
-            const lang = languages.find(l => l.id.toString() === filters.language_id.toString());
-            if (lang) list.push({key: "language_id", label: lang.title});
+        if (filters.languages_id) {
+            const lang = languages.find(l => String(l.id) === String(filters.languages_id));
+            if (lang) list.push({key: "languages_id", label: lang.title});
         }
 
         if (filters.cooperation) {
@@ -314,7 +296,7 @@ export const useCategoryFilters = (categorySlug) => {
         }
 
         if (filters.currency_id) {
-            const currency = currencies.find(c => c.id.toString() === filters.currency_id.toString());
+            const currency = currencies.find(c => String(c.id) === String(filters.currency_id));
             if (currency) list.push({key: "currency_id", label: `${currency.title} (${currency.code})`});
         }
 
@@ -327,7 +309,6 @@ export const useCategoryFilters = (categorySlug) => {
             const bathroomItem = bathroomsOptions.find(b => String(b.id) === String(filters.bathroom));
             if (bathroomItem) list.push({key: "bathroom", label: bathroomItem.label});
         }
-
 
         return list;
     }, [
@@ -346,23 +327,11 @@ export const useCategoryFilters = (categorySlug) => {
         degrees,
         bedroomsOptions,
         bathroomsOptions,
-        s,
+        s
     ]);
-
-    // 🔹 PREPARE API QUERY (flat for backend)
-    const apiFilters = useMemo(() => {
-        const q = {};
-        Object.entries(filters).forEach(([key, value]) => {
-            if (!allowedKeys.includes(key)) return;
-            if (value === "" || value === false || value === null) return;
-            q[key] = value;
-        });
-        return q;
-    }, [filters, allowedKeys]);
 
     return {
         filters,
-        apiFilters,
         handleChange,
         clearAllFilters,
         categoryTree,

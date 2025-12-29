@@ -43,10 +43,9 @@ const RecruitmentFilterContent = ({
                                       languages,
                                       workType,
                                       degrees,
+                                      functionRangeFromAPI,
                                       s
                                   }) => {
-   const dic = useTranslation();
-    const d = dic.public.register_ad.trip;
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
@@ -134,7 +133,7 @@ const RecruitmentFilterContent = ({
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
-                            <SelectItem key={c.id} value={c.id.toString}>
+                            <SelectItem key={c.id} value={c.id}>
                                 {c.title} ({c.code})
                             </SelectItem>
                         ))}
@@ -145,8 +144,8 @@ const RecruitmentFilterContent = ({
             <div className="flex flex-col gap-4">
                 <Label>{s.price_range}</Label>
                 <Slider
+                    value={[filters?.min_price, filters.max_price]}
                     disabled={!filters.currency_id}
-                    value={[filters.min_price, filters.max_price]}
                     min={priceRangeFromAPI?.min}
                     max={priceRangeFromAPI?.max}
                     step={1000}
@@ -155,7 +154,7 @@ const RecruitmentFilterContent = ({
                         handleChange("max_price", max);
                     }}
                 />
-                <div className="flex gap-2">
+                <div className="flex gap-4 mt-2">
                     <Input
                         disabled={!filters.currency_id}
                         value={formatPrice(filters.min_price)}
@@ -165,7 +164,7 @@ const RecruitmentFilterContent = ({
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Min price"
+                        placeholder={priceRangeFromAPI?.min}
                     />
                     <Input
                         disabled={!filters.currency_id}
@@ -176,7 +175,7 @@ const RecruitmentFilterContent = ({
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Max price"
+                        placeholder={priceRangeFromAPI?.max}
                     />
                 </div>
             </div>

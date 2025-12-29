@@ -41,9 +41,6 @@ const VisaFilterContent = ({
                                allData,
                                s
                            }) => {
-    const dic = useTranslation();
-    const d = dic.public.register_ad.trip;
-
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
     return (
@@ -124,9 +121,8 @@ const VisaFilterContent = ({
             </div>
 
 
-            {/* Verified */}
             <div className="flex items-center justify-between mt-2">
-                <p className="text-lg font-[500] text-Gray-800">{s.verified_ads}</p>
+                <p className="text-lg font-medium text-Gray-800">{s.verified_ads}</p>
                 <Switch
                     checked={filters.verified}
                     onCheckedChange={(val) => handleChange("verified", val)}

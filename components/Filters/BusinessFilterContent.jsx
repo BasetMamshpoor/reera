@@ -38,12 +38,9 @@ const BusinessFilterContent = ({
                                    handleChange,
                                    priceRangeFromAPI,
                                    modelsData,
-                                   allData
+                                   allData,
+                                   s
                                }) => {
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
-    const d = dic.public.register_ad.trip;
-
     const formatPrice = (price) => new Intl.NumberFormat().format(price);
 
 
@@ -71,7 +68,7 @@ const BusinessFilterContent = ({
                     onValueChange={(val) => handleChange("condition", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={s.select_condition || "انتخاب وضعیت"}/>
+                        <SelectValue placeholder={s.select_condition || "انتخاب وضعیت کالا"}/>
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
@@ -85,17 +82,17 @@ const BusinessFilterContent = ({
             </div>
 
             <div className="flex flex-col gap-2 w-full">
-                <Label>{d.currency || "ارز"}</Label>
+                <Label>{s.currency || "ارز"}</Label>
                 <Select
                     value={filters?.currency_id}
                     onValueChange={(val) => handleChange("currency_id", val)}
                 >
                     <SelectTrigger className="w-full border border-default-divider rounded-lg">
-                        <SelectValue placeholder={d.select_currency || "انتخاب ارز"}/>
+                        <SelectValue placeholder={s.select_currency || "انتخاب ارز"}/>
                     </SelectTrigger>
                     <SelectContent>
                         {allData?.currency?.map((c) => (
-                            <SelectItem key={c.id} value={c.id.toString()}>
+                            <SelectItem key={c.id} value={c.id}>
                                 {c.title} ({c.code})
                             </SelectItem>
                         ))}
@@ -104,40 +101,40 @@ const BusinessFilterContent = ({
             </div>
 
             <div className="flex flex-col gap-2">
-                <Label>{s.price_range || "Price Range"}</Label>
+                <Label>{s.price_range}</Label>
                 <Slider
-                    disabled={!filters?.currency_id}
-                    value={[filters?.min_price, filters?.max_price]}
+                    value={[filters?.min_price,filters.max_price]}
+                    disabled={!filters.currency_id}
                     min={priceRangeFromAPI?.min}
                     max={priceRangeFromAPI?.max}
-                    step={0}
+                    step={1000}
                     onValueChange={([min, max]) => {
                         handleChange("min_price", min);
                         handleChange("max_price", max);
                     }}
                 />
-                <div className="flex gap-2">
+                <div className="flex gap-4 mt-2">
                     <Input
-                        disabled={!filters?.currency_id}
-                        value={formatPrice(filters?.min_price)}
+                        disabled={!filters.currency_id}
+                        value={formatPrice(filters.min_price)}
                         onChange={(e) =>
                             handleChange(
                                 "min_price",
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Min price"
+                        placeholder={priceRangeFromAPI?.min}
                     />
                     <Input
-                        disabled={!filters?.currency_id}
-                        value={formatPrice(filters?.max_price)}
+                        disabled={!filters.currency_id}
+                        value={formatPrice(filters.max_price)}
                         onChange={(e) =>
                             handleChange(
                                 "max_price",
                                 Number(e.target.value.replace(/,/g, ""))
                             )
                         }
-                        placeholder="Max price"
+                        placeholder={priceRangeFromAPI?.max}
                     />
                 </div>
             </div>

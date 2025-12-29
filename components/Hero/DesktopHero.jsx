@@ -39,7 +39,7 @@ const DesktopHero = ({slides}) => {
     };
 
     return (
-        <div className="hidden relative w-full h-150 mt-12 lg:flex flex-row rtl:flex-row-reverse">
+        <div className="hidden relative w-full h-150 lg:flex flex-row rtl:flex-row-reverse">
             {/* Image Slider Section */}
             <div
                 className="absolute h-full w-1/2 rounded-tr-[100px] bg-[#4299C1] z-[3] rounded-bl-[100px] flex justify-center items-center p-12">

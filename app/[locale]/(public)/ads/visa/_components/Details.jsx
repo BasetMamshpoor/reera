@@ -16,7 +16,7 @@ const Details = ({locale, page}) => {
                 </div>
                 <div className="flex gap-6 lg:flex-row flex-col">
                     <VisaSidebar s={s}/>
-                    <AdvsRes link={`/${locale}/ads`} page={page}/>
+                    <AdvsRes link={`/${locale}/ads`} page={page} category_slug={"visa"}/>
                 </div>
             </div>
         </>

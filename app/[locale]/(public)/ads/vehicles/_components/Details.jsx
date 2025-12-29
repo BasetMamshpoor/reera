@@ -15,8 +15,8 @@ const Details = ({locale, page}) => {
                     <p className="text-4xl text-Primary-400 font-bold">{s.vehicles}</p>
                 </div>
                 <div className="flex gap-6 lg:flex-row flex-col">
-                    <VehicesSidebar s={s}/>
-                    <AdvsRes link={`/${locale}/ads`} page={page}/>
+                    <VehicesSidebar  s={s}/>
+                    <AdvsRes link={`/${locale}/ads`} page={page} category_slug={"vehicles"}/>
                 </div>
             </div>
         </>
