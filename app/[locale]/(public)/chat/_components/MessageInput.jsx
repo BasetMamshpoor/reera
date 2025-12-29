@@ -3,7 +3,7 @@
 import React from 'react';
 import Paperclip from "@/assets/icons/paperclip.svg";
 import { Mic } from "lucide-react";
-import Trash from "@/assets/icons/trash.svg";
+import Trash from "@/assets/icons/Trash.svg";
 
 const MessageInput = ({
                           isGlobalChat, // جدید: آیا چت جهانی هست؟
