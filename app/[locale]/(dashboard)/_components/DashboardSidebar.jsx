@@ -73,9 +73,9 @@ const DashboardSidebar = () => {
     };
     return (
         <div
-            className="flex flex-col gap-8 border border-[#D1D5DB] dark:border-[#374151] bg-[#F9FAFB] dark:bg-[#14181D] rounded-2xl [box-shadow:0_2px_32px_0_rgba(28,_28,_28,_0.06)] w-full max-w-80 h-fit sticky top-4">
+            className="max-h-[85vh] h-fit lg:max-h-[100vh] overflow-y-auto scrollbar-hide flex flex-col gap-8 border border-default-divider bg-Surface-2 rounded-2xl shadow-lg w-full max-w-80 lg:sticky lg:top-4">
             {/* Rest of the component remains the same */}
-            <div className="relative w-full rounded-t-2xl overflow-hidden">
+            <div className="relative w-full rounded-t-2xl lg:overflow-hidden">
                 <Image
                     src={"/images/city-profile.jpg"}
                     alt="image"
@@ -84,7 +84,7 @@ const DashboardSidebar = () => {
                     className="w-screen"
                 />
                 <div className="w-full absolute -bottom-1">
-                    <ImageOverlay className="!w-full !h-full fill-[#F9FAFB] dark:fill-[#14181D]"/>
+                    <ImageOverlay className="!w-full !h-full fill-Surface-2"/>
                 </div>
                 <div className="w-full px-5 absolute z-30 bottom-0">
                     <div

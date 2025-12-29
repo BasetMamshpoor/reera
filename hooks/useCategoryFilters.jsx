@@ -134,7 +134,6 @@ export const useCategoryFilters = (categorySlug) => {
         setHydrated(true);
     }, [hydrated, categorySlug, searchParams, allowedKeys, defaultFilters, filters]);
 
-    // ================= Helpers =================
     const isDefaultValue = (key, value) => {
         if (!(key in defaultFilters)) return false;
         return String(value) === String(defaultFilters[key]);
@@ -159,7 +158,6 @@ export const useCategoryFilters = (categorySlug) => {
         }
     }, [filters, hydrated, allowedKeys, router, searchParams, defaultFilters]);
 
-    // ================= Handlers =================
     const handleChange = (key, value) => {
         if (!allowedKeys.includes(key)) return;
         setFilters(prev => ({
@@ -174,7 +172,6 @@ export const useCategoryFilters = (categorySlug) => {
         router.replace("?", {scroll: false});
     };
 
-    // ================= Category Tree =================
     const categoryTree = useMemo(() => mainCategories.map(cat => ({
         id: cat.id,
         label: cat.category,
@@ -183,7 +180,6 @@ export const useCategoryFilters = (categorySlug) => {
             : [],
     })), [mainCategories, filters?.category_id, filtersData]);
 
-    // ================= Options =================
     const workType = [
         {id: "full_time", title: s.full_time},
         {id: "part_time", title: s.part_time},

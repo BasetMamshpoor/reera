@@ -14,9 +14,6 @@ const Details = () => {
     const dic = useTranslation();
     const d = dic.public.profile.dashboard;
 
-
-    // const [label, setLabel] = useState([]);
-
     const [selected, setSelected] = useState([]);
     const {locale} = useParams();
 
@@ -41,8 +38,8 @@ const Details = () => {
             <div
                 className="flex flex-col dark:bg-[#252C36] w-full border border-gray-200 dark:border-[#374151] rounded-xl">
                 <div className="hidden lg:flex items-center gap-2 p-5 border-b dark:border-[#374151] border-gray-200">
-                    <Layer className="fill-gray-800 dark:fill-gray-200"/>
-                    <p className="text-xl dark:text-[#E0E2E5] text-black font-bold pt-1">
+                    <Layer className="fill-Gray-800"/>
+                    <p className="text-xl text-Gray-950 font-bold pt-1">
                         {d.dashboard}
                     </p>
                 </div>

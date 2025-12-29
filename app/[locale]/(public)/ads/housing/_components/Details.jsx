@@ -4,7 +4,7 @@ import AdvsRes from "@/app/[locale]/(public)/ads/_components/AdvsRes";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import HousingSidebar from "./HousingSidebar";
 
-const Details = ({locale, page,city_id}) => {
+const Details = ({locale, page}) => {
     const dic = useTranslation();
     const s = dic.all_ads.sidebar;
     return (
@@ -16,7 +16,7 @@ const Details = ({locale, page,city_id}) => {
                 </div>
                 <div className="flex gap-6 lg:flex-row flex-col">
                     <HousingSidebar s={s}/>
-                    <AdvsRes link={`/${locale}/ads`} page={page}/>
+                    <AdvsRes link={`/${locale}/ads`} page={page} category_slug={"housing"}/>
                 </div>
             </div>
         </>

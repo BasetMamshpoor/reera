@@ -99,6 +99,7 @@
     "sidebar": {
       "all": "All",
       "filter": "Filter",
+      "business": "Business",
       "vehicles": "Vehicles",
       "home_kitchen": "Home & Kitchen",
       "personal_items": "Personal Items",
@@ -240,7 +241,9 @@
       "select_languages": "Select Languages",
       "number_of_bedrooms": "Number of Bedrooms",
       "select_model": "Select model",
-      "area_range": "Area Range"
+      "area_range": "Area Range",
+      "condition": "Condition",
+      "select_condition": "Select Condition"
     }
   },
   "consultor": {

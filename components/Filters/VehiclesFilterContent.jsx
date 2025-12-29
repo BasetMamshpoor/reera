@@ -12,7 +12,6 @@ import {
 import {Switch} from "@/components/ui/switch";
 import TreeCategory from "@/components/ui/TreeCategory";
 import {Slider} from "@/components/ui/slider";
-import Spinner from "@/components/Spinner";
 
 const VisaFilterContent = ({
                                categoryTree,

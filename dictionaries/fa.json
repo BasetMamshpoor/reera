@@ -98,6 +98,7 @@
     },
     "sidebar": {
       "all": "همه",
+      "business": "بازرگانی",
       "filter": "فیلتر",
       "home_kitchen": "خانه و آشپزخانه",
       "personal_items": "وسایل شخصی",
@@ -183,9 +184,6 @@
       "decorative_items": "لوازم تزئینی",
       "heating_cooling": "گرمایش و سرمایش",
       "cleaning": "تمیزکاری",
-      "new": "نو",
-      "almost_new": "در حد نو",
-      "second_hand": "کارکرده",
       "oldest": "قدیمی\u200Cترین",
       "popular": "محبوب ترین",
       "expensive": "گران ترین",
@@ -209,8 +207,6 @@
       "bathroom_3": "3 سرویس بهداشتی",
       "bathroom_4": "4 سرویس بهداشتی",
       "plus_bathroom": "۵ سرویس و بیشتر",
-      "used": "کارکرده",
-      "needs_repair": "نیاز به تعمیر",
       "meter": "متر",
       "km": "کیلومتر",
       "ads": "آگهی‌های",
@@ -240,7 +236,14 @@
       "type_visa": "نوع ویزا",
       "apply_filters": "اعمال فیلترها",
       "cancel": "انصراف",
-      "area_range": "بازه متراژ"
+      "area_range": "بازه متراژ",
+      "condition": "وضعیت کالا",
+      "select_condition": "انتخاب وضعیت کالا",
+      "new": "نو",
+      "almost_new": "در حد نو",
+      "second_hand": "کارکرده",
+      "used": "کارکرده",
+      "needs_repair": "نیاز به تعمیر"
     }
   },
   "consultor": {

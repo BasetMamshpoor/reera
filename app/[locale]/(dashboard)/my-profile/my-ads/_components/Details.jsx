@@ -39,7 +39,7 @@ const Details = () => {
                     defaultValue="all"
                     className="py-6"
                 >
-                    <TabsList className="flex items-center gap-6 overflow-x-auto">
+                    <TabsList className="flex items-center gap-4 scrollbar-hide lg:gap-6 overflow-x-auto">
                         <TabsTrigger
                             className="flex items-center max-w-[133px] w-full gap-4 px-3 py-2 border border-default-divider rounded-lg data-[state=active]:bg-Primary-400 data-[state=active]:text-white cursor-pointer"
                             value="all"

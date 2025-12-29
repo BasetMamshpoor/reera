@@ -3,7 +3,6 @@ import {
     Drawer,
     DrawerClose,
     DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
@@ -11,7 +10,6 @@ import {
 } from "@/components/ui/drawer";
 import CloseSquare from "@/assets/icons/closesquare.svg";
 import FilterIcon from "@/assets/icons/filter.svg";
-import {useTranslation} from "@/app/[locale]/TranslationContext";
 import Filter from "@/assets/icons/filter.svg";
 import BusinessFilterContent from "@/components/Filters/BusinessFilterContent";
 
@@ -22,12 +20,10 @@ const RecMobileFilter = ({
                              priceRangeFromAPI,
                              modelsData,
                              clearAllFilters,
-                             categoryTree
+                             categoryTree,
+                             s
                          }) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const dic = useTranslation();
-    const s = dic.all_ads.sidebar;
-
 
     return (
 
@@ -41,13 +37,13 @@ const RecMobileFilter = ({
                     </button>
                 </DrawerTrigger>
 
-                <DrawerContent className="h-[100vh]">
+                <DrawerContent className="h-[85vh]">
                     <DrawerHeader className="flex p-4">
                         <DrawerTitle>{s.filter}</DrawerTitle>
                         <DrawerClose asChild>
                             <div className="flex justify-between items-center">
                                 <div className="flex gap-2 items-center">
-                                    <Filter className="dark:fill-Gray-50"/>
+                                    <Filter className="fill-Gray-950"/>
                                     <span>{s.filter}</span>
                                 </div>
                                 <button
@@ -63,6 +59,7 @@ const RecMobileFilter = ({
 
                     <div className="overflow-y-auto flex-1 p-4">
                         <BusinessFilterContent
+                            s={s}
                             categoryTree={categoryTree}
                             allData={allData}
                             filters={filters}
@@ -74,15 +71,15 @@ const RecMobileFilter = ({
 
                     <DrawerFooter className="p-4 grid grid-cols-2 gap-4">
                         <button
-                            className="w-full py-3 bg-Primary-400 text-Gray-50 font-semibold rounded-xl"
+                            className="w-full py-3 bg-Primary-400 text-Gray-50 font-semibold rounded-xl cursor-pointer"
                             onClick={() => setIsDrawerOpen(false)}
                         >
-                            اعمال فیلترها
+                            {s.apply_filters}
                         </button>
                         <DrawerClose asChild>
                             <button
-                                className="w-full py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl">
-                                انصراف
+                                className="w-full py-3 border-2 border-Gray-300 text-Gray-700 font-semibold rounded-xl cursor-pointer">
+                                {s.cancel}
                             </button>
                         </DrawerClose>
                     </DrawerFooter>
