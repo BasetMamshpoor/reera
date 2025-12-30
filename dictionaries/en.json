@@ -484,7 +484,10 @@
         "support_ticket": "Support Ticket",
         "transactions_list": "Transactions List",
         "digital_currency": "Digital Currency",
-        "exit": "Exit"
+        "exit": "Exit",
+        "register": "Register Ad",
+        "profile": "Profile",
+        "Password": "Change password"
       }
     }
   },

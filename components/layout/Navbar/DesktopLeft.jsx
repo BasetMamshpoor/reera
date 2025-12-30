@@ -29,6 +29,10 @@ const DesktopLeft = ({}) => {
         ? `/${locale}/my-profile`
         : `/${locale}/login`;
 
+    const chatUrl = session?.user
+        ? `/${locale}/chat`
+        : `/${locale}/login`;
+
     const registerAdLink = session?.user
         ? `/${locale}/register-ad`
         : `/${locale}/login?callbackUrl=/${locale}/register-ad`;
@@ -84,7 +88,7 @@ const DesktopLeft = ({}) => {
             </Link>
 
             <Link
-                href={`/${locale}/chat`}
+                href={chatUrl}
                 aria-label="Messages"
                 className="bg-transparent border-2 border-gray-500 dark:border-white p-2.5 rounded-lg cursor-pointer hover:scale-105 transition-all"
             >
