@@ -84,6 +84,9 @@ const OtpPage = ({ email, phone, onEdit, p, mode = "signup" }) => {
                 </div>
             </div>
 
+
+
+
             <div className="flex flex-col gap-4">
                 <span className="text-sm text-Gray-600 text-center">{p.enter_6_digit_code}</span>
                 <div className="flex justify-center">
