@@ -20,7 +20,7 @@ import List from "@/assets/icons/Card Recive.svg";
 import {useParams, usePathname, useRouter} from "next/navigation";
 import {useTranslation} from "@/app/[locale]/TranslationContext";
 import {signOut} from "next-auth/react";
-
+import Password from "@/assets/icons/settings.svg"
 const SidebarLink = ({href, icon: Icon, label}) => {
     const dic = useTranslation();
     const pathname = usePathname();
@@ -108,6 +108,11 @@ const DashboardSidebar = () => {
                 </div>
             </div>
             <div className="flex flex-col pb-6">
+                <SidebarLink
+                    href={`/${locale}/my-profile/password`}
+                    icon={Password}
+                    label={p.Password}
+                />
                 <SidebarLink
                     href={`/${locale}/my-profile`}
                     icon={Edit}

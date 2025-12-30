@@ -484,7 +484,10 @@
         "support_ticket": "تیکت پشتیبانی",
         "transactions_list": "لیست تراکنش‌ها",
         "digital_currency": "ارز دیجیتال",
-        "exit": "خروج"
+        "exit": "خروج",
+        "register": "ثبت آگهی",
+        "profile": "پروفایل",
+        "Password": "تغییر رمز"
       }
     }
   },

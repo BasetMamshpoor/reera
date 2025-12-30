@@ -6,7 +6,7 @@ import { Mic } from "lucide-react";
 import Trash from "@/assets/icons/Trash.svg";
 
 const MessageInput = ({
-                          isGlobalChat, // جدید: آیا چت جهانی هست؟
+                          isGlobalChat,
                           messageText,
                           setMessageText,
                           selectedFile,
@@ -15,7 +15,6 @@ const MessageInput = ({
                           setRecordedVoice,
                           voiceDuration,
                           isRecording,
-                          setIsRecording,
                           recordingTime,
                           isCanceling,
                           fileInputRef,
@@ -33,8 +32,6 @@ const MessageInput = ({
                           stopRecording,
                           cancelRecording,
                           setVoiceDuration,
-                          setRecordingTime,
-                          setIsCanceling
                       }) => {
     if (isBlocked) {
         return (
