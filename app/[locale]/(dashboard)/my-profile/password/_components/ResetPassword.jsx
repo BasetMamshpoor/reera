@@ -51,11 +51,6 @@ const ResetPassword = () => {
         },
         onSuccess: (data) => {
             toast.success(data?.message || "رمز عبور با موفقیت تغییر یافت");
-
-            // ریدایرکت به صفحه لاگین بعد از 2 ثانیه
-            setTimeout(() => {
-                router.push("/auth");
-            }, 2000);
         },
         onError: (error) => {
             toast.error(error.message);

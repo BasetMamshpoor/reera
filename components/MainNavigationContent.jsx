@@ -23,9 +23,9 @@ const MainNavigationContent = () => {
         try {
             await signOut({
                 redirect: true,
-                callbackUrl: `/${locale}`,
+                callbackUrl: "/",
             });
-            router.push(`/${locale}`);
+            router.push("/");
         } catch (error) {
             console.error("Logout error:", error);
         }

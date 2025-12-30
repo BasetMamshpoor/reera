@@ -16,7 +16,7 @@ const OtpPage = ({ email, phone, onEdit, p, mode = "signup" }) => {
     const params = useParams();
     const locale = params?.locale ?? "fa";
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get("callbackUrl") || `https://rira24.com/${locale}`;
+    const callbackUrl = searchParams.get("callbackUrl") || "/";
     // const callbackUrl = searchParams.get("callbackUrl") || `http://localhost:5000/${locale}`;
     const identifier = email || phone;
     const isEmail = !!email;
