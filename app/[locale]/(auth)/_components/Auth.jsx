@@ -60,7 +60,7 @@ const Auth = ({onSendOtp}) => {
 
             <Tabs dir={locale === "fa" ? "rtl" : "ltr"} value={activeTab} onValueChange={setActiveTab}
                   className="w-full">
-                <TabsList className="hidden lg:flex w-full bg-transparent border-b p-0 rounded-0">
+                <TabsList className="flex w-full bg-transparent border-b p-0 rounded-0">
                     <TabsTrigger
                         className="data-[state=active]:border-b-Primary-400 cursor-pointer data-[state=active]:border-b-2 pb-2  font-bold text-sm"
                         value="login">
