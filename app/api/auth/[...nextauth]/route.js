@@ -8,8 +8,6 @@ const request = async ({ method, url, data }) => {
         method,
         headers: {
             "Content-Type": "application/json",
-            // اگر API_KEY نیاز دارید
-            // "Authorization": `Bearer ${process.env.API_KEY}`,
         },
         body: data ? JSON.stringify(data) : undefined,
     });
@@ -24,23 +22,15 @@ const request = async ({ method, url, data }) => {
 const handler = NextAuth({
     session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60, // 30 روز
+        maxAge: 30 * 24 * 60 * 60,
     },
     providers: [
-        // 1. Google Provider
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            authorization: {
-                params: {
-                    prompt: "consent",
-                    access_type: "offline",
-                    response_type: "code"
-                }
-            }
         }),
 
-        // 2. Email OTP Provider (برای ثبت‌نام/ورود با ایمیل + OTP)
+        // 1. Email OTP Provider
         CredentialsProvider({
             id: "email-otp",
             name: "Email OTP",
@@ -57,7 +47,6 @@ const handler = NextAuth({
                 }
 
                 try {
-                    // سعی می‌کنیم اول register، اگر نشد login
                     const data = await request({
                         method: "POST",
                         url: "/auth/register",
@@ -72,7 +61,6 @@ const handler = NextAuth({
                     if (!data?.data?.token) {
                         console.log("❌ No token in register response, trying login");
 
-                        // اگر register جواب نداد، سعی می‌کنیم login
                         const loginData = await request({
                             method: "POST",
                             url: "/auth/login",
@@ -106,7 +94,7 @@ const handler = NextAuth({
             },
         }),
 
-        // 3. Phone OTP Provider (برای ثبت‌نام/ورود با شماره + OTP)
+        // 2. Phone OTP Provider
         CredentialsProvider({
             id: "phone-otp",
             name: "Phone OTP",
@@ -123,7 +111,6 @@ const handler = NextAuth({
                 }
 
                 try {
-                    // سعی می‌کنیم اول register، اگر نشد login
                     const data = await request({
                         method: "POST",
                         url: "/auth/register",
@@ -138,7 +125,6 @@ const handler = NextAuth({
                     if (!data?.data?.token) {
                         console.log("❌ No token in register response, trying login");
 
-                        // اگر register جواب نداد، سعی می‌کنیم login
                         const loginData = await request({
                             method: "POST",
                             url: "/auth/login",
@@ -172,28 +158,29 @@ const handler = NextAuth({
             },
         }),
 
-        // 4. Password Login Provider (برای ورود با ایمیل + رمز عبور)
+        // 3. Password Login Provider (ایمیل + رمز)
         CredentialsProvider({
             id: "password-login",
             name: "Password Login",
             credentials: {
-                email: { label: "Email", type: "email" },
+                identifier: { label: "Email", type: "text" },
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
                 console.log("🔐 Password Login Authorize:", credentials);
 
-                if (!credentials?.email || !credentials?.password) {
-                    console.log("❌ Missing email or password");
+                if (!credentials?.identifier || !credentials?.password) {
+                    console.log("❌ Missing identifier or password");
                     return null;
                 }
 
                 try {
+                    // استفاده از endpoint لاگین با رمز
                     const data = await request({
                         method: "POST",
-                        url: "/auth/login-password", // فرض می‌کنیم این endpoint دارید
+                        url: "/auth/login",
                         data: {
-                            user: credentials.email.trim(),
+                            user: credentials.identifier.trim(),
                             password: credentials.password,
                         },
                     });
@@ -205,10 +192,13 @@ const handler = NextAuth({
                         return null;
                     }
 
+                    const isEmail = credentials.identifier.includes('@');
+
                     return {
                         id: data.data.user_id.toString(),
                         accessToken: data.data.token,
-                        email: credentials.email.trim(),
+                        email: isEmail ? credentials.identifier.trim() : null,
+                        mobile: !isEmail ? credentials.identifier.trim() : null,
                     };
                 } catch (err) {
                     console.error("❌ Password Login error:", err.message);
@@ -218,126 +208,55 @@ const handler = NextAuth({
         }),
     ],
     callbacks: {
-        async jwt({ token, user, account, trigger, session }) {
-            console.log("🔄 JWT Callback:", {
-                token: token?.sub ? "Has token" : "No token",
-                user: user ? "Has user" : "No user",
-                account: account?.provider,
-                trigger,
-            });
+        async jwt({ token, user, account }) {
+            console.log("🔄 JWT Callback - User:", user ? "Exists" : "None");
 
-            // اگر user جدید لاگین کرده
             if (user) {
                 token.id = user.id;
                 token.accessToken = user.accessToken;
-                token.email = user.email || token.email;
-                token.mobile = user.mobile || token.mobile;
-
-                // اگر از Google آمده
-                if (account?.provider === "google") {
-                    token.email = user.email;
-                    token.picture = user.image;
-                }
-            }
-
-            // اگر session از client آپدیت شده
-            if (trigger === "update" && session) {
-                token = { ...token, ...session };
+                token.email = user.email;
+                token.mobile = user.mobile;
             }
 
             console.log("✅ Final JWT Token:", {
                 id: token.id,
                 email: token.email,
                 mobile: token.mobile,
-                hasToken: !!token.accessToken,
             });
 
             return token;
         },
 
         async session({ session, token }) {
-            console.log("🔄 Session Callback:", {
-                sessionEmail: session.user?.email,
-                tokenId: token.id,
-                tokenEmail: token.email,
-            });
+            console.log("🔄 Session Callback - Token ID:", token.id);
 
             session.user = {
                 id: token.id,
                 email: token.email,
                 mobile: token.mobile,
-                image: token.picture,
-                name: token.name,
             };
-
             session.accessToken = token.accessToken;
-            session.error = token.error;
 
-            console.log("✅ Final Session:", {
-                user: session.user,
-                hasAccessToken: !!session.accessToken,
-            });
-
+            console.log("✅ Final session:", session.user);
             return session;
         },
 
         async redirect({ url, baseUrl }) {
-            console.log("🔄 Redirect Callback:", { url, baseUrl });
-
-            // اگر callbackUrl مشخص شده باشد
             if (url.startsWith("/")) {
                 return `${baseUrl}${url}`;
             }
-
-            // اگر callbackUrl کامل باشد
             if (url.startsWith(baseUrl)) {
                 return url;
             }
-
-            // پیش‌فرض
             return baseUrl;
-        },
-
-        async signIn({ user, account, profile, email, credentials }) {
-            console.log("🔓 SignIn Callback:", {
-                user: user?.id,
-                account: account?.provider,
-                hasCredentials: !!credentials,
-            });
-            return true;
         },
     },
     pages: {
         signIn: "/auth",
-        signOut: "/auth",
-        error: "/auth/error",
-        newUser: "/auth/new-user", // برای کاربران جدید
-    },
-    events: {
-        async signIn(message) {
-            console.log("🎉 User signed in:", message.user?.email);
-        },
-        async signOut(message) {
-            console.log("👋 User signed out:", message.session?.user?.email);
-        },
-        async session(message) {
-            console.log("📋 Session event:", message.session?.user?.email);
-        },
+        error: "/auth",
     },
     debug: process.env.NODE_ENV === "development",
     secret: process.env.NEXTAUTH_SECRET,
-    useSecureCookies: process.env.NODE_ENV === "production",
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: "lax",
-                path: "/",
-                secure: process.env.NODE_ENV === "production",
-            },
-        },
-    },
 });
 
 export { handler as GET, handler as POST };

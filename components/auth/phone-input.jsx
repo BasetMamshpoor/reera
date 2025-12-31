@@ -68,7 +68,7 @@ const PhoneInput = ({ value, onChange, className, ...props }) => {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 px-3 py-2 border-r border-input hover:bg-gray-50 transition-colors cursor-pointer"
+          className="flex items-center gap-2 px-3 py-2 border-r border-input hover:bg-Gray-50 transition-colors cursor-pointer"
         >
           <span className="text-lg">{selectedCountry.flag}</span>
           <span className="text-sm">{selectedCountry.code}</span>
@@ -85,13 +85,13 @@ const PhoneInput = ({ value, onChange, className, ...props }) => {
             {/* Search Input */}
             <div className="p-2 border-b border-default-divider">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-Gray-400" />
                 <input
                   type="text"
                   placeholder="Search countries..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-md text-sm outline-none focus:ring-2 focus:ring-Primary-400 focus:border-transparent"
+                  className="w-full pl-9 pr-3 py-2 border border-Gray-200 rounded-md text-sm outline-none focus:ring-2 focus:ring-Primary-400 focus:border-transparent"
                 />
               </div>
             </div>
@@ -118,7 +118,7 @@ const PhoneInput = ({ value, onChange, className, ...props }) => {
 
               <div className="custom-scrollbar">
                 {filteredCountries.length === 0 ? (
-                  <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                  <div className="px-4 py-3 text-sm text-Gray-500 text-center">
                     No countries found
                   </div>
                 ) : (
@@ -127,14 +127,14 @@ const PhoneInput = ({ value, onChange, className, ...props }) => {
                       key={country.countryCode}
                       type="button"
                       onClick={() => handleCountrySelect(country)}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors cursor-pointer border-b border-gray-100 last:border-b-0"
+                      className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-Gray-50 transition-colors cursor-pointer border-b border-Gray-100 last:border-b-0"
                     >
                       <span className="text-lg">{country.flag}</span>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-gray-900 truncate">
+                        <div className="text-sm font-medium text-Gray-900 truncate">
                           {country.name}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-Gray-500">
                           {country.code}
                         </div>
                       </div>
